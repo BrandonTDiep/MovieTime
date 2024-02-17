@@ -1,0 +1,41 @@
+<%- include('partials/head') -%>
+
+<main>
+  <%- include('partials/nav') -%>
+  <div>
+    <img src="<%= base_url + movieDetails.poster_path %>" class="img-fluid rounded-start" alt="movie poster" style = "min-width: 94px; width: 94px;height: 141px;">
+  </div>
+
+  <div>
+    <div class="card-body">
+        <h5 class="card-title"><%= movieDetails.title %></h5>
+        <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;"><%= movieDetails.overview %></p>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <h2>Add a review</h2>
+    <form action="/review/createReview/<%= movieId %>" method="POST">
+      <div class="mb-3">
+          <label for="review" class="form-label">Review</label>
+          <input type="text" class="form-control" id="review" name="review">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <ul>
+    <% for(var i=0; i<reviews.length; i++) {%>
+      <li class="col-6 justify-content-between mt-5">
+        <%= reviews[i].review%>
+      </li>
+    <% } %>
+  </ul>
+
+
+      
+</main>
+
+<%- include('partials/footer') -%>
+
+

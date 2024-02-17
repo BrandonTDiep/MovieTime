@@ -1,0 +1,27 @@
+<%- include('partials/head') -%>
+
+<main>
+    <%- include('partials/nav') -%>
+    <% movies.forEach(movie => { %>
+        <div class="card mb-3" style="max-width: 540px; margin-left: 12px">
+            <div class="d-flex">
+              <div>
+                <a href="/movies/<%= movie.id%>">
+                    <img src="<%= base_url + movie.poster_path %>" class="img-fluid rounded-start" alt="movie poster" style = "min-width: 94px; width: 94px;height: 141px;">
+                </a>
+              </div>
+              <div>
+                <div class="card-body">
+                    <h5 class="card-title"><%= movie.title %></h5>
+                    <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;"><%= movie.overview %></p>   
+                </div>
+              </div>
+            </div>
+        </div>
+    <% }); %>
+</main>
+
+<%- include('partials/footer') -%>
+
+
+<!-- how it works the user makes a request whether it be PUT or GET, it makes  a request to the router. The sole job of the router is know which controller to hand this request off to. So the controller hears that request and goes to the views and ask it to render out some ejs and the controller responds with that html-->

@@ -1,0 +1,18 @@
+<%- include('partials/head') -%>
+
+<main>
+  <%- include('partials/nav') -%>
+  <div class="row justify-content-center align-items-center" style="height: 60vh;">
+    <div class="col-12 d-flex flex-column align-items-center justify-content-end" style="height: 50%;">
+      <h1 class="text-center">MovieTime</h1>
+      <form action="/movies/search" method="GET" class="d-flex">
+          <label class="sr-only">Enter Movie Name</label>
+          <input type="search" name = "query" class="form-control" id="inlineFormInputName2" placeholder="Search">
+          <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+</div>
+</main>
+
+
+<%- include('partials/footer') -%>
