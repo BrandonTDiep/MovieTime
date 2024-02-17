@@ -42,10 +42,9 @@ module.exports = {
       const movieId = req.params.id;
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await response.json()
+      const reviews = await Review.find({movieId}).sort({ reviewLikes: "desc", createdAt: "desc" }).lean(); // find all review tied to movie
 
-      const reviews = await Review.find({movieId}).sort({ reviewLikes: "desc", createdAt: "desc" }).lean(); // find all comments tied to our post
-
-
+      console.log(req.user.id)
       res.render("moviepage.ejs", {
         movieId: req.params.id,
         movieDetails: movie, 
