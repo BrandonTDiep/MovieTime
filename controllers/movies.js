@@ -44,12 +44,12 @@ module.exports = {
       const movie = await response.json()
       const reviews = await Review.find({movieId}).sort({ reviewLikes: "desc", createdAt: "desc" }).lean(); // find all review tied to movie
 
-      console.log(req.user.id)
       res.render("moviepage.ejs", {
         movieId: req.params.id,
         movieDetails: movie, 
         base_url: BASE_URL,
         reviews: reviews,
+        userId: req.user.id,
         user: {
           loggedIn: true
         }

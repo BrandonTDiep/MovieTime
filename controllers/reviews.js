@@ -15,7 +15,7 @@ module.exports = {
         liked: 0,
         movieId: req.params.id,
         user: req.user.id,
-        userName: userName
+        userName: userName,
       });
       console.log("Review has been added!");
       res.redirect("/movies/" + req.params.id);
@@ -27,13 +27,23 @@ module.exports = {
     try {
       const review = await Review.findById(req.params.id); 
       const movieId = review.movieId
-      await Review.findOneAndUpdate(
-        { _id: req.params.id },
-        {
-          $inc: { reviewLikes: 1 },
-        }
-      );
-      console.log("Likes +1");
+      const userId = req.user.id;
+
+      // Check if the user has already liked the review
+      if (review.userLikes.includes(userId)) {
+        // If the user has already liked, decrement the like count
+        await Review.findOneAndUpdate(
+            { _id: req.params.id },
+            { $inc: { reviewLikes: -1 }, $pull: { userLikes: userId } } // Remove user from userLikes array
+        );
+      } 
+      else {
+        // If the user hasn't liked, increment the like count
+        await Review.findOneAndUpdate(
+          { _id: req.params.id },
+          { $inc: { reviewLikes: 1 }, $push: { userLikes: userId } } // Add user to userLikes array
+        );
+      }
       res.redirect(`/movies/${movieId}`);
     } catch (err) {
       console.log(err);

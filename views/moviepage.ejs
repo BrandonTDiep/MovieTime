@@ -55,16 +55,21 @@
   </div>
 
   <ul>
-    <% for(var i=0; i < reviews.length; i++) {%>
-      <li class="col-6 justify-content-between mt-5">
+    <% for(let i=0; i < reviews.length; i++) {%>
+      <li class="justify-content-between mt-5">
         <p><%= reviews[i].userName%> <%= reviews[i].review%></p>
-        <form class="col-1" action="/review/likeReview/<%= reviews[i]._id%>?_method=PUT" method="POST">
-          <button class="btn btn-primary fa fa-heart" type="submit"></button>
+        <form action="/review/likeReview/<%= reviews[i]._id%>?_method=PUT" method="POST">
+          <% let userLikesArray = reviews[i].userLikes.map(String);  %>
+          <% if(userLikesArray.includes(userId)) {%>
+            <% console.log(userLikesArray) %>
+            <% console.log(user) %>
+            <h3><button class="btn btn-primary fa fa-heart" type="submit"></button>Liked: <%= reviews[i].reviewLikes %></h3>
+          <% } else { %>
+            <h3><button class="btn btn-primary fa fa-heart" type="submit"></button>Like Review: <%= reviews[i].reviewLikes %></h3>
+          <% } %>
         </form>
-        <h3 class="col-3">Likes: <%= reviews[i].reviewLikes %></h3>
       </li>
     <% } %>
-    
   </ul>     
 </main>
 

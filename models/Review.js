@@ -33,6 +33,7 @@ const ReviewSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  userLikes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Array to store user likes
 });
 
 module.exports = mongoose.model("Review", ReviewSchema);
