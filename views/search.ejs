@@ -10,8 +10,10 @@
                 </a>
               </div>
               <div class="card-body">
-                  <h5 class="card-title"><%= movie.title %></h5>
-                  <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; font-size: 15px;"><%= movie.overview %></p>   
+                <h5 class="card-title"><%= movie.title %>
+                    <span style="color: #89a; font-size: 16px; font-weight: 200;">(<%= movie.release_date.split('-')[0] %>)</span>
+                </h5>
+                <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; font-size: 15px;"><%= movie.overview %></p>   
               </div>
             </div>
         </div>

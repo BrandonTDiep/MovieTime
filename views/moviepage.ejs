@@ -3,10 +3,9 @@
 
 <main>
   <div>
-    <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster">
-  </div>
-
-  <div>
+    <div>
+      <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster">
+    </div>
     <div class="card-body">
         <h5 class="card-title"><%= movieDetails.title %></h5>
         <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;"><%= movieDetails.overview %></p>
@@ -59,10 +58,8 @@
       <li class="justify-content-between mt-5">
         <p><%= reviews[i].userName%> <%= reviews[i].review%></p>
         <form action="/review/likeReview/<%= reviews[i]._id%>?_method=PUT" method="POST">
-          <% let userLikesArray = reviews[i].userLikes.map(String);  %>
+          <% let userLikesArray = reviews[i].userLikes.map(String); %>
           <% if(userLikesArray.includes(userId)) {%>
-            <% console.log(userLikesArray) %>
-            <% console.log(user) %>
             <h3><button class="btn btn-primary fa fa-heart" type="submit"></button>Liked: <%= reviews[i].reviewLikes %></h3>
           <% } else { %>
             <h3><button class="btn btn-primary fa fa-heart" type="submit"></button>Like Review: <%= reviews[i].reviewLikes %></h3>
