@@ -8,7 +8,7 @@ module.exports = {
       const userName = user.userName
     
       await Review.create({
-        // moviepage.ejs has input with the name of "review", so when this form submits, whatever value is input, it will have the value of req.body.comment
+        // moviepage.ejs has input with the name of "review", so when this form submits, whatever value is input, it will have the value of req.body.review
         review: req.body.review, 
         reviewLikes: 0,
         rating: 0,

@@ -63,3 +63,6 @@ app.use("/review", reviewRoutes);
 app.listen(process.env.PORT, () => {
   console.log("Server is running, you better catch it!");
 });
+
+
+//  how it works the user makes a request whether it be PUT or GET, it makes  a request to the router. The sole job of the router is know which controller to hand this request off to. So the controller hears that request and goes to the views and ask it to render out some ejs and the controller responds with that html

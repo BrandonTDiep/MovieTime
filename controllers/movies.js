@@ -38,7 +38,7 @@ module.exports = {
   getMoviePage: async (req, res) => {
     try {
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
-      const BASE_URL = 'https://www.themoviedb.org/t/p/w94_and_h141_bestv2'
+      const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
       const movieId = req.params.id;
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await response.json()
