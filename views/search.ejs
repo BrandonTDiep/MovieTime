@@ -5,12 +5,19 @@
         <div class="card mb-3" style="max-width: 540px; margin-left: 12px">
             <div class="d-flex">
               <div>
-                <a href="/movies/<%= movie.id%>">
+                <% if(movie.poster_path == null) {%>
+                  <a href="/movies/<%= movie.id%>">
+                    <img src="/imgs/missing-img.jpg" class="img-fluid rounded-start" alt="movie poster" style = "min-width: 94px; width: 94px;height: 141px;">
+                  </a>
+              
+                <% } else {%>
+                  <a href="/movies/<%= movie.id%>">
                     <img src="<%= base_url + movie.poster_path %>" class="img-fluid rounded-start" alt="movie poster" style = "min-width: 94px; width: 94px;height: 141px;">
-                </a>
+                  </a>                
+                <% }%>
               </div>
               <div class="card-body">
-                <h5 class="card-title"><%= movie.title %>
+                <h5 class="card-title" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;"><%= movie.title %>
                     <span style="color: #89a; font-size: 16px; font-weight: 200;">(<%= movie.release_date.split('-')[0] %>)</span>
                 </h5>
                 <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; font-size: 15px;"><%= movie.overview %></p>   
