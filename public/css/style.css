@@ -1,0 +1,39 @@
+.movie-header{
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    height: 600px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.tagline{
+    text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
+}
+
+.like-button, .unlike-button {
+    background-color: transparent; 
+    border: none;
+    padding: 0; 
+    margin-right: 7px;
+}
+
+.like-button:focus, .unlike-button:focus {
+    outline: none; 
+}
+
+.like-button .fa-heart {
+    color: red; 
+    font-size: 16px; 
+}
+
+.unlike-button .fa-heart{
+    color: gray; 
+    font-size: 16px; 
+}
+
+.unlike-button span:hover {
+    color: orange;
+}
+
+

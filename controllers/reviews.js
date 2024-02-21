@@ -44,7 +44,7 @@ module.exports = {
           { $inc: { reviewLikes: 1 }, $push: { userLikes: userId } } // Add user to userLikes array
         );
       }
-      res.redirect(`/movies/${movieId}`);
+      res.redirect(`/movies/${movieId}#review-section`);
     } catch (err) {
       console.log(err);
     }
