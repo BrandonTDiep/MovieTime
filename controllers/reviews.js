@@ -49,6 +49,18 @@ module.exports = {
       console.log(err);
     }
   },
+  deleteReview: async (req, res) => {
+    try {
+      const review = await Review.findById(req.params.id); 
+      const movieId = review.movieId
+      // Delete review from db
+      await Review.remove({ _id: req.params.id });
+      console.log("Deleted Review");
+      res.redirect(`/movies/${movieId}`);
+    } catch (err) {
+      res.redirect(`/movies/${movieId}`);
+    }
+  },
 };
 
 

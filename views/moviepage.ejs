@@ -39,10 +39,10 @@
         <div class="ms-5" style="flex: 2;"> <!-- Adding margin to the left of the card-body -->
           <% const filteredDirectors = movieCredit.crew.filter(({job})=> job ==='Director'); %>
           <h2><%= movieDetails.title %></h2>
-          <p style="font-size: 20px;" class="mb-2">Directed by <%= filteredDirectors[0].name %></p>
-          <p>
-            <%= movieDetails.overview %>
-          </p>
+          <% if(filteredDirectors.length !== 0) { %>
+            <p style="font-size: 20px;" class="mb-2">Directed by <%= filteredDirectors[0].name %></p>
+          <% } %>
+          <p><%= movieDetails.overview %></p>
         </div>
       </div>
     </section>
@@ -80,25 +80,29 @@
           <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
             <p style="font-weight: bold;"><%= reviews[i].userName%></p>
             <p><%= reviews[i].review%></p>
-            <form action="/review/likeReview/<%= reviews[i]._id%>?_method=PUT" method="POST">
-              <% let userLikesArray = reviews[i].userLikes.map(String); %>
-              <% if(userLikesArray.includes(userId)) {%>
-                <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                  <span style="font-weight: 600"> Liked</span>
-                </button> 
-                <span><%= reviews[i].reviewLikes %> likes</span>
-              <% } else { %>
-                <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                  <span style="font-weight: 500"> Like Review</span>
-                </button> 
-                <span><%= reviews[i].reviewLikes %> likes</span>
-                <!-- <%if(reviews[i].user == userId){ %>
-                <form action="/review/deleteReview/<%=  reviews[i]._id %>?_method=DELETE" method="POST">
-                <button class="btn btn-primary fa fa-trash" type="submit"></button>
-                <%}%> -->
+            <div class="review-container">
+              <form action="/review/likeReview/<%= reviews[i]._id%>?_method=PUT" method="POST">
+                <% let userLikesArray = reviews[i].userLikes.map(String); %>
+                <% if(userLikesArray.includes(userId)) {%>
+                  <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                    <span style="font-weight: 600"> Liked</span>
+                  </button> 
+                  <span><%= reviews[i].reviewLikes %> likes</span>
+                <% } else { %>
+                  <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                    <span style="font-weight: 500"> Like Review</span>
+                  </button> 
+                  <span><%= reviews[i].reviewLikes %> likes</span>
+                <% } %>
               </form>
-              <% } %>
-            </form>
+              
+              <%if(reviews[i].user == userId){ %>
+                <form action="/review/deleteReview/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                  <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
+                </form>
+              <%}%>
+            </div>
+   
           </li>
         <% } %>
       </ul>

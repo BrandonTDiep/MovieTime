@@ -24,6 +24,7 @@ module.exports = {
       res.render('search.ejs', {
         movies: results, 
         base_url: BASE_URL,
+        searchQuery: movieName,
         user: {
           loggedIn: true
         }

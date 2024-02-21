@@ -36,4 +36,19 @@
     color: orange;
 }
 
+.review-container {
+    display: flex;
+    align-items: center; 
+  }
+  
+.review-container form {
+    margin-right: 10px; 
+}
 
+.delete-form {
+    margin-left: auto; 
+}
+
+.delete-button:hover{
+    color: red;
+}
