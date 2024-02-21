@@ -12,10 +12,7 @@
             (<%= movieDetails.release_date.split('-')[0] %>)
           </span>
         </h1>
-      
         <div class="d-flex flex-column">
-          <% const filteredDirectors = movieCredit.crew.filter(({job})=> job ==='Director'); %>
-          <!-- <span class="text-white" style="font-size: 20px; text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;">Directed by <%= filteredDirectors[0].name %></span> -->
           <span class="text-white mt-1 tagline"><%= movieDetails.tagline %></span>
         </div>
       </div>
@@ -23,23 +20,30 @@
   <% }%>
 
   <!-- Body -->
-  <section class="mx-auto">
+  <section style="margin: 0 400px;">
+
     <!-- Overview -->
-    <section>
-      <div>
-        <% if(movieDetails.poster_path != null) {%>
-          <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster">
-        <% } else {%>
-          <img src="/imgs/missing-img.jpg" alt="movie poster">
-        <% }%>
-        <div class="card-body">
-            <h5 class="card-title"><%= movieDetails.title %></h5>
-            <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;"><%= movieDetails.overview %></p>
+    <section class="mt-5">
+      <div class="d-flex"> <!-- Using flexbox to align items vertically -->
+        <div style="flex: 0.5;">
+          <% if(movieDetails.poster_path != null) { %>
+            <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster">
+          <% } else { %>
+            <img src="/imgs/missing-img.jpg" alt="movie poster">
+          <% } %>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
+            Write review
+          </button>
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Write review
-        </button>
+        <div class="ms-5" style="flex: 2;"> <!-- Adding margin to the left of the card-body -->
+          <% const filteredDirectors = movieCredit.crew.filter(({job})=> job ==='Director'); %>
+          <h2><%= movieDetails.title %></h2>
+          <p style="font-size: 20px;" class="mb-2">Directed by <%= filteredDirectors[0].name %></p>
+          <p>
+            <%= movieDetails.overview %>
+          </p>
+        </div>
       </div>
     </section>
 
@@ -69,7 +73,7 @@
     </section>
 
     <!-- Review Comment Section -->
-    <section>
+    <section class="mt-5">
       <h5 style="border-bottom: 1px solid gray; margin-bottom: 0;">Reviews</h5>
       <ul style="padding: 0;">
         <% for(let i=0; i < reviews.length; i++) {%>
@@ -88,6 +92,11 @@
                   <span style="font-weight: 500"> Like Review</span>
                 </button> 
                 <span><%= reviews[i].reviewLikes %> likes</span>
+                <!-- <%if(reviews[i].user == userId){ %>
+                <form action="/review/deleteReview/<%=  reviews[i]._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-primary fa fa-trash" type="submit"></button>
+                <%}%> -->
+              </form>
               <% } %>
             </form>
           </li>
