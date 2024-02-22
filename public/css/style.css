@@ -110,13 +110,13 @@
     margin: 5px;
 }
 
-/* Rest of your existing CSS for star ratings */
-.rating {
-    border: none;
-    float: left;
+.fa-star.checked {
+    color: orange; 
 }
 
-/* Add more CSS for star ratings as needed */
+.fa-star-half.checked {
+    color: orange; 
+}
 
 
 

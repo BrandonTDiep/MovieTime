@@ -110,7 +110,22 @@
       <ul style="padding: 0;">
         <% for(let i=0; i < reviews.length; i++) {%>
           <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
-            <p style="font-weight: bold;"><%= reviews[i].userName%></p>
+            <div class="review d-flex">
+              <p class="username" style="font-weight: bold; margin-right: 10px;"><%= reviews[i].userName %></p>
+              <!-- Show star ratings based on reviews.rating -->
+              <div>
+                  <% let rating = reviews[i].rating; %>
+                  <% for (let j = 1; j <= 5; j++) { %>
+                      <% if (j <= Math.floor(rating)) { %>
+                          <span class="fa fa-star checked"></span>
+                      <% } 
+                      else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
+                          <span class="fa fa-star-half checked"></span>
+                      <% } %>
+                  <% } %>
+              </div>
+            </div>
+          
             <p><%= reviews[i].review%></p>
             <div class="review-container">
               <form action="/review/likeReview/<%= reviews[i]._id%>?_method=PUT" method="POST">
@@ -134,7 +149,6 @@
                 </form>
               <%}%>
             </div>
-   
           </li>
         <% } %>
       </ul>
