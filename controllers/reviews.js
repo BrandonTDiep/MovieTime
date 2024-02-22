@@ -6,12 +6,13 @@ module.exports = {
     try {
       const user = await User.findById(req.user.id); 
       const userName = user.userName
-    
+      console.log(req.body);
+
       await Review.create({
         // moviepage.ejs has input with the name of "review", so when this form submits, whatever value is input, it will have the value of req.body.review
         review: req.body.review, 
         reviewLikes: 0,
-        rating: 0,
+        rating: req.body.rating,
         liked: 0,
         movieId: req.params.id,
         user: req.user.id,

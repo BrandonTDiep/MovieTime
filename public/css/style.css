@@ -1,6 +1,8 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css);
 
 /* --------------- MOVIE PAGE --------------- */
+
+
 .movie-header{
     background-size: cover; 
     background-repeat: no-repeat; 
@@ -57,7 +59,7 @@
 }
 
 /*styling star rating*/
-.rating{
+.rating, .clearRating{
 	border: none;
 	float: left;
 }
@@ -100,3 +102,21 @@
 .rating > input:checked ~ label:hover ~ label{
 	color: yellow;
 }
+
+/* Clear button styling */
+.clear:before {
+    content: '\2716';
+    font-size: 1.5rem;
+    margin: 5px;
+}
+
+/* Rest of your existing CSS for star ratings */
+.rating {
+    border: none;
+    float: left;
+}
+
+/* Add more CSS for star ratings as needed */
+
+
+

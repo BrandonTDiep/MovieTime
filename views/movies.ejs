@@ -2,16 +2,22 @@
 
 <main>
   <%- include('partials/nav') -%>
-  <div class="row justify-content-center align-items-center" style="height: 60vh;">
-    <div class="col-12 d-flex flex-column align-items-center justify-content-end" style="height: 50%;">
+  
+  <main class="d-flex align-items-center justify-content-center"> <!-- Centering content both vertically and horizontally -->
+    <div class="container">
       <h1 class="text-center">MovieTime</h1>
-      <form action="/movies/search" method="GET" class="d-flex">
-          <label class="sr-only">Enter Movie Name</label>
-          <input type="search" name = "query" class="form-control" id="inlineFormInputName2" placeholder="Search">
-          <button type="submit" class="btn btn-primary">Search</button>
-      </form>
+      <div class="d-flex justify-content-center">
+          <form action="/movies/search" method="GET" class="d-flex">
+              <label class="sr-only">Enter Movie Name</label>
+              <input type="search" name="query" class="form-control" id="inlineFormInputName2" placeholder="Search">
+              <button type="submit" class="btn btn-primary">Search</button>
+          </form>
+      </div>
     </div>
-</div>
+  </main>
+  
+  <%- include('partials/footer') -%>
+  
 </main>
 
 

@@ -9,6 +9,10 @@ const ReviewSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  rating: {
+    type: Number,
+    default: 0
+  },
   movieId: {
     type: Number,
     required: true,
