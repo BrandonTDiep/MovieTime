@@ -41,7 +41,18 @@
           <% const filteredDirectors = movieCredit.crew.filter(({job})=> job ==='Director'); %>
           <h2><%= movieDetails.title %></h2>
           <% if(filteredDirectors.length !== 0) { %>
-            <p style="font-size: 20px;" class="mb-2">Directed by <%= filteredDirectors[0].name %></p>
+            <span style="font-size: 20px;">Directed by</span>
+            <% if(filteredDirectors.length === 1) { %>
+              <span style="font-size: 20px;" class="mb-2"><%= filteredDirectors[0].name %></span>
+            <% } else { %>
+              <% for (let i = 0; i < filteredDirectors.length; i++) { %>
+                <% if(i < filteredDirectors.length - 1) { %>
+                  <span style="font-size: 20px;" class="mb-2"><%= filteredDirectors[i].name %>, </span>
+                  <% } else { %>
+                  <span style="font-size: 20px;" class="mb-2"><%= filteredDirectors[i].name %></span>
+                <% } %>
+              <% } %>
+            <% } %>
           <% } %>
           <p><%= movieDetails.overview %></p>
         </div>
