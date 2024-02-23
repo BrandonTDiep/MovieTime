@@ -1,7 +1,7 @@
 {
-  "name": "social",
+  "name": "movie",
   "version": "1.0.0",
-  "description": "Social Network",
+  "description": "<Movie Web App similar to LetterBoxhd",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",

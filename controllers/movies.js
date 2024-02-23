@@ -45,14 +45,15 @@ module.exports = {
       const credit = await response_credit.json()
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await response.json()
-      const reviews = await Review.find({movieId}).sort({ reviewLikes: "desc", createdAt: "desc" }).lean(); // find all review tied to movie
+      const reviews = await Review.find({ movieId }, { 'userReviews': 1 }).sort({ 'userReviews.reviewLikes': 'desc', 'userReviews.createdAt': 'desc' }).lean();
+      const userReviews = reviews.map(review => review.userReviews).flat();
 
       res.render("moviepage.ejs", {
         movieId: req.params.id,
         movieDetails: movie, 
         movieCredit: credit,
         base_url: BASE_URL,
-        reviews: reviews,
+        reviews: userReviews,
         userId: req.user.id,
         user: {
           loggedIn: true

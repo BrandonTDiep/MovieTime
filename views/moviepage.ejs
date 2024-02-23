@@ -36,6 +36,7 @@
             Write review
           </button>
         </div>
+
         <div class="ms-5" style="flex: 2;"> <!-- Adding margin to the left of the card-body -->
           <% const filteredDirectors = movieCredit.crew.filter(({job})=> job ==='Director'); %>
           <h2><%= movieDetails.title %></h2>
@@ -44,6 +45,7 @@
           <% } %>
           <p><%= movieDetails.overview %></p>
         </div>
+
       </div>
     </section>
 
@@ -108,6 +110,16 @@
     <section class="mt-5">
       <h5 style="border-bottom: 1px solid gray; margin-bottom: 0;">Reviews</h5>
       <ul style="padding: 0;">
+        <% 
+        // Sort reviews by likes and then by createdAt
+        reviews.sort((a, b) => {
+          if (b.reviewLikes !== a.reviewLikes) {
+            return b.reviewLikes - a.reviewLikes; // Sort by likes
+          }
+          // If likes are equal, sort by createdAt
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+        %>
         <% for(let i=0; i < reviews.length; i++) {%>
           <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
             <div class="review d-flex">
@@ -128,7 +140,7 @@
           
             <p><%= reviews[i].review%></p>
             <div class="review-container">
-              <form action="/review/likeReview/<%= reviews[i]._id%>?_method=PUT" method="POST">
+              <form action="/review/likeReview/<%= movieId %>/<%= reviews[i]._id%>?_method=PUT" method="POST">
                 <% let userLikesArray = reviews[i].userLikes.map(String); %>
                 <% if(userLikesArray.includes(userId)) {%>
                   <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
@@ -144,7 +156,7 @@
               </form>
               
               <%if(reviews[i].user == userId){ %>
-                <form action="/review/deleteReview/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                <form action="/review/deleteReview/<%= movieId %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
                   <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
                 </form>
               <%}%>
