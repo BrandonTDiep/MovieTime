@@ -56,10 +56,6 @@ module.exports = {
       // Get me the review (document) that has the userReview id
       const review = await Review.findOne({ "userReviews._id": reviewId });
 
-      console.log(review)
-
-      console.log(review.userReviews)
-
       const userReview = review.userReviews.find(review => review._id.toString() === reviewId);
 
       // Check if the user has already liked the review

@@ -20,11 +20,10 @@
   <% }%>
 
   <!-- Body -->
-  <section style="margin: 0 300px;">
-
+  <section style="width: 1090px; margin: 0 auto; padding: 0 10px;">
     <!-- Overview -->
     <section class="mt-5">
-      <div class="d-flex"> <!-- Using flexbox to align items vertically -->
+      <div class="d-flex"> 
         <div style="flex: 0.5;">
           <% if(movieDetails.poster_path != null) { %>
             <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster">
@@ -37,24 +36,40 @@
           </button>
         </div>
 
-        <div class="ms-5" style="flex: 2;"> <!-- Adding margin to the left of the card-body -->
+        <div class="ms-5" style="flex: 2;"> 
           <% const filteredDirectors = movieCredit.crew.filter(({job})=> job ==='Director'); %>
           <h2><%= movieDetails.title %></h2>
           <% if(filteredDirectors.length !== 0) { %>
             <span style="font-size: 20px;">Directed by</span>
             <% if(filteredDirectors.length === 1) { %>
-              <span style="font-size: 20px;" class="mb-2"><%= filteredDirectors[0].name %></span>
+              <p style="font-size: 20px; display: inline-block;" class="mb-2"><%= filteredDirectors[0].name %></p>
             <% } else { %>
               <% for (let i = 0; i < filteredDirectors.length; i++) { %>
                 <% if(i < filteredDirectors.length - 1) { %>
-                  <span style="font-size: 20px;" class="mb-2"><%= filteredDirectors[i].name %>, </span>
+                  <p style="font-size: 20px; display: inline-block;" class="mb-2"><%= filteredDirectors[i].name %>, </p>
                   <% } else { %>
-                  <span style="font-size: 20px;" class="mb-2"><%= filteredDirectors[i].name %></span>
+                  <p style="font-size: 20px; display: inline-block;" class="mb-2"><%= filteredDirectors[i].name %></p>
                 <% } %>
               <% } %>
             <% } %>
           <% } %>
           <p><%= movieDetails.overview %></p>
+        </div>
+
+        <div class="ms-5" style="flex: 0.5;"> 
+          <% let rating = 0; %>
+          <% let numOfRating = 0; %>
+          <% let avgRating = 0; %>
+
+          <% for (let i=0; i < reviews.length; i++) { %>
+            <% rating += reviews[i].rating; %>
+            <% numOfRating += 1; %>
+          <% } %>
+          
+          <% if(numOfRating > 0) { %>
+            <% avgRating = rating / numOfRating; %>
+          <% } %>
+          <span><%= avgRating %></span>
         </div>
 
       </div>
