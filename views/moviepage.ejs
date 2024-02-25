@@ -31,9 +31,15 @@
             <img src="/imgs/missing-img.jpg" alt="movie poster">
           <% } %>
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
-            Write review
-          </button>
+          <% if(userHasReview) { %>
+            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
+              Edit your review...
+            </button>
+          <% } else { %>
+            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
+              Write review
+            </button>
+          <% } %>
         </div>
 
         <div class="ms-5" style="flex: 2;"> 
@@ -56,20 +62,25 @@
           <p><%= movieDetails.overview %></p>
         </div>
 
-        <div class="ms-5" style="flex: 0.5;"> 
+        <div class="ms-5 text-center" style="flex: 0.5;"> 
           <% let rating = 0; %>
           <% let numOfRating = 0; %>
           <% let avgRating = 0; %>
 
           <% for (let i=0; i < reviews.length; i++) { %>
-            <% rating += reviews[i].rating; %>
-            <% numOfRating += 1; %>
+            <% if(reviews[i].rating !== 0) { %>
+              <% avgRating = rating / numOfRating; %>
+              <% rating += reviews[i].rating; %>
+              <% numOfRating += 1; %>
+            <% } %>
           <% } %>
           
           <% if(numOfRating > 0) { %>
             <% avgRating = rating / numOfRating; %>
           <% } %>
-          <span><%= avgRating %></span>
+          <p style="margin-bottom: 0;">Avg. Rating</p>
+
+          <h3><%= avgRating.toFixed(1) %></h3>
         </div>
 
       </div>
@@ -89,10 +100,16 @@
           </div>
 
           <!-- Modal Body -->
-          <form action="/review/createReview/<%= movieId %>" method="POST">
+          <% if(userHasReview) { %>
+            <form action="/review/updateReview/<%= movieId %>?_method=PUT" method="POST">
+          <% } else { %>
+            <form action="/review/createReview/<%= movieId %>" method="POST">
+          <% } %>
             <div class="modal-body d-flex">
               <div class="d-flex align-items-center" style="margin-right: 50px">
-                <img src="<%= base_url + movieDetails.poster_path %>" alt="" style = "width: 150px; height: 225px;">
+                <% if(movieDetails.poster_path != null) { %>
+                  <img src="<%= base_url + movieDetails.poster_path %>" class="img-fluid rounded"  alt="movie poster" style = "width: 150px; height: 225px;">
+                  <% } %>
               </div>
 
               <div class="mb-3" style="flex-grow: 3;">
@@ -124,8 +141,14 @@
                 </div>
               </div>
               <div>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <% if(userHasReview) { %>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                  <button type="submit" class="btn btn-primary">Save</button>
+                <% } else { %>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                <% } %>
               </div>
             </div>
           </form>

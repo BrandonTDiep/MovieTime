@@ -48,6 +48,22 @@ module.exports = {
       const reviews = await Review.find({ movieId }, { 'userReviews': 1 }).sort({ 'userReviews.reviewLikes': 'desc', 'userReviews.createdAt': 'desc' }).lean();
       const userReviews = reviews.map(review => review.userReviews).flat();
 
+      const userHasReview = await Review.findOne(
+        { 
+            movieId: req.params.id, 
+            "userReviews.user": req.user.id 
+        },
+        { 
+            "userReviews": { $elemMatch: { user: req.user.id } }
+        }
+      );
+
+      let hasReview = false;
+      if(userHasReview){
+        hasReview = true;
+        console.log(userHasReview)
+      }
+
       res.render("moviepage.ejs", {
         movieId: req.params.id,
         movieDetails: movie, 
@@ -57,7 +73,8 @@ module.exports = {
         userId: req.user.id,
         user: {
           loggedIn: true
-        }
+        },
+        userHasReview: hasReview,
       });
     } catch (err) {
       console.log(err);

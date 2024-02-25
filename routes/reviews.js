@@ -5,8 +5,9 @@ const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 //Review Routes - simplified for now
 router.post("/createReview/:id", ensureAuth, reviewsController.createReview);
-router.put("/likeReview/:movieId/:id", reviewsController.likeReview);
-router.delete("/deleteReview/:movieId/:id", reviewsController.deleteReview);
+router.put("/updateReview/:movieId", reviewsController.updateReview);
+router.put("/likeReview/:movieId/:reviewId", reviewsController.likeReview);
+router.delete("/deleteReview/:movieId/:reviewId", reviewsController.deleteReview);
 
 
 

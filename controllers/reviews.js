@@ -46,12 +46,32 @@ module.exports = {
       console.log(err);
     }
   },
+  updateReview: async (req, res) => {
+    try {
+      await Review.findOneAndUpdate(
+        { 
+          movieId: req.params.movieId, 
+          "userReviews.user": req.user.id 
+        },
+        {
+          $set: { 
+            "userReviews.$.review": req.body.review, 
+            "userReviews.$.rating": req.body.rating,
+          }
+        },
+        { new: true }
+      );
+      res.redirect("/movies/" + req.params.movieId);
+    } catch (err) {
+      console.log(err);
+    }
+  },
   likeReview: async (req, res) => {
     try {
 
       const movieId = req.params.movieId
       const userId = req.user.id;
-      const reviewId = req.params.id;
+      const reviewId = req.params.reviewId;
 
       // Get me the review (document) that has the userReview id
       const review = await Review.findOne({ "userReviews._id": reviewId });
@@ -81,7 +101,7 @@ module.exports = {
   deleteReview: async (req, res) => {
     try {
       const movieId = req.params.movieId;
-      const reviewId = req.params.id;
+      const reviewId = req.params.reviewId;
 
       // Delete review from db
       // Delete the review from the userReviews array based on _id
