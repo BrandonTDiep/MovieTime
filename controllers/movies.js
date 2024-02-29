@@ -45,7 +45,7 @@ module.exports = {
       const credit = await response_credit.json()
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await response.json()
-      const reviews = await Review.find({ movieId }, { 'userReviews': 1 }).sort({ 'userReviews.reviewLikes': 'desc', 'userReviews.createdAt': 'desc' }).lean();
+      const reviews = await Review.find({ movieId }, { 'userReviews': 1 }).sort({ 'userReviews.reviewLikes': 'desc', 'userReviews.createdAt': 'desc' }).populate('userReviews.user').lean();
       const userReviews = reviews.map(review => review.userReviews).flat();
 
       const userHasReview = await Review.findOne(
@@ -57,12 +57,12 @@ module.exports = {
             "userReviews": { $elemMatch: { user: req.user.id } }
         }
       );
-
       let hasReview = false;
       if(userHasReview){
         hasReview = true;
-        console.log(userHasReview)
       }
+
+      console.log(reviews[0].userReviews)
 
       res.render("moviepage.ejs", {
         movieId: req.params.id,
@@ -75,6 +75,7 @@ module.exports = {
           loggedIn: true
         },
         userHasReview: hasReview,
+        userReview: userHasReview
       });
     } catch (err) {
       console.log(err);

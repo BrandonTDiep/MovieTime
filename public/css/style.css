@@ -3,6 +3,8 @@
 /* --------------- MOVIE PAGE --------------- */
 
 
+/*-----------HEADER-----------*/
+
 .movie-header{
     background-size: cover; 
     background-repeat: no-repeat; 
@@ -15,6 +17,9 @@
 .tagline{
     text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
 }
+
+/*-----------Rating Section-----------*/
+
 
 .like-button, .unlike-button {
     background-color: transparent; 
@@ -93,14 +98,14 @@
 .rating > input:checked ~ label,
 .rating:not(:checked) > label:hover, 
 .rating:not(:checked) > label:hover ~ label{
-	color: yellow;
+	color: orange;
 }
 
 .rating > input:checked + label:hover,
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label,
 .rating > input:checked ~ label:hover ~ label{
-	color: yellow;
+	color: orange;
 }
 
 /* Clear button styling */
@@ -118,5 +123,34 @@
     color: orange; 
 }
 
+.fa-times{
+    color: white;
+}
+
+/*-----------MODAL-----------*/
+
+.modal-header{
+    border-bottom: 1px solid rgba(162, 177, 229, .2);
+}
+.modal-footer{
+    border-top: 1px solid rgba(162, 177, 229, .2);
+}
+
+/*-----------HTML-----------*/
+
+body,  .card-body{
+    background-color: #14181C;
+}
+
+.modal-content{
+    background-color: #242832;
+}
 
 
+h1, h2, h3, h4, h5, span, p {
+    color: white;
+}
+
+nav {
+    background-color: #24272C;
+}

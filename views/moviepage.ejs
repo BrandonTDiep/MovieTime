@@ -96,7 +96,7 @@
                 <%= movieDetails.release_date.split('-')[0] %>
               </span>
             </h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white;"></button>
           </div>
 
           <!-- Modal Body -->
@@ -114,7 +114,11 @@
 
               <div class="mb-3" style="flex-grow: 3;">
                 <h5 class="form-label font-weight-bold">Review</h5>
-                <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
+                <% if(userHasReview) { %>
+                  <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.userReviews[0].review %></textarea>
+                <% } else { %>
+                    <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
+                <% } %>
               </div>
             </div>
 
@@ -172,7 +176,7 @@
         <% for(let i=0; i < reviews.length; i++) {%>
           <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
             <div class="review d-flex">
-              <p class="username" style="font-weight: bold; margin-right: 10px;"><%= reviews[i].userName %></p>
+              <p class="username" style="font-weight: bold; margin-right: 10px;"><%= reviews[i].user.userName %></p>
               <!-- Show star ratings based on reviews.rating -->
               <div>
                   <% let rating = reviews[i].rating; %>
@@ -204,7 +208,7 @@
                 <% } %>
               </form>
               
-              <%if(reviews[i].user == userId){ %>
+              <%if(reviews[i].user._id == userId){ %>
                 <form action="/review/deleteReview/<%= movieId %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
                   <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
                 </form>
