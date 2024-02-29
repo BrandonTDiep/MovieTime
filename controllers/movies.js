@@ -62,7 +62,6 @@ module.exports = {
         hasReview = true;
       }
 
-      console.log(reviews[0].userReviews)
 
       res.render("moviepage.ejs", {
         movieId: req.params.id,
