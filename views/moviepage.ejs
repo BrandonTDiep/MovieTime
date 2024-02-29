@@ -28,7 +28,7 @@
           <% if(movieDetails.poster_path != null) { %>
             <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster">
           <% } else { %>
-            <img src="/imgs/missing-img.jpg" alt="movie poster">
+            <img src="/imgs/missing-img.jpg" alt="movie poster" style="width: 220px; height: 330px;">
           <% } %>
           <!-- Button trigger modal -->
           <% if(userHasReview) { %>
@@ -80,7 +80,7 @@
           <% } %>
 
           <% if(avgRating === 0.0) { %>
-            <h4>No Ratings</h4>
+            <h4>No Rating</h4>
           <% } else { %>
             <p style="margin-bottom: 0;">Avg. Rating</p>
             <h3><%= avgRating.toFixed(1) %></h3>

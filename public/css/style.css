@@ -1,5 +1,65 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css);
 
+/*-----------HTML-----------*/
+
+body{
+    background-color: #14181C;
+}
+
+.modal-content{
+    background-color: #242832;
+}
+
+
+h1, h2, h3, h4, h5, span, p {
+    color: white;
+}
+
+nav {
+    background-color: #24272C;
+}
+
+
+/* --------------- SEARCH PAGE --------------- */
+
+h3.search{
+    text-align: center;
+}
+
+h4.card-title{
+    color: white;
+    overflow: hidden; text-overflow: 
+    ellipsis; display: -webkit-box; 
+    -webkit-line-clamp: 1; 
+    -webkit-box-orient: vertical;
+}
+
+h4.card-title span{
+    color: #89a; 
+    font-size: 16px; 
+    font-weight: 400;
+}
+
+p.card-text{
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    font-size: 16px;
+}
+
+.card-body{
+    background-color: #242832;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.card{
+    border-color: gray;
+}
+
+
 /* --------------- MOVIE PAGE --------------- */
 
 
@@ -136,21 +196,7 @@
     border-top: 1px solid rgba(162, 177, 229, .2);
 }
 
-/*-----------HTML-----------*/
-
-body,  .card-body{
-    background-color: #14181C;
-}
-
-.modal-content{
-    background-color: #242832;
-}
 
 
-h1, h2, h3, h4, h5, span, p {
-    color: white;
-}
+/* -------------------------------------------- */
 
-nav {
-    background-color: #24272C;
-}
