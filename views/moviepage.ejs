@@ -220,8 +220,8 @@
                   <% } %>
                 <% } %>
               </form>
-              
-              <%if(reviews[i].user._id == userId){ %>
+
+              <%if(JSON.stringify(reviews[i].user._id) === JSON.stringify(user._id)){ %>
                 <form action="/review/deleteReview/<%= movieId %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
                   <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
                 </form>

@@ -4,9 +4,10 @@ module.exports = {
   getMovie: async (req, res) => {
     try {
       res.render("movies.ejs", {
-        user: {
+        user: req.user,
+        userStatus: {
           loggedIn: true
-        }
+        },
       });
     } catch (err) {
       console.log(err);
@@ -25,7 +26,8 @@ module.exports = {
         movies: results, 
         base_url: BASE_URL,
         searchQuery: movieName,
-        user: {
+        user: req.user,
+        userStatus: {
           loggedIn: true
         }
       });
@@ -62,15 +64,15 @@ module.exports = {
         hasReview = true;
       }
 
-
       res.render("moviepage.ejs", {
         movieId: req.params.id,
         movieDetails: movie, 
         movieCredit: credit,
         base_url: BASE_URL,
         reviews: userReviews,
+        user: req.user,
         userId: req.user.id,
-        user: {
+        userStatus: {
           loggedIn: true
         },
         userHasReview: hasReview,
