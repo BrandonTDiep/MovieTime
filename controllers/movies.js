@@ -3,8 +3,17 @@ const Review = require("../models/Review");
 module.exports = {
   getMovie: async (req, res) => {
     try {
+      const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
+      const trendingMovies = await fetch(`https://api.themoviedb.org/3/trending/movie/week?language=en-US&api_key=${MOVIEAPI_KEY}`)
+      const nowPlayingMovies = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=${MOVIEAPI_KEY}`)
+      const trendMovies = await trendingMovies.json()
+      const nowPlayMovies = await nowPlayingMovies.json()
+
+
       res.render("movies.ejs", {
         user: req.user,
+        trendMovies: trendMovies.results,
+        nowPlayMovies: nowPlayMovies.results,
         userStatus: {
           loggedIn: true
         },

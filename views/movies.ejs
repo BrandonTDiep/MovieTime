@@ -2,18 +2,22 @@
 <%- include('partials/nav') -%>
 
 <main>
-  <main class="d-flex align-items-center justify-content-center"> <!-- Centering content both vertically and horizontally -->
-    <div class="container">
-      <h1 class="text-center">MovieTime</h1>
-      <div class="d-flex justify-content-center">
-          <form action="/movies/search" method="GET" class="d-flex">
-              <label class="sr-only">Enter Movie Name</label>
-              <input type="search" name="query" class="form-control" id="inlineFormInputName2" placeholder="Search">
-              <button type="submit" class="btn btn-primary">Search</button>
-          </form>
+  <section style="width: 1500px; margin: 0 auto; padding: 0 10px; text-align: center;">
+    <h4 style="margin: 50px 0; font-weight:100; color: #abc;">Welcome back, <span style="border-bottom: 1px solid gray;"><%= user.userName %></span>. Let's see a movie... </h4>
+    <header class="movie-header" style="background-image: linear-gradient(to bottom, rgba(14, 13, 13, 0.5),rgba(0, 0, 0, 0.7)), url('/imgs/cinema-bg.jpg'); "> 
+      <div class="container">
+        <h1 class="text-center">MovieTime</h1>
+        <div class="d-flex justify-content-center">
+            <form action="/movies/search" method="GET" class="d-flex">
+                <label class="sr-only">Enter Movie Name</label>
+                <input type="search" name="query" class="form-control" id="inlineFormInputName2" placeholder="Search">
+            </form>
+        </div>
       </div>
-    </div>
-  </main>
+    </header>
+  </section>
+  
+
 </main>
 
 
