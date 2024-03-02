@@ -11,11 +11,11 @@
               <div>
                 <% if(movie.poster_path == null) {%>
                   <a href="/movies/<%= movie.id%>">
-                    <img src="/imgs/missing-img.jpg" class="img-fluid rounded-start search-poster" alt="movie poster">
+                    <img src="/imgs/missing-img.jpg" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
                   </a>
                 <% } else {%>
                   <a href="/movies/<%= movie.id%>">
-                    <img src="<%= base_url + movie.poster_path %>" class="img-fluid rounded-start search-poster" alt="movie poster">
+                    <img src="<%= base_url + movie.poster_path %>" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
                   </a>                
                 <% }%>
               </div>
