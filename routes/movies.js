@@ -4,7 +4,7 @@ const moviesController = require("../controllers/movies");
 
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
-//Post Routes - simplified for now
+//Movies Routes - simplified for now
 router.get("/search", ensureAuth, moviesController.getSearchedMovies); // this is where the "id" property is created in request :id query parameter
 router.get("/:id",ensureAuth, moviesController.getMoviePage);
 

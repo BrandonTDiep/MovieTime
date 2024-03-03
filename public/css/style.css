@@ -218,6 +218,10 @@ p.card-text{
     color: #abc;
 } 
 
+.movie-home h1{
+    margin-bottom: 30px; 
+} 
+
 .movie-home span{
     border-bottom: 1px solid gray;
 } 
@@ -300,4 +304,7 @@ p.card-text{
     margin-left: 5px;
 }
 
+.carousel:last-child{
+    margin-bottom: 200px;
+}
 
