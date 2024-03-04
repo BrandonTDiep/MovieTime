@@ -15,8 +15,14 @@ h1, h2, h3, h4, h5, span, p, label {
     color: white;
 }
 
+/* --------------- NAVBAR --------------- */
+
 nav {
     background-color: #24272C;
+}
+
+nav li.nav-item a.nav-link{
+    margin-right: 30px
 }
 
 
