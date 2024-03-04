@@ -1,4 +1,6 @@
+const Movie = require("../models/Movie");
 const Review = require("../models/Review");
+
 
 module.exports = {
   getMovie: async (req, res) => {
@@ -58,18 +60,13 @@ module.exports = {
       const credit = await response_credit.json()
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await response.json()
-      const reviews = await Review.find({ movieId }, { 'userReviews': 1 }).sort({ 'userReviews.reviewLikes': 'desc', 'userReviews.createdAt': 'desc' }).populate('userReviews.user').lean();
-      const userReviews = reviews.map(review => review.userReviews).flat();
+      const reviews = await Review.find({ movieId }).sort({ 'userReviews.reviewLikes': 'desc', 'userReviews.createdAt': 'desc' }).populate('user');
 
-      const userHasReview = await Review.findOne(
-        { 
-            movieId: req.params.id, 
-            "userReviews.user": req.user.id 
-        },
-        { 
-            "userReviews": { $elemMatch: { user: req.user.id } }
-        }
-      );
+      const userHasReview = await Review.findOne({
+        movieId: req.params.id,
+        user: req.user.id
+      });
+
       let hasReview = false;
       if(userHasReview){
         hasReview = true;
@@ -80,7 +77,7 @@ module.exports = {
         movieDetails: movie, 
         movieCredit: credit,
         base_url: BASE_URL,
-        reviews: userReviews,
+        reviews: reviews,
         user: req.user,
         userId: req.user.id,
         userStatus: {

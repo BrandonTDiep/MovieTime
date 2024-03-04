@@ -5,29 +5,27 @@ const ReviewSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  userReviews: [{
-    review: {
-      type: String,
-      required: true,
-    },
-    reviewLikes: {
-      type: Number,
-      required: true,
-    },
-    rating: {
-      type: Number,
-      default: 0
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    userLikes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], 
-  }],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  review: {
+    type: String,
+    required: true,
+  },
+  reviewLikes: {
+    type: Number,
+    required: true,
+  },
+  rating: {
+    type: Number,
+    default: 0
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  userLikes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], 
 });
 
 module.exports = mongoose.model("Review", ReviewSchema);

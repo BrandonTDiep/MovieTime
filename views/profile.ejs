@@ -1,6 +1,21 @@
 <%- include('partials/head') -%>
+<%- include('partials/nav') -%>
 <main>
-<h1>hello</h1>
+    <section style="width: 1090px; margin: 0 auto; padding: 0 10px;">
+      <% if(userProf == null) { %>
+        <h1>Could not find user.</h1>
+      <% } else { %>
+        <div class="d-flex">
+          <img src="/imgs/default-pic.jpg" alt="movie poster" loading="lazy" style="width: 95px; height: 95px;">
+          <h4><%= userProf.userName %></h4>
+
+        </div>
+        
+        <label for="imgUpload" class="form-label">Image</label>
+                <input type="file" class="form-control" id="imageUpload" name="file">
+      <% } %>
+    </section>
+
 </main>
 
 <%- include('partials/footer') -%>

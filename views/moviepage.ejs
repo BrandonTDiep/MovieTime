@@ -68,7 +68,7 @@
           <% let avgRating = 0; %>
 
           <% for (let i=0; i < reviews.length; i++) { %>
-            <% if(reviews[i].rating !== null) { %>
+            <% if(reviews[i].rating !== 0 && reviews[i].rating !== null) { %>
               <% avgRating = rating / numOfRating; %>
               <% rating += reviews[i].rating; %>
               <% numOfRating += 1; %>
@@ -119,7 +119,7 @@
               <div class="mb-3" style="flex-grow: 3;">
                 <h5 class="form-label font-weight-bold">Review</h5>
                 <% if(userHasReview) { %>
-                  <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.userReviews[0].review %></textarea>
+                  <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.review %></textarea>
                 <% } else { %>
                     <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
                 <% } %>
@@ -167,16 +167,6 @@
     <section class="mt-5">
       <h5 style="border-bottom: 1px solid gray; margin-bottom: 0;">Reviews</h5>
       <ul style="padding: 0;">
-        <% 
-        // Sort reviews by likes and then by createdAt
-        reviews.sort((a, b) => {
-          if (b.reviewLikes !== a.reviewLikes) {
-            return b.reviewLikes - a.reviewLikes; // Sort by likes
-          }
-          // If likes are equal, sort by createdAt
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        });
-        %>
         <% for(let i=0; i < reviews.length; i++) {%>
           <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
             <div class="review d-flex">
