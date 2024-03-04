@@ -69,7 +69,6 @@
 
           <% for (let i=0; i < reviews.length; i++) { %>
             <% if(reviews[i].rating !== 0 && reviews[i].rating !== null) { %>
-              <% avgRating = rating / numOfRating; %>
               <% rating += reviews[i].rating; %>
               <% numOfRating += 1; %>
             <% } %>

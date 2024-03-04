@@ -1,4 +1,3 @@
-const Movie = require("../models/Movie");
 const Review = require("../models/Review");
 
 
@@ -60,7 +59,7 @@ module.exports = {
       const credit = await response_credit.json()
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await response.json()
-      const reviews = await Review.find({ movieId }).sort({ 'userReviews.reviewLikes': 'desc', 'userReviews.createdAt': 'desc' }).populate('user');
+      const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
 
       const userHasReview = await Review.findOne({
         movieId: req.params.id,
