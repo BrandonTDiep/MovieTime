@@ -11,16 +11,28 @@ module.exports = {
       const nowPlayingMovies = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=${MOVIEAPI_KEY}`)
       const trendMovies = await trendingMovies.json()
       const nowPlayMovies = await nowPlayingMovies.json()
-
-      res.render("movies.ejs", {
-        user: req.user,
-        trendMovies: trendMovies.results,
-        nowPlayMovies: nowPlayMovies.results,
-        base_url: BASE_URL,
-        userStatus: {
-          loggedIn: true
-        },
-      });
+      if(req.user){
+        res.render("index.ejs", {
+          user: req.user,
+          trendMovies: trendMovies.results,
+          nowPlayMovies: nowPlayMovies.results,
+          base_url: BASE_URL,
+          userStatus: {
+            loggedIn: true
+          },
+        });
+      }
+      else{
+        res.render("index.ejs", {
+          user: req.user,
+          trendMovies: trendMovies.results,
+          nowPlayMovies: nowPlayMovies.results,
+          base_url: BASE_URL,
+          userStatus: {
+            loggedIn: false
+          },
+        });
+      }  
     } catch (err) {
       console.log(err);
     }
@@ -33,21 +45,33 @@ module.exports = {
       const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${MOVIEAPI_KEY}&query=${movieName}&include_adult=false&language=en-US&page=1`)
       const movies = await response.json()
       const results = movies.results
-
-      res.render('search.ejs', {
-        movies: results, 
-        base_url: BASE_URL,
-        searchQuery: movieName,
-        user: req.user,
-        userStatus: {
-          loggedIn: true
-        }
-      });
+      if(req.user){
+        res.render('search.ejs', {
+          movies: results, 
+          base_url: BASE_URL,
+          searchQuery: movieName,
+          user: req.user,
+          userStatus: {
+            loggedIn: true
+          }
+        });
+      }
+      else{
+        res.render('search.ejs', {
+          movies: results, 
+          base_url: BASE_URL,
+          searchQuery: movieName,
+          userStatus: {
+            loggedIn: false
+          }
+        });
+      }
+      
     }
     catch(e){
       console.error(e)
       req.flash('errors', 'Movie could not be found')
-      res.redirect('/movies')
+      res.redirect('/')
     }   
   },
   getMoviePage: async (req, res) => {
@@ -60,31 +84,44 @@ module.exports = {
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await response.json()
       const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
-
-      const userHasReview = await Review.findOne({
-        movieId: req.params.id,
-        user: req.user.id
-      });
-
-      let hasReview = false;
-      if(userHasReview){
-        hasReview = true;
+      if(req.user){
+        const userHasReview = await Review.findOne({
+          movieId: req.params.id,
+          user: req.user.id
+        });
+        
+        let hasReview = false;
+        if(userHasReview){
+          hasReview = true;
+        }
+        res.render("moviepage.ejs", {
+          movieId: req.params.id,
+          movieDetails: movie, 
+          movieCredit: credit,
+          base_url: BASE_URL,
+          reviews: reviews,
+          user: req.user,
+          userId: req.user.id,
+          userStatus: {
+            loggedIn: true
+          },
+          userHasReview: hasReview,
+          userReview: userHasReview
+        });
+      }
+      else{
+        res.render("moviepage.ejs", {
+          movieId: req.params.id,
+          movieDetails: movie, 
+          movieCredit: credit,
+          base_url: BASE_URL,
+          reviews: reviews,
+          userStatus: {
+            loggedIn: false
+          },
+        });
       }
 
-      res.render("moviepage.ejs", {
-        movieId: req.params.id,
-        movieDetails: movie, 
-        movieCredit: credit,
-        base_url: BASE_URL,
-        reviews: reviews,
-        user: req.user,
-        userId: req.user.id,
-        userStatus: {
-          loggedIn: true
-        },
-        userHasReview: hasReview,
-        userReview: userHasReview
-      });
     } catch (err) {
       console.log(err);
     }

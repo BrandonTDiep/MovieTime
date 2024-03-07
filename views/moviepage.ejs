@@ -31,14 +31,22 @@
             <img src="/imgs/missing-img.jpg" alt="movie poster" style="width: 220px; height: 330px;" loading="lazy">
           <% } %>
           <!-- Button trigger modal -->
-          <% if(userHasReview) { %>
-            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
-              Edit your review...
-            </button>
+          <% if (userStatus.loggedIn) { %>
+            <% if(userHasReview) { %>
+              <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
+                Edit your review...
+              </button>
+            <% } else { %>
+              <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
+                Write review
+              </button>
+            <% } %>
           <% } else { %>
-            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
-              Write review
-            </button>
+            <form action="/login" method="GET">
+              <button type="submit" class="btn btn-primary mt-2" style="width: 220px;">
+                Sign in to review
+              </button>
+            </form>
           <% } %>
         </div>
 
@@ -103,11 +111,14 @@
           </div>
 
           <!-- Modal Body -->
-          <% if(userHasReview) { %>
-            <form action="/review/updateReview/<%= movieId %>?_method=PUT" method="POST">
-          <% } else { %>
-            <form action="/review/createReview/<%= movieId %>" method="POST">
+          <% if (userStatus.loggedIn) { %>
+            <% if(userHasReview) { %>
+              <form action="/review/updateReview/<%= movieId %>?_method=PUT" method="POST">
+            <% } else { %>
+              <form action="/review/createReview/<%= movieId %>" method="POST">
+            <% } %>
           <% } %>
+          
             <div class="modal-body d-flex">
               <div class="d-flex align-items-center" style="margin-right: 50px">
                 <% if(movieDetails.poster_path != null) { %>
@@ -117,11 +128,15 @@
 
               <div class="mb-3" style="flex-grow: 3;">
                 <h5 class="form-label font-weight-bold">Review</h5>
-                <% if(userHasReview) { %>
-                  <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.review %></textarea>
-                <% } else { %>
-                    <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
+                <% if (userStatus.loggedIn) { %>
+                  <% if(userHasReview) { %>
+                    <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.review %></textarea>
+                  <% } else { %>
+                      <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
+                  <% } %>
                 <% } %>
+                
+                
               </div>
             </div>
 
@@ -148,14 +163,17 @@
                 </div>
               </div>
               <div>
-                <% if(userHasReview) { %>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                  <button type="submit" class="btn btn-primary">Save</button>
-                <% } else { %>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                <% if (userStatus.loggedIn) { %>
+                  <% if(userHasReview) { %>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  <% } else { %>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  <% } %>
                 <% } %>
+                
               </div>
             </div>
           </form>
@@ -187,14 +205,27 @@
             <div class="review-container">
               <form action="/review/likeReview/<%= movieId %>/<%= reviews[i]._id%>?_method=PUT" method="POST">
                 <% let userLikesArray = reviews[i].userLikes.map(String); %>
-                <% if(userLikesArray.includes(userId)) {%>
-                  <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                    <span style="font-weight: 600"> Liked</span>
-                  </button> 
-                  <% if(reviews[i].reviewLikes === 1) { %>
-                    <span><%= reviews[i].reviewLikes %> like</span>
+                <% if (userStatus.loggedIn) { %>
+                  <% if(userLikesArray.includes(userId)) {%>
+                    <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                      <span style="font-weight: 600"> Liked</span>
+                    </button> 
+                    <% if(reviews[i].reviewLikes === 1) { %>
+                      <span><%= reviews[i].reviewLikes %> like</span>
+                    <% } else { %>
+                      <span><%= reviews[i].reviewLikes %> likes</span>
+                    <% } %>
                   <% } else { %>
-                    <span><%= reviews[i].reviewLikes %> likes</span>
+                    <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                      <span style="font-weight: 500"> Like Review</span>
+                    </button> 
+                    <% if(reviews[i].reviewLikes === 0) { %>
+                      <span></span>
+                    <% } else if (reviews[i].reviewLikes === 1) { %>
+                      <span><%= reviews[i].reviewLikes %> like</span>
+                    <% } else { %>
+                      <span><%= reviews[i].reviewLikes %> likes</span>
+                    <% } %>
                   <% } %>
                 <% } else { %>
                   <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
@@ -208,13 +239,17 @@
                     <span><%= reviews[i].reviewLikes %> likes</span>
                   <% } %>
                 <% } %>
+
+
               </form>
 
-              <%if(JSON.stringify(reviews[i].user._id) === JSON.stringify(user._id)){ %>
-                <form action="/review/deleteReview/<%= movieId %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
-                  <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
-                </form>
-              <%}%>
+              <% if (userStatus.loggedIn) { %>
+                <%if(JSON.stringify(reviews[i].user._id) === JSON.stringify(user._id)){ %>
+                  <form action="/review/deleteReview/<%= movieId %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                    <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
+                  </form>
+                <%}%>
+              <% } %>              
             </div>
           </li>
         <% } %>
