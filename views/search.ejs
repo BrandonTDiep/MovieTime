@@ -1,36 +1,38 @@
 <%- include('partials/head') -%>
 <%- include('partials/nav') -%>
 <main>
-  <% if(searchQuery == "" || movies.length === 0) {%>
-    <h3 class="mt-3 search">No Movies Found</h3>
-  <% } else {%>
-    <h3 class="mt-3 search">Search Results for "<%= searchQuery %>"</h3>
-    <% movies.forEach(movie => { %>
-        <div class="card mb-3" style="max-width: 800px; margin: 0 auto">
-            <div class="d-flex">
-              <div>
-                <% if(movie.poster_path == null) {%>
-                  <a href="/movies/<%= movie.id%>">
-                    <img src="/imgs/missing-img.jpg" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
-                  </a>
-                <% } else {%>
-                  <a href="/movies/<%= movie.id%>">
-                    <img src="<%= base_url + movie.poster_path %>" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
-                  </a>                
-                <% }%>
+  <section class="search-results">
+    <% if(searchQuery == "" || movies.length === 0) {%>
+      <h3 class="mt-3 search">No Movies Found</h3>
+    <% } else {%>
+      <h3 class="mt-3 search">Search Results for "<%= searchQuery %>"</h3>
+      <% movies.forEach(movie => { %>
+          <div class="card mb-3" style="max-width: 800px; margin: 0 auto">
+              <div class="d-flex">
+                <div>
+                  <% if(movie.poster_path == null) {%>
+                    <a href="/movies/<%= movie.id%>">
+                      <img src="/imgs/missing-img.jpg" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
+                    </a>
+                  <% } else {%>
+                    <a href="/movies/<%= movie.id%>">
+                      <img src="<%= base_url + movie.poster_path %>" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
+                    </a>                
+                  <% }%>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title"><%= movie.title %>
+                    <% if(movie.release_date.split('-')[0] !== "") {%>
+                      <span>(<%= movie.release_date.split('-')[0] %>)</span>
+                    <% } %>
+                  </h4>
+                  <p class="card-text"><%= movie.overview %></p>   
+                </div>
               </div>
-              <div class="card-body">
-                <h4 class="card-title"><%= movie.title %>
-                  <% if(movie.release_date.split('-')[0] !== "") {%>
-                    <span>(<%= movie.release_date.split('-')[0] %>)</span>
-                  <% } %>
-                </h4>
-                <p class="card-text"><%= movie.overview %></p>   
-              </div>
-            </div>
-        </div>       
-    <% }); %>          
-  <% }%>
+          </div>       
+      <% }); %>          
+    <% }%>
+  </section>
 </main>
 
 <%- include('partials/footer') -%>

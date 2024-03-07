@@ -25,8 +25,16 @@ nav li.nav-item a.nav-link{
     margin-right: 30px
 }
 
+.navbar-toggler{
+    background-color: white;
+}
+
 
 /* --------------- SEARCH PAGE --------------- */
+
+.search-results{
+    margin: 0 20px;
+}
 
 h3.search{
     text-align: center;
@@ -90,6 +98,24 @@ p.card-text{
     text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
 }
 
+
+/*------------ Body ------------*/
+
+.movie-info span{
+    font-weight:300; 
+    color: #abc;
+} 
+
+p.dir-name{
+    color: white;
+} 
+
+
+.overview, .review{
+    color: #B3D6F3;
+} 
+
+/* optional color */
 /*-------- Rating Section --------*/
 
 
