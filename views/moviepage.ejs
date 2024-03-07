@@ -296,8 +296,11 @@
   });
 
   // Check and autofill the stars if user has already made a review
-  <% if (userReview) { %>
-    checkUserRating(<%= userReview.rating %>);
+  <% if (userStatus.loggedIn) { %>
+    <% if (userReview) { %>
+      checkUserRating(<%= userReview.rating %>);
+    <% } %>
   <% } %>
+
 </script>
 <%- include('partials/footer') -%>
