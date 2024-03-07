@@ -32,7 +32,7 @@
           <% } %>
           <!-- Button trigger modal -->
           <% if (userStatus.loggedIn) { %>
-            <% if(userHasReview) { %>
+            <% if(userReview) { %>
               <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
                 Edit your review...
               </button>
@@ -90,7 +90,8 @@
             <h4>No Rating</h4>
           <% } else { %>
             <p style="margin-bottom: 0;">Avg. Rating</p>
-            <h3><%= avgRating.toFixed(1) %></h3>
+            
+            <h3><span class="fa fa-star checked"></span> <%= avgRating.toFixed(1) %></h3>
           <% } %>
         </div>
 
@@ -112,7 +113,7 @@
 
           <!-- Modal Body -->
           <% if (userStatus.loggedIn) { %>
-            <% if(userHasReview) { %>
+            <% if(userReview) { %>
               <form action="/review/updateReview/<%= movieId %>?_method=PUT" method="POST">
             <% } else { %>
               <form action="/review/createReview/<%= movieId %>" method="POST">
@@ -129,7 +130,7 @@
               <div class="mb-3" style="flex-grow: 3;">
                 <h5 class="form-label font-weight-bold">Review</h5>
                 <% if (userStatus.loggedIn) { %>
-                  <% if(userHasReview) { %>
+                  <% if(userReview) { %>
                     <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.review %></textarea>
                   <% } else { %>
                       <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
@@ -164,7 +165,7 @@
               </div>
               <div>
                 <% if (userStatus.loggedIn) { %>
-                  <% if(userHasReview) { %>
+                  <% if(userReview) { %>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
   
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -185,7 +186,11 @@
       <h5 style="border-bottom: 1px solid gray; margin-bottom: 0;">Reviews</h5>
       <ul style="padding: 0;">
         <% for(let i=0; i < reviews.length; i++) {%>
-          <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
+          <% if (i === reviews.length - 1) { %>
+            <li class="justify-content-between py-3">
+          <% } else {%>
+            <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
+          <% } %>
             <div class="review d-flex">
               <p class="username" style="font-weight: bold; margin-right: 10px;"><%= reviews[i].user.userName %></p>
               <!-- Show star ratings based on reviews.rating -->
@@ -239,8 +244,6 @@
                     <span><%= reviews[i].reviewLikes %> likes</span>
                   <% } %>
                 <% } %>
-
-
               </form>
 
               <% if (userStatus.loggedIn) { %>
@@ -258,25 +261,39 @@
   </section>
 </main>
 
-<script>
+<<script>
   // Get all the star inputs
   const stars = document.querySelectorAll('.rating input');
 
+  // Function to check the appropriate star rating input based on user's previous rating
+  function checkUserRating(userRating) {
+    stars.forEach(star => {
+      if (star.value == userRating) {
+        star.checked = true;
+      }
+    });
+  }
+
   // Add click event listener to each star input
   stars.forEach(star => {
-      star.addEventListener('click', function() {
-          // Toggle the visibility of clear button based on whether any star is checked or not
-          document.getElementById('clearRating').style.display = document.querySelector('.rating input:checked') ? 'inline-block' : 'none';
-      });
+    star.addEventListener('click', function() {
+      // Toggle the visibility of clear button based on whether any star is checked or not
+      document.getElementById('clearRating').style.display = document.querySelector('.rating input:checked') ? 'inline-block' : 'none';
+    });
   });
 
   // Add click event listener to clear button to reset the rating
   document.getElementById('clearRating').addEventListener('click', function() {
-      event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); // Prevent the default form submission
 
-      document.querySelector('.rating input:checked').checked = false;
-      // Hide the clear button after resetting the rating
-      this.style.display = 'none';
+    document.querySelector('.rating input:checked').checked = false;
+    // Hide the clear button after resetting the rating
+    this.style.display = 'none';
   });
+
+  // Check and autofill the stars if user has already made a review
+  <% if (userReview) { %>
+    checkUserRating(<%= userReview.rating %>);
+  <% } %>
 </script>
 <%- include('partials/footer') -%>

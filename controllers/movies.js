@@ -89,11 +89,7 @@ module.exports = {
           movieId: req.params.id,
           user: req.user.id
         });
-        
-        let hasReview = false;
-        if(userHasReview){
-          hasReview = true;
-        }
+        console.log(userHasReview)
         res.render("moviepage.ejs", {
           movieId: req.params.id,
           movieDetails: movie, 
@@ -105,7 +101,6 @@ module.exports = {
           userStatus: {
             loggedIn: true
           },
-          userHasReview: hasReview,
           userReview: userHasReview
         });
       }

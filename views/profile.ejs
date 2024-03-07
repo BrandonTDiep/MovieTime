@@ -11,7 +11,85 @@
         </div>
         
         <label for="imgUpload" class="form-label">Image</label>
-        <input type="file" class="form-control" id="imageUpload" name="file">
+        <input type="file" class="form-control" id="imgUpload" name="file">
+        
+        <!-- Review Comment Section -->
+        <section class="mt-5">
+          <h5 style="border-bottom: 1px solid gray; margin-bottom: 0;">Recent Reviews</h5>
+          <ul style="padding: 0;">
+            <% for(let i=0; i < recentReviews.length; i++) {%>
+              <% if (i === recentReviews.length - 1) { %>
+                <li class="justify-content-between py-3">
+              <% } else {%>
+                <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
+              <% } %>
+                <div class="review d-flex">
+                  <p class="username" style="font-weight: bold; margin-right: 10px;"><%= recentReviews[i].user.userName %></p>
+                  <!-- Show star ratings based on recentReviews.rating -->
+                  <div>
+                      <% let rating = recentReviews[i].rating; %>
+                      <% for (let j = 1; j <= 5; j++) { %>
+                          <% if (j <= Math.floor(rating)) { %>
+                              <span class="fa fa-star checked"></span>
+                          <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
+                              <span class="fa fa-star-half checked"></span>
+                          <% } %>
+                      <% } %>
+                  </div>
+                </div>
+              
+                <p><%= recentReviews[i].review%></p>
+                <div class="review-container">
+                  <form action="/review/likeReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST">
+                    <% let userLikesArray = recentReviews[i].userLikes.map(String); %>
+                    <% if (userStatus.loggedIn) { %>
+                      <% if(userLikesArray.includes(userId)) {%>
+                        <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                          <span style="font-weight: 600"> Liked</span>
+                        </button> 
+                        <% if(recentReviews[i].reviewLikes === 1) { %>
+                          <span><%= recentReviews[i].reviewLikes %> like</span>
+                        <% } else { %>
+                          <span><%= recentReviews[i].reviewLikes %> likes</span>
+                        <% } %>
+                      <% } else { %>
+                        <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                          <span style="font-weight: 500"> Like Review</span>
+                        </button> 
+                        <% if(recentReviews[i].reviewLikes === 0) { %>
+                          <span></span>
+                        <% } else if (recentReviews[i].reviewLikes === 1) { %>
+                          <span><%= recentReviews[i].reviewLikes %> like</span>
+                        <% } else { %>
+                          <span><%= recentReviews[i].reviewLikes %> likes</span>
+                        <% } %>
+                      <% } %>
+                    <% } else { %>
+                      <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                        <span style="font-weight: 500"> Like Review</span>
+                      </button> 
+                      <% if(recentReviews[i].reviewLikes === 0) { %>
+                        <span></span>
+                      <% } else if (recentReviews[i].reviewLikes === 1) { %>
+                        <span><%= recentReviews[i].reviewLikes %> like</span>
+                      <% } else { %>
+                        <span><%= recentReviews[i].reviewLikes %> likes</span>
+                      <% } %>
+                    <% } %>
+                  </form>
+
+                  <% if (userStatus.loggedIn) { %>
+                    <%if(JSON.stringify(recentReviews[i].user._id) === JSON.stringify(user._id)){ %>
+                      <form action="/review/deleteReview/<%= recentReviews.movieId %>/<%= recentReviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                        <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
+                      </form>
+                    <%}%>
+                  <% } %>              
+                </div>
+              </li>
+            <% } %>
+          </ul>
+        </section>       
       <% } %>
     </section>
 
