@@ -228,8 +228,10 @@ p.card-text{
     margin-bottom: 30px; 
 } 
 
-.movie-home span{
+.movie-home a{
     border-bottom: 1px solid gray;
+    color: white;
+    text-decoration: none;
 } 
 
 .movie-header{
@@ -314,3 +316,7 @@ p.card-text{
     margin-bottom: 200px;
 }
 
+/* --------------- PROFILE PAGE --------------- */
+.missing-profile{
+    text-align: center;
+}
