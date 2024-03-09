@@ -15,6 +15,14 @@ h1, h2, h3, h4, h5, span, p, label {
     color: white;
 }
 
+.btn{
+    background-color: #4A5E8D;
+    border: none;
+}
+
+.btn:hover{
+    background-color: #3B4760;
+}
 /* --------------- NAVBAR --------------- */
 
 nav {
@@ -27,6 +35,14 @@ nav li.nav-item a.nav-link{
 
 .navbar-toggler{
     background-color: white;
+}
+
+.dropdown-menu{
+    background-color: #4A5E8D;
+}
+
+.dropdown-item:hover{
+    background-color: #3B4760;
 }
 
 
