@@ -89,7 +89,6 @@ module.exports = {
           movieId: req.params.id,
           user: req.user.id
         });
-        console.log(userHasReview)
         res.render("moviepage.ejs", {
           movieId: req.params.id,
           movieDetails: movie, 

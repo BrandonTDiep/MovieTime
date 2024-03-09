@@ -42,11 +42,7 @@
               </button>
             <% } %>
           <% } else { %>
-            <form action="/login" method="GET">
-              <button type="submit" class="btn btn-primary mt-2" style="width: 220px;">
-                Sign in to review
-              </button>
-            </form>
+            <a href="/login" class="btn btn-primary mt-2" style="width: 220px;">Sign in to review</a>
           <% } %>
         </div>
 
@@ -213,7 +209,7 @@
                   <% if(userReview) { %>
                     <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.review %></textarea>
                   <% } else { %>
-                      <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
+                    <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
                   <% } %>
                 <% } %>
                 
