@@ -4,7 +4,7 @@
 <main>
   <section class="movie-home">
     <% if (userStatus.loggedIn) { %>
-        <h4>Welcome back, <a href="/profile/<%= user.userName %>"><%= user.userName %>.</a> Let's see a movie... </h4>
+        <h4>Welcome back, <a href="/<%= user.userName %>"><%= user.userName %>.</a> Let's see a movie... </h4>
     <% } %>
     <header class="movie-header"> 
       <div class="container">

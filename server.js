@@ -11,7 +11,8 @@ const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const movieRoutes = require("./routes/movies");
 const reviewRoutes = require("./routes/reviews");
-const profileRoutes = require("./routes/profiles");
+const settingRoutes = require("./routes/settings");
+
 
 
 //Use .env file in config folder
@@ -60,7 +61,8 @@ app.use(flash());
 app.use("/", mainRoutes);
 app.use("/movies", movieRoutes)
 app.use("/review", reviewRoutes);
-app.use("/profile", profileRoutes);
+app.use("/settings", settingRoutes);
+
 
 //Server Running
 app.listen(process.env.PORT, () => {
