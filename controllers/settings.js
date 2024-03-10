@@ -21,22 +21,30 @@ module.exports = {
       await cloudinary.uploader.destroy(req.user.cloudinaryId);
 
       // Upload image to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: "movie_profilePics"
-      });
+      if(req.file){
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: "movie_profilePics"
+        });
 
-      await User.findOneAndUpdate(
-        { _id: req.user.id },
-        {
-          profilePic: result.secure_url,
-          cloudinaryId: result.public_id,
-        }
-      );
-      console.log("hello")
-
+        await User.findOneAndUpdate(
+          { _id: req.user.id },
+          {
+            bio: req.body.bio,
+            profilePic: result.secure_url,
+            cloudinaryId: result.public_id,
+          }
+        );
+      }
+      else{
+        await User.findOneAndUpdate(
+          { _id: req.user.id },
+          {
+            bio: req.body.bio,
+          }
+        );
+      }
+      
       res.redirect(`/settings`);
-
-
     } catch (err) {
       console.log(err);
     }

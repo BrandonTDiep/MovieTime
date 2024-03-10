@@ -5,8 +5,8 @@
       <% if(userProf == null) { %>
         <h1 class="missing-profile">Could not find user.</h1>
       <% } else { %>
-        <section style="max-width: 1100px;">
-          <section class="row mt-3">
+        <section>
+          <section class="row mt-4">
               <div class="col-auto mt-auto">
                 <img src="<%= user.profilePic %>" alt="user profile picture" loading="lazy" style="width: 95px; height: 95px;" class="img-fluid rounded">
               </div>
@@ -17,111 +17,120 @@
                 </div>
               </div>
           </section>
-          
-        <!-- Review Comment Section -->
-        <section class="mt-5">
-          <h5 style="border-bottom: 1px solid gray; margin-bottom: 0;">Recent Reviews</h5>
-          <ul style="padding: 0;">
-            <% for(let i=0; i < recentReviews.length; i++) {%>
-              <% if (i === recentReviews.length - 1) { %>
-                <li class="justify-content-between py-3">
-              <% } else {%>
-                <li class="justify-content-between py-3" style="border-bottom: 1px solid gray; list-style: none;">
-              <% } %>
-                <div class="review row">
-                  <div class="col-auto mt-auto">
-                    <a href="/movies/<%= recentReviews[i].movieId %>">
-                      <img src="<%= base_url + movieDetails[i].poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
-                    </a>
-                  </div>
-                  <section class="col">
-                    <h4 style="font-weight: bold; margin-right: 10px;">
+          <div style="border-bottom: 2px solid #456; padding-bottom: 20px;"></div>
+        
+          <section class="row">
 
-                      <a href="/movies/<%= recentReviews[i].movieId %>" style="text-decoration: none; color: white;">
-                        <%= movieDetails[i].title %>
-                      </a>
-                      
-                      <span style="color: #89a; font-size: 20px; font-weight: 300;">
-                        <%= movieDetails[i].release_date.split('-')[0] %>
-                      </span>
-                    </h4>
-                    <% const dateObject = new Date(recentReviews[i].createdAt); %>
-                    <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
-                    <% const day = dateObject.getDate(); %>  
-                    <% const year = dateObject.getFullYear(); %>  
-                    <% const datePart = `${month} ${day} ${year}`; %>  
+            <section class="mt-5 col-lg-2 col-sm-2">
+              <h5 style="border-bottom: 1px solid #456;" class="mb-1 pb-1">Bio</h5>
+              <p style="overflow-wrap: break-word; font-size: 13px;" class="bio"><%= user.bio %></p>
+            </section>
+
+            <!-- Review Comment Section -->
+            <section class="mt-5 col">
+              <h5 style="border-bottom: 1px solid #456; margin-bottom: 0;" class="pb-1">Recent Reviews</h5>
+              <ul style="padding: 0;">
+                <% for(let i=0; i < recentReviews.length; i++) {%>
+                  <% if (i === recentReviews.length - 1) { %>
+                    <li class="justify-content-between py-3">
+                  <% } else {%>
+                    <li class="justify-content-between py-3" style="border-bottom: 1px solid #456; list-style: none;">
+                  <% } %>
+                    <div class="review row">
+                      <div class="col-auto mt-auto">
+                        <a href="/movies/<%= recentReviews[i].movieId %>">
+                          <img src="<%= base_url + movieDetails[i].poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
+                        </a>
+                      </div>
+                      <section class="col">
+                        <h4 style="font-weight: bold; margin-right: 10px;">
+
+                          <a href="/movies/<%= recentReviews[i].movieId %>" style="text-decoration: none; color: white;">
+                            <%= movieDetails[i].title %>
+                          </a>
+                          
+                          <span style="color: #89a; font-size: 20px; font-weight: 300;">
+                            <%= movieDetails[i].release_date.split('-')[0] %>
+                          </span>
+                        </h4>
+                        <% const dateObject = new Date(recentReviews[i].createdAt); %>
+                        <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
+                        <% const day = dateObject.getDate(); %>  
+                        <% const year = dateObject.getFullYear(); %>  
+                        <% const datePart = `${month} ${day} ${year}`; %>  
 
 
-                    
-                    <!-- Show star ratings based on recentReviews.rating -->
-                    <div class="mb-2">
-                        <% let rating = recentReviews[i].rating; %>
-                        <% for (let j = 1; j <= 5; j++) { %>
-                            <% if (j <= Math.floor(rating)) { %>
-                                <span class="fa fa-star checked" style="font-size: 14px;"></span>
-                            <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
-                                <span class="fa fa-star-half checked" style="font-size: 14px;"></span>
+                        
+                        <!-- Show star ratings based on recentReviews.rating -->
+                        <div class="mb-2">
+                            <% let rating = recentReviews[i].rating; %>
+                            <% for (let j = 1; j <= 5; j++) { %>
+                                <% if (j <= Math.floor(rating)) { %>
+                                    <span class="fa fa-star checked" style="font-size: 14px;"></span>
+                                <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
+                                    <span class="fa fa-star-half checked" style="font-size: 14px;"></span>
+                                <% } %>
                             <% } %>
-                        <% } %>
-                        <span style="color: #89a; font-size: 14px; font-weight: 300; margin-left: 10px;">             
-                          <%= datePart %>  
-                        </span>
-                    </div>
-                    <p class="review mb-2"><%= recentReviews[i].review%></p>
+                            <span style="color: #89a; font-size: 14px; font-weight: 300; margin-left: 10px;">             
+                              <%= datePart %>  
+                            </span>
+                        </div>
+                        <p class="review mb-2"><%= recentReviews[i].review%></p>
 
-                    <div class="review-container">
-                      <form action="/review/likeReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST">
-                        <% let userLikesArray = recentReviews[i].userLikes.map(String); %>
-                        <% if (userStatus.loggedIn) { %>
-                          <% if(userLikesArray.includes(userId)) {%>
-                            <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                              <span style="font-weight: 600"> Liked</span>
-                            </button> 
-                            <% if(recentReviews[i].reviewLikes === 1) { %>
-                              <span><%= recentReviews[i].reviewLikes %> like</span>
+                        <div class="review-container">
+                          <form action="/review/likeReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST">
+                            <% let userLikesArray = recentReviews[i].userLikes.map(String); %>
+                            <% if (userStatus.loggedIn) { %>
+                              <% if(userLikesArray.includes(userId)) {%>
+                                <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                                  <span style="font-weight: 600"> Liked</span>
+                                </button> 
+                                <% if(recentReviews[i].reviewLikes === 1) { %>
+                                  <span><%= recentReviews[i].reviewLikes %> like</span>
+                                <% } else { %>
+                                  <span><%= recentReviews[i].reviewLikes %> likes</span>
+                                <% } %>
+                              <% } else { %>
+                                <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                                  <span style="font-weight: 500"> Like Review</span>
+                                </button> 
+                                <% if(recentReviews[i].reviewLikes === 0) { %>
+                                  <span></span>
+                                <% } else if (recentReviews[i].reviewLikes === 1) { %>
+                                  <span><%= recentReviews[i].reviewLikes %> like</span>
+                                <% } else { %>
+                                  <span><%= recentReviews[i].reviewLikes %> likes</span>
+                                <% } %>
+                              <% } %>
                             <% } else { %>
-                              <span><%= recentReviews[i].reviewLikes %> likes</span>
+                              <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                                <span style="font-weight: 500"> Like Review</span>
+                              </button> 
+                              <% if(recentReviews[i].reviewLikes === 0) { %>
+                                <span></span>
+                              <% } else if (recentReviews[i].reviewLikes === 1) { %>
+                                <span><%= recentReviews[i].reviewLikes %> like</span>
+                              <% } else { %>
+                                <span><%= recentReviews[i].reviewLikes %> likes</span>
+                              <% } %>
                             <% } %>
-                          <% } else { %>
-                            <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                              <span style="font-weight: 500"> Like Review</span>
-                            </button> 
-                            <% if(recentReviews[i].reviewLikes === 0) { %>
-                              <span></span>
-                            <% } else if (recentReviews[i].reviewLikes === 1) { %>
-                              <span><%= recentReviews[i].reviewLikes %> like</span>
-                            <% } else { %>
-                              <span><%= recentReviews[i].reviewLikes %> likes</span>
-                            <% } %>
-                          <% } %>
-                        <% } else { %>
-                          <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                            <span style="font-weight: 500"> Like Review</span>
-                          </button> 
-                          <% if(recentReviews[i].reviewLikes === 0) { %>
-                            <span></span>
-                          <% } else if (recentReviews[i].reviewLikes === 1) { %>
-                            <span><%= recentReviews[i].reviewLikes %> like</span>
-                          <% } else { %>
-                            <span><%= recentReviews[i].reviewLikes %> likes</span>
-                          <% } %>
-                        <% } %>
-                      </form>
-    
-                      <% if (userStatus.loggedIn) { %>
-                        <%if(JSON.stringify(recentReviews[i].user._id) === JSON.stringify(user._id)){ %>
-                          <form action="/review/deleteReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
-                            <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
                           </form>
-                        <%}%>
-                      <% } %>              
+        
+                          <% if (userStatus.loggedIn) { %>
+                            <%if(JSON.stringify(recentReviews[i].user._id) === JSON.stringify(user._id)){ %>
+                              <form action="/review/deleteReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                                <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
+                              </form>
+                            <%}%>
+                          <% } %>              
+                        </div>
+                      </section>
                     </div>
-                  </section>
-                </div>
-              </li>
-            <% } %>
-          </ul>
-        </section>          
+                  </li>
+                <% } %>
+              </ul>
+            </section>      
+          </section>
       <% } %>
     </section>
 
