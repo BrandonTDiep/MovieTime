@@ -1,6 +1,6 @@
 // const Review = require("../models/Review");
 const User = require("../models/User");
-const Review = require("../models/Review");
+const cloudinary = require("../middleware/cloudinary");
 
 module.exports = {
   getSetting: async (req, res) => {
@@ -15,14 +15,28 @@ module.exports = {
       console.log(err);
     }
   },
-  // updateProfile: async (req, res) => {
-  //   try {
-  //     // Upload image to cloudinary
-  //     const result = await cloudinary.uploader.upload(req.file.path);
+  updateSetting: async (req, res) => {
+    try {
+      // Upload image to cloudinary
+      console.log(req.file.path)
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "movie_profilePics"
+      });
+      await User.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          profilePic: result.secure_url,
+          cloudinaryId: result.public_id,
+        }
+      );
+      console.log("hello")
 
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // },
+      res.redirect(`/settings`);
+
+
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
