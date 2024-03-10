@@ -22,6 +22,10 @@ module.exports = {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "movie_profilePics"
       });
+
+      // Delete image from cloudinary
+      // await cloudinary.uploader.destroy(user.cloudinaryId);
+
       await User.findOneAndUpdate(
         { _id: req.user.id },
         {
