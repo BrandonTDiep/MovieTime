@@ -381,3 +381,8 @@ aside.favorite-films ul li button{
     background-color: #242832;
     border: 2px solid #30394c;
 }
+
+.fav-film:hover{
+    border-color: #345;
+    color: gray;
+}
