@@ -17,14 +17,13 @@ module.exports = {
   },
   updateSetting: async (req, res) => {
     try {
+      // Delete image from cloudinary
+      await cloudinary.uploader.destroy(req.user.cloudinaryId);
+
       // Upload image to cloudinary
-      console.log(req.file.path)
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "movie_profilePics"
       });
-
-      // Delete image from cloudinary
-      // await cloudinary.uploader.destroy(user.cloudinaryId);
 
       await User.findOneAndUpdate(
         { _id: req.user.id },
