@@ -33,24 +33,40 @@
                         <label>Favorite Films</label>
                         <ul style="list-style: none; padding-left: 0;" class="d-flex flex-wrap">
                             <li>
-                                <button class="img-fluid rounded fav-film">
-                                    <i class="fa fa-plus-square"></i>
-                                </button>
+                                <% if(favFilms[0]) { %>
+                                    <img src="<%= base_url + favFilms[0].moviePoster %>" alt="movie poster" loading="lazy" style="width: 110px; height: 165px;" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded favFilm fav_film" data-position="1">
+                                <% } else { %>
+                                    <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="1">
+                                        <i class="fa fa-plus-square"></i>
+                                    </button>
+                                <% } %>
                             </li>
                             <li>
-                                <button class="img-fluid rounded fav-film">
-                                    <i class="fa fa-plus-square"></i>
-                                </button>
+                                <% if(favFilms[1]) { %>
+                                    <img src="<%= base_url + favFilms[1].moviePoster %>" alt="movie poster" loading="lazy" style="width: 110px; height: 165px;" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded favFilm fav_film" data-position="2">
+                                <% } else { %>
+                                    <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="2">
+                                        <i class="fa fa-plus-square"></i>
+                                    </button>
+                                <% } %>
                             </li>
                             <li>
-                                <button class="img-fluid rounded fav-film">
-                                    <i class="fa fa-plus-square"></i>
-                                </button>
+                                <% if(favFilms[2]) { %>
+                                    <img src="<%= base_url + favFilms[2].moviePoster %>" alt="movie poster" loading="lazy" style="width: 110px; height: 165px;" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded favFilm fav_film" data-position="3">
+                                <% } else { %>
+                                    <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="3">
+                                        <i class="fa fa-plus-square"></i>
+                                    </button>
+                                <% } %>
                             </li>
                             <li>
-                                <button class="img-fluid rounded fav-film">
-                                    <i class="fa fa-plus-square"></i>
-                                </button>
+                                <% if(favFilms[3]) { %>
+                                    <img src="<%= base_url + favFilms[3].moviePoster %>" alt="movie poster" loading="lazy" style="width: 110px; height: 165px;" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded favFilm fav_film" data-position="4">
+                                <% } else { %>
+                                    <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="4">
+                                        <i class="fa fa-plus-square"></i>
+                                    </button>
+                                <% } %>
                             </li>
                         </ul>
                     </aside> 
@@ -60,6 +76,29 @@
                 <button type="submit" class="btn btn-primary" value="Upload">Save Changes</button>
             </div>
         </form>
+
+        <!-- Modal -->
+        <section class="modal fade" id="favFilmModal" tabindex="-1" aria-labelledby="favFilmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> Pick a Favorite Film</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white;"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body form-group">
+                        <form action="/settings/updateFavMovies/?_method=PUT" method="POST">
+
+                            <label for="favFilm" class="col-form-label">Name of Film:</label>
+                            <input type="text" class="form-control" id="favFilm" name="favFilm">
+                            <input type="hidden" id="position" name="position">
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </section>
 </main>
 
@@ -78,6 +117,15 @@
             fileSelected.textContent = '';
         }
     };
+
+    const favFilmButtons = document.querySelectorAll('.fav_film');
+
+    favFilmButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const position = this.getAttribute('data-position');
+            document.getElementById('position').value = position;
+        });
+    });
 </script>
 
 <%- include('partials/footer') -%>

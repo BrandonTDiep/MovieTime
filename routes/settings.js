@@ -8,6 +8,7 @@ const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 router.get("/", ensureAuth, settingController.getSetting);
 router.put("/updateSetting", upload.single("file"), settingController.updateSetting);
+router.put("/updateFavMovies",  settingController.updateFavMovies);
 
 
 module.exports = router;

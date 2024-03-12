@@ -15,6 +15,16 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  favFilms: [{ 
+    moviePoster: {
+      type: String,
+      required: true
+    },
+    position: {
+      type: Number,
+      required: true
+    } 
+  }], 
 });
 
 // Password hash middleware.
