@@ -107,12 +107,16 @@
             <% } %>
               <div class="row">
                 <div class="col-auto">
-                  <img src="<%= reviews[i].user.profilePic%>" alt="user profile picture" loading="lazy" style="width: 40px; height: 40px;" class="img-fluid rounded">
+                  <a href="/<%= reviews[i].user.userName %>" class="nav-link">
+                    <img src="<%= reviews[i].user.profilePic%>" alt="user profile picture" loading="lazy" style="width: 40px; height: 40px;" class="img-fluid rounded">
+                  </a>
                 </div>
 
                 <div class="col">
                   <div class="review d-flex">
-                    <p class="username" style="font-weight: bold; margin-right: 10px;"><%= reviews[i].user.userName %></p>
+                    <a href="/<%= reviews[i].user.userName %>" class="nav-link">
+                      <p class="username" style="font-weight: bold; margin-right: 10px;"><%= reviews[i].user.userName %></p>
+                    </a>
                     <!-- Show star ratings based on reviews.rating -->
                     <div>
                         <% let rating = reviews[i].rating; %>
@@ -263,6 +267,7 @@
             </div>
           </form>
         </div>
+      </div>
     </section>
 
     
