@@ -74,6 +74,7 @@ module.exports = {
           { "_id": req.user.id, "favFilms.position": position },
           {
             $set: { 
+              "favFilms.$.movieId": movieId,
               "favFilms.$.moviePoster": movie.poster_path,
               "favFilms.$.position": position
             },
@@ -85,6 +86,7 @@ module.exports = {
           { "_id": req.user.id},
           {
             $push: { "favFilms": {
+              movieId: movieId,
               moviePoster: movie.poster_path,
               position: position
             }},
