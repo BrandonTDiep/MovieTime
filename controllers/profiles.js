@@ -9,6 +9,8 @@ module.exports = {
       const recentReviews = await Review.find({ user: userProfile.id }).sort({ createdAt: 'desc' }).populate('user');
       const BASE_URL = 'https://www.themoviedb.org/t/p/w94_and_h141_bestv2'
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
+      const base_url2 = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
+
 
 
       const movieIds = []
@@ -27,13 +29,18 @@ module.exports = {
 
 
       if(userProfile){
+
+        const favFilms = userProfile.favFilms.sort((a, b) => a.position - b.position)
+
         res.render("profile.ejs", {
           user: req.user,
           userProf: userProfile,
           recentReviews: recentReviews,
           popularReviews: popularReviews,
           movieDetails: movieDetails,
+          favFilms: favFilms,
           base_url: BASE_URL,
+          base_url2: base_url2,
           userId: req.user.id,
           userStatus: {
             loggedIn: true
