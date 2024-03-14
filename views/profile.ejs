@@ -13,7 +13,9 @@
               <div class="col mt-auto">
                 <div class="d-flex justify-content-between">
                   <h4><%= userProf.userName %></h4>
-                  <a href="/settings" class="btn btn-primary">Edit Profile</a>
+                  <% if(userProf.id === user.id) { %>
+                    <a href="/settings" class="btn btn-primary">Edit Profile</a>
+                  <% } %>
                 </div>
               </div>
           </section>
