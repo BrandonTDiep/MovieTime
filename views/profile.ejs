@@ -42,7 +42,9 @@
                         </a>
                       <% } %>
                   <% } else { %>
-                      <p>Have any <a href="/settings">favorite films</a>?</p>
+                      <% if(userProf.id === user.id) { %>
+                        <p>Have any <a href="/settings">favorite films</a>?</p>
+                      <% } %>
                   <% } %>
               </div>                    
 
