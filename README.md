@@ -11,8 +11,6 @@
   - DB_STRING = `your database URI`
   - MOVIEAPI_KEY = `your movie api key`
 
-  -----------------------------------------------------
-  `DONT NEED CLOUDINARY FOR NOW CAUSE NO IMAGES`
   - CLOUD_NAME = `your cloudinary cloud name`
   - API_KEY = `your cloudinary api key`
   - API_SECRET = `your cloudinary api secret`
