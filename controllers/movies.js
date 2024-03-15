@@ -78,7 +78,7 @@ module.exports = {
     try {
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
       const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
-      const movieId = req.params.id;
+      const movieId = req.params.movieId;
       const response_credit =  await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${MOVIEAPI_KEY}`)
       const credit = await response_credit.json()
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)

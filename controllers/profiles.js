@@ -4,7 +4,7 @@ const Review = require("../models/Review");
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      const userProfile = await User.findOne({userName: req.params.id});
+      const userProfile = await User.findOne({userName: req.params.username});
       const popularReviews = await Review.find({ user: userProfile.id }).sort({ reviewLikes: 'desc' }).populate('user');
       const recentReviews = await Review.find({ user: userProfile.id }).sort({ createdAt: 'desc' }).populate('user');
       const BASE_URL = 'https://www.themoviedb.org/t/p/w94_and_h141_bestv2'
