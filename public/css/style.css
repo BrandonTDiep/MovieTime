@@ -31,7 +31,18 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
 /* --------------- NAVBAR --------------- */
 
 nav {
-    background-color: #24272C;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.nav-background{
+    background-color: #111314;
+
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 nav li.nav-item a.nav-link{
