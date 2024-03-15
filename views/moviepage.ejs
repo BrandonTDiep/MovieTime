@@ -4,11 +4,11 @@
 <main>
   <!-- Header -->
   <% if(movieDetails.backdrop_path != null) {%>
-    <header class="movie-header" style="background-image: linear-gradient(to bottom, rgba(14, 13, 13, 0.5),rgba(0, 0, 0, 0.8)), url('https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/<%= movieDetails.backdrop_path %>');" loading="lazy"> 
+    <header class="moviepage-header" style="background-image: linear-gradient(to bottom, rgba(14, 13, 13, 0.5),rgba(0, 0, 0, 0.8)), url('https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/<%= movieDetails.backdrop_path %>');" loading="lazy"> 
       <div class="container text-center"> 
         <h1 class="text-white">
           <%= movieDetails.title %> 
-          <span style="color: #89a; font-size: 22px; font-weight: 300;">
+          <span class="movie-date">
             (<%= movieDetails.release_date.split('-')[0] %>)
           </span>
         </h1>
@@ -20,46 +20,46 @@
   <% }%>
 
   <!-- Movie Overview -->
-  <section style="margin: 0 auto; padding: 0 10px;" class="d-flex justify-content-center">
-    <section class="mt-5" style="max-width: 1100px;">
+  <section class="d-flex justify-content-center movie-overview">
+    <section class="mt-5">
       <!-- Movie Poster -->
       <div class="d-flex flex-wrap"> 
-        <div style="flex: 0.5;">
+        <div class="movie-poster">
           <% if(movieDetails.poster_path != null) { %>
             <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy">
           <% } else { %>
-            <img src="/imgs/missing-img.jpg" alt="movie poster" style="width: 220px; height: 330px;" loading="lazy">
+            <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img" loading="lazy">
           <% } %>
           <!-- Button trigger modal -->
           <% if (userStatus.loggedIn) { %>
             <% if(userReview) { %>
-              <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
+              <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Edit your review...
               </button>
             <% } else { %>
-              <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 220px;">
+              <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Write review
               </button>
             <% } %>
           <% } else { %>
-            <a href="/login" class="btn btn-primary mt-2" style="width: 220px;">Sign in to review</a>
+            <a href="/login" class="btn btn-primary mt-2">Sign in to review</a>
           <% } %>
         </div>
 
         <!-- Movie Info -->
-        <div class="ms-5 movie-info" style="flex: 2;"> 
+        <div class="ms-5 movie-info"> 
           <% const filteredDirectors = movieCredit.crew.filter(({job})=> job ==='Director'); %>
           <h2><%= movieDetails.title %></h2>
           <% if(filteredDirectors.length !== 0) { %>
-            <span style="font-size: 20px;">Directed by</span>
+            <span>Directed by</span>
             <% if(filteredDirectors.length === 1) { %>
-              <p style="font-size: 20px; display: inline-block;" class="mb-2 dir-name"><%= filteredDirectors[0].name %></p>
+              <p class="mb-2 dir-name"><%= filteredDirectors[0].name %></p>
             <% } else { %>
               <% for (let i = 0; i < filteredDirectors.length; i++) { %>
                 <% if(i < filteredDirectors.length - 1) { %>
-                  <p style="font-size: 20px; display: inline-block;" class="mb-2"><%= filteredDirectors[i].name %>, </p>
+                  <p class="mb-2 dir-name"><%= filteredDirectors[i].name %>, </p>
                   <% } else { %>
-                  <p style="font-size: 20px; display: inline-block;" class="mb-2"><%= filteredDirectors[i].name %></p>
+                  <p class="mb-2 dir-name"><%= filteredDirectors[i].name %></p>
                 <% } %>
               <% } %>
             <% } %>
@@ -68,7 +68,7 @@
         </div>
 
         <!-- Movie Rating -->
-        <div class="ms-5 text-center" style="flex: 0.5;"> 
+        <div class="ms-5 text-center movie-rating"> 
           <% let rating = 0; %>
           <% let numOfRating = 0; %>
           <% let avgRating = 0; %>
@@ -87,7 +87,7 @@
           <% if(avgRating === 0.0) { %>
             <h4>No Rating</h4>
           <% } else { %>
-            <p style="margin-bottom: 0;">Avg. Rating</p>
+            <p>Avg. Rating</p>
             
             <h3><span class="fa fa-star checked"></span> <%= avgRating.toFixed(1) %></h3>
           <% } %>
@@ -96,26 +96,26 @@
       </div>
 
       <!-- Review Comment Section -->
-      <section class="mt-5">
-        <h5 style="border-bottom: 1px solid #456; margin-bottom: 0;" class="pb-1">Reviews</h5>
-        <ul style="padding: 0;">
+      <section class="mt-5 review-comments">
+        <h5 class="pb-1">Reviews</h5>
+        <ul>
           <% for(let i=0; i < reviews.length; i++) {%>
             <% if (i === reviews.length - 1) { %>
-              <li class="justify-content-between py-3" style="list-style: none;">
+              <li class="justify-content-between py-3 review-last">
             <% } else {%>
-              <li class="justify-content-between py-3" style="border-bottom: 1px solid #456; list-style: none;">
+              <li class="justify-content-between py-3 review-other">
             <% } %>
               <div class="row">
                 <div class="col-auto">
                   <a href="/<%= reviews[i].user.userName %>" class="nav-link">
-                    <img src="<%= reviews[i].user.profilePic%>" alt="user profile picture" loading="lazy" style="width: 40px; height: 40px;" class="img-fluid rounded">
+                    <img src="<%= reviews[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
                   </a>
                 </div>
 
                 <div class="col">
                   <div class="review d-flex">
                     <a href="/<%= reviews[i].user.userName %>" class="nav-link">
-                      <p class="username" style="font-weight: bold; margin-right: 10px;"><%= reviews[i].user.userName %></p>
+                      <p class="review-username"><%= reviews[i].user.userName %></p>
                     </a>
                     <!-- Show star ratings based on reviews.rating -->
                     <div>
@@ -129,15 +129,15 @@
                         <% } %>
                     </div>
                   </div>
-                
                   <p class="review"><%= reviews[i].review%></p>
+                  
                   <div class="review-container">
-                    <form action="/review/likeReview/<%= movieId %>/<%= reviews[i]._id%>?_method=PUT" method="POST">
+                    <form action="/review/likeReview/<%= movieId %>/<%= reviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
                       <% let userLikesArray = reviews[i].userLikes.map(String); %>
                       <% if (userStatus.loggedIn) { %>
                         <% if(userLikesArray.includes(userId)) {%>
                           <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                            <span style="font-weight: 600"> Liked</span>
+                            <span> Liked</span>
                           </button> 
                           <% if(reviews[i].reviewLikes === 1) { %>
                             <span><%= reviews[i].reviewLikes %> like</span>
@@ -146,7 +146,7 @@
                           <% } %>
                         <% } else { %>
                           <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                            <span style="font-weight: 500"> Like Review</span>
+                            <span> Like Review</span>
                           </button> 
                           <% if(reviews[i].reviewLikes === 0) { %>
                             <span></span>
@@ -158,7 +158,7 @@
                         <% } %>
                       <% } else { %>
                         <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                          <span style="font-weight: 500"> Like Review</span>
+                          <span> Like Review</span>
                         </button> 
                         <% if(reviews[i].reviewLikes === 0) { %>
                           <span></span>
@@ -192,11 +192,11 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title font-weight-bold" id="exampleModalLabel"> <%= movieDetails.title %> 
-              <span style="color: #89a; font-size: 22px; font-weight: 300;">
+              <span class="movie-date">
                 <%= movieDetails.release_date.split('-')[0] %>
               </span>
             </h4>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white;"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <!-- Modal Body -->
@@ -209,13 +209,13 @@
           <% } %>
           
             <div class="modal-body d-flex">
-              <div class="d-flex align-items-center" style="margin-right: 50px">
+              <div class="d-flex align-items-center">
                 <% if(movieDetails.poster_path != null) { %>
-                  <img src="<%= base_url + movieDetails.poster_path %>" class="img-fluid rounded"  alt="movie poster" style = "width: 150px; height: 225px;" loading="lazy">
+                  <img src="<%= base_url + movieDetails.poster_path %>" class="img-fluid rounded modal-poster"  alt="movie poster" loading="lazy">
                   <% } %>
               </div>
 
-              <div class="mb-3" style="flex-grow: 3;">
+              <div class="mb-3 modal-review">
                 <h5 class="form-label font-weight-bold">Review</h5>
                 <% if (userStatus.loggedIn) { %>
                   <% if(userReview) { %>
@@ -224,18 +224,16 @@
                     <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
                   <% } %>
                 <% } %>
-                
-                
               </div>
             </div>
 
             <!-- Modal Footer -->
-            <div class="modal-footer d-flex justify-content-between" style="padding: 12px 16px;">
+            <div class="modal-footer d-flex justify-content-between">
               <div class="rating-wrap d-flex flex-column">
                 <h5>Rating</h5>
                 <div>
                   <fieldset class="d-flex">
-                    <button id="clearRating" class="clear-button" aria-label="Clear rating" style="display: none; background-color: transparent; border: none;"><i class="fas fa-times"></i></button>
+                    <button id="clearRating" class="clear-button" aria-label="Clear rating"><i class="fas fa-times"></i></button>
                     <div class="rating">
                       <input type="radio" id="star5" name="rating" value="5"/><label for="star5" class="full" title="Awesome"></label>
                       <input type="radio" id="star4.5" name="rating" value="4.5"/><label for="star4.5" class="half"></label>
@@ -270,7 +268,6 @@
       </div>
     </section>
 
-    
   </section>
 </main>
 

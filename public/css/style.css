@@ -24,6 +24,10 @@ button.btn.btn-primary:hover, a.btn.btn-primary:hover, label.btn-primary:hover,
 button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:active{
     background-color: #3B4760;
 }
+
+.btn.btn-primary.mt-2{
+   width: 220px;
+}
 /* --------------- NAVBAR --------------- */
 
 nav {
@@ -96,13 +100,18 @@ p.card-text{
     height: 141px;
 }
 
+.search-results div.card{
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 
 /* --------------- MOVIE PAGE --------------- */
 
 
 /*------------ Header ------------*/
 
-.movie-header{
+.moviepage-header{
     background-size: cover; 
     background-repeat: no-repeat; 
     height: 600px; 
@@ -115,27 +124,95 @@ p.card-text{
     text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
 }
 
+.movie-date{
+    color: #89a; 
+    font-size: 22px; 
+    font-weight: 300;
+}
+
 
 /*------------ Body ------------*/
+
+/*--- Movie Overview ---*/
+
+.movie-overview{
+    margin: 0 auto; 
+    padding: 0 10px;
+    max-width: 1100px;
+}
+
+.movie-poster{
+    flex: 0.5;
+}
+
+.missing-img{
+    width: 220px; 
+    height: 330px;
+}
+
+.movie-info {
+    flex: 2;
+} 
 
 .movie-info span{
     font-weight:300; 
     color: #abc;
+    font-size: 20px;
 } 
 
-p.dir-name{
+.movie-info p.dir-name{
     color: white;
+    font-size: 20px; 
+    display: inline-block;
 } 
 
+/*--- Movie Rating ---*/
+
+.movie-rating{
+    flex: 0.5
+}
+
+.movie-rating p {
+    margin-bottom: 0;
+}
+
+.review-comments h5{
+    border-bottom: 1px solid #456; 
+    margin-bottom: 0;
+}
+
+.review-comments ul{
+    padding: 0;
+}
+
+.review-comments ul li{
+    padding: 0;
+}
+
+.review-other{
+    border-bottom: 1px solid #456; 
+    list-style: none
+}
+
+.review-last{
+    list-style: none;
+}
+
+.review-comments img.user-profilePic{
+    width: 40px; 
+    height: 40px;
+}
+
+.review-username{
+    font-weight: bold;
+    margin-right: 10px;
+}
 
 .overview, .review, .bio{
     color: #B3D6F3;
 } 
 
-/* optional color */
 /*-------- Rating Section --------*/
-
-
 .like-button, .unlike-button {
     background-color: transparent; 
     border: none;
@@ -143,23 +220,43 @@ p.dir-name{
     margin-right: 7px;
 }
 
+.like-button span, .unlike-button span{
+    font-size: 0.91rem;
+    color: rgb(123, 155, 188);
+    font-weight: 500;
+}
+
+.like-button span{
+    color: white;
+}
+
+
+.like-button .fa-heart, .unlike-button .fa-heart {
+    color: rgb(113, 147, 182); 
+    font-size: 0.91rem;
+}
+
+.like-button .fa-heart{
+    color: red;
+}
+
+.like-button .fa-heart:hover, .unlike-button .fa-heart:hover {
+    color: red; 
+    
+}
+
+.unlike-button span:hover {
+    color: white;
+}
+
 .like-button:focus, .unlike-button:focus {
     outline: none; 
 }
 
-.like-button .fa-heart {
-    color: red; 
-    font-size: 16px; 
+.review-likes > span{
+    color: rgb(139, 173, 207);
 }
 
-.unlike-button .fa-heart{
-    color: gray; 
-    font-size: 16px; 
-}
-
-.unlike-button span:hover {
-    color: orange;
-}
 
 .review-container {
     display: flex;
@@ -178,7 +275,6 @@ p.dir-name{
     color: red;
 }
 
-/*styling star rating*/
 .rating, .clearRating{
 	border: none;
 	float: left;
@@ -242,15 +338,30 @@ p.dir-name{
     color: white;
 }
 
-/*------------ Modal ------------*/
+/*------------ Movie Review Modal ------------*/
 
 .modal-header{
     border-bottom: 1px solid rgba(162, 177, 229, .2);
 }
 .modal-footer{
     border-top: 1px solid rgba(162, 177, 229, .2);
+    padding: 12px 16px;
+}
+.modal-poster{
+    width: 150px; height: 225px;
 }
 
+.form-control, .form-control:focus{
+    background-color: #cde;
+}
+
+.modal-body div:first-child{
+    margin-right: 50px;
+}
+
+.modal-review{
+    flex-grow: 3;
+}
 
 
 /* --------------- HOME PAGE --------------- */
@@ -279,6 +390,18 @@ p.dir-name{
 
 .movie-header{
     background-image: linear-gradient(to bottom, rgba(14, 13, 13, 0.5),rgba(0, 0, 0, 0.7)), url('/imgs/cinema-bg.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    height: 600px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.clear-button{
+    display: none; 
+    background-color: transparent;
+    border: none;
 }
 
 /*----------- Carousel -----------*/

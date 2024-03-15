@@ -32,17 +32,14 @@
               <p style="overflow-wrap: break-word; font-size: 13px;" class="bio"><%= userProf.bio %></p>
             </section>
 
-            <!-- Review Comment Section -->
             <section class="mt-5 col">
-
-
               <section>
                 <h5 style="border-bottom: 1px solid #456; margin-bottom: 0;" class="pb-1">Favorite Films</h5>
                 <div class="pt-3 mb-5">
                   <% if(userProf.favFilms.length !== 0) { %>
                       <% for(let i=0; i < favFilms.length; i++) {%>
                         <a href="/movies/<%= favFilms[i].movieId %>" class="text-decoration-none">
-                          <img src="<%= base_url2 + favFilms[i].moviePoster %>" class="img-fluid rounded pr-3" alt="favorite movie poster" loading="lazy" style = "width: 150px; height: 225px; margin-right: 10px;">
+                          <img src="<%= base_url2 + favFilms[i].moviePoster %>" class="img-fluid rounded pr-3" alt="favorite movie poster" loading="lazy" style = "width: 170px; height: 255px; margin-right: 10px;">
                         </a>
                       <% } %>
                   <% } else { %>
@@ -52,18 +49,18 @@
                         <% } %>
                       <% } %>                  
                   <% } %>
-              </div>                    
-
+                </div>                    
               </section>
 
-              <section>
-                <h5 style="border-bottom: 1px solid #456; margin-bottom: 0;" class="pb-1">Recent Reviews</h5>
-                <ul style="padding: 0;">
+              <!-- Review Comment Section -->
+              <section class="review-comments">
+                <h5 class="pb-1">Recent Reviews</h5>
+                <ul>
                   <% for(let i=0; i < recentReviews.length; i++) {%>
                     <% if (i === recentReviews.length - 1) { %>
-                      <li class="justify-content-between py-3" style="list-style: none;">
+                      <li class="justify-content-between py-3 review-last">
                     <% } else {%>
-                      <li class="justify-content-between py-3" style="border-bottom: 1px solid #456; list-style: none;">
+                      <li class="justify-content-between py-3  review-other">
                     <% } %>
                       <div class="review row">
                         <div class="col-auto mt-auto">
@@ -78,7 +75,7 @@
                               <%= movieDetails[i].title %>
                             </a>
                             
-                            <span style="color: #89a; font-size: 20px; font-weight: 300;">
+                            <span class="movie-date">
                               <%= movieDetails[i].release_date.split('-')[0] %>
                             </span>
                           </h4>
@@ -95,9 +92,9 @@
                               <% let rating = recentReviews[i].rating; %>
                               <% for (let j = 1; j <= 5; j++) { %>
                                   <% if (j <= Math.floor(rating)) { %>
-                                      <span class="fa fa-star checked" style="font-size: 14px;"></span>
+                                      <span class="fa fa-star checked"></span>
                                   <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
-                                      <span class="fa fa-star-half checked" style="font-size: 14px;"></span>
+                                      <span class="fa fa-star-half checked"></span>
                                   <% } %>
                               <% } %>
                               <span style="color: #89a; font-size: 14px; font-weight: 300; margin-left: 10px;">             
@@ -107,12 +104,12 @@
                           <p class="review mb-2"><%= recentReviews[i].review%></p>
 
                           <div class="review-container">
-                            <form action="/review/likeReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST">
+                            <form action="/review/likeReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
                               <% let userLikesArray = recentReviews[i].userLikes.map(String); %>
                               <% if (userStatus.loggedIn) { %>
                                 <% if(userLikesArray.includes(userId)) {%>
                                   <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                    <span style="font-weight: 600"> Liked</span>
+                                    <span> Liked</span>
                                   </button> 
                                   <% if(recentReviews[i].reviewLikes === 1) { %>
                                     <span><%= recentReviews[i].reviewLikes %> like</span>
@@ -121,7 +118,7 @@
                                   <% } %>
                                 <% } else { %>
                                   <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                    <span style="font-weight: 500"> Like Review</span>
+                                    <span> Like Review</span>
                                   </button> 
                                   <% if(recentReviews[i].reviewLikes === 0) { %>
                                     <span></span>
@@ -133,7 +130,7 @@
                                 <% } %>
                               <% } else { %>
                                 <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                  <span style="font-weight: 500"> Like Review</span>
+                                  <span> Like Review</span>
                                 </button> 
                                 <% if(recentReviews[i].reviewLikes === 0) { %>
                                   <span></span>
