@@ -31,21 +31,41 @@ module.exports = {
       if(userProfile){
 
         const favFilms = userProfile.favFilms.sort((a, b) => a.position - b.position)
+        if(req.user){
+          res.render("profile.ejs", {
+            user: req.user,
+            userProf: userProfile,
+            recentReviews: recentReviews,
+            popularReviews: popularReviews,
+            movieDetails: movieDetails,
+            favFilms: favFilms,
+            base_url: BASE_URL,
+            base_url2: base_url2,
+            userId: req.user.id,
+            userStatus: {
+              loggedIn: true
+            },
+          });
+        }
+        else{
+          res.render("profile.ejs", {
+            user: req.user,
+            userProf: userProfile,
+            recentReviews: recentReviews,
+            popularReviews: popularReviews,
+            movieDetails: movieDetails,
+            favFilms: favFilms,
+            base_url: BASE_URL,
+            base_url2: base_url2,
+            userStatus: {
+              loggedIn: false
+            },
+          });
 
-        res.render("profile.ejs", {
-          user: req.user,
-          userProf: userProfile,
-          recentReviews: recentReviews,
-          popularReviews: popularReviews,
-          movieDetails: movieDetails,
-          favFilms: favFilms,
-          base_url: BASE_URL,
-          base_url2: base_url2,
-          userId: req.user.id,
-          userStatus: {
-            loggedIn: true
-          },
-        });
+        }
+
+
+        
       }
       else{
         res.render("profile.ejs", {
