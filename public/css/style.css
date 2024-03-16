@@ -49,6 +49,12 @@ nav li.nav-item a.nav-link{
     margin-right: 30px
 }
 
+.nav-profilePic{
+    width: 25px; 
+    height: 25px;
+    margin-right: 5px;
+}
+
 .navbar-toggler{
     background-color: white;
 }
@@ -146,7 +152,7 @@ p.card-text{
 
 /*--- Movie Overview ---*/
 
-.movie-overview{
+.movie-overview, .settings{
     margin: 0 auto; 
     padding: 0 10px;
     max-width: 1100px;
@@ -547,10 +553,50 @@ p.card-text{
 }
 
 
-
-
-
 /* --------------- SETTINGS PAGE --------------- */
+
+
+.settings-username{
+    background-color: #242832; 
+    border: none; 
+    color: white;
+}
+
+.settings-profilePic{
+    width: 95px; 
+    height: 95px;
+}
+
+#avatar_upload{
+    background-color: #242832; 
+    border: none; color: white; 
+    margin-bottom: 20px; 
+    display: none;
+}
+
+.avatar-select span{
+    margin-left: 20px
+}
+
+#bio{
+    background-color: #242832; 
+    border: none; 
+    color: white;
+}
+
+.film.fav_film{
+    width: 110px;
+    height: 165px;
+}
+
+.film-container{
+    margin-left: 50px;
+}
+
+.favfilm-list{
+    list-style: none;
+    padding-left: 0;
+}
 
 aside.favorite-films ul li{
     margin-right: 10px;
