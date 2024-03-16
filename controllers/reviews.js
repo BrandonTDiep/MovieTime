@@ -9,7 +9,7 @@ module.exports = {
       const userName = user.userName;
     
       const newReview = await Review.create({
-        movieId: req.params.id,
+        movieId: req.params.movieId,
         user: req.user.id,
         review: req.body.review, 
         reviewLikes: 0,
@@ -18,7 +18,7 @@ module.exports = {
         userName: userName,
       });
 
-      const existingMovie = await Movie.findOne({movieId: req.params.id});
+      const existingMovie = await Movie.findOne({movieId: req.params.movieId});
 
       if(existingMovie){
         existingMovie.reviews.push(newReview._id);
@@ -27,13 +27,13 @@ module.exports = {
       }
       else{
         await Movie.create({
-          movieId: req.params.id,
+          movieId: req.params.movieId,
           reviews: [newReview._id],
         })
         console.log("Review has been added for new movieId!")
       }
       
-      res.redirect("/movies/" + req.params.id);
+      res.redirect("/movies/" + req.params.movieId);
     } catch (err) {
       console.log(err);
     }
