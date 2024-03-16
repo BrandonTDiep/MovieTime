@@ -556,7 +556,7 @@ p.card-text{
 /* --------------- SETTINGS PAGE --------------- */
 
 
-.settings-username{
+.settings-username, .settings-bio{
     background-color: #242832; 
     border: none; 
     color: white;
@@ -576,12 +576,6 @@ p.card-text{
 
 .avatar-select span{
     margin-left: 20px
-}
-
-#bio{
-    background-color: #242832; 
-    border: none; 
-    color: white;
 }
 
 .film.fav_film{
