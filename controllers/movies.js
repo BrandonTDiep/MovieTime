@@ -85,12 +85,13 @@ module.exports = {
       const movie = await response.json()
       const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
 
-      const userHasReview = await Review.findOne({
-        movieId: req.params.movieId,
-        user: req.user.id
-      });
       
       if(req.user){
+        const userHasReview = await Review.findOne({
+          movieId: req.params.movieId,
+          user: req.user.id
+        });
+        
         res.render("moviepage.ejs", {
           movieId: req.params.movieId,
           movieDetails: movie, 
