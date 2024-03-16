@@ -46,7 +46,7 @@ nav {
 }
 
 nav li.nav-item a.nav-link{
-    margin-right: 30px
+    margin-right: 20px
 }
 
 .nav-profilePic{
@@ -585,8 +585,8 @@ p.card-text{
 }
 
 .film.fav_film{
-    width: 110px;
-    height: 165px;
+    width: 115px;
+    height: 170px;
 }
 
 .film-container{

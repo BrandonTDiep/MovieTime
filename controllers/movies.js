@@ -84,11 +84,13 @@ module.exports = {
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await response.json()
       const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
+
+      const userHasReview = await Review.findOne({
+        movieId: req.params.movieId,
+        user: req.user.id
+      });
+      
       if(req.user){
-        const userHasReview = await Review.findOne({
-          movieId: req.params.id,
-          user: req.user.id
-        });
         res.render("moviepage.ejs", {
           movieId: req.params.id,
           movieDetails: movie, 
