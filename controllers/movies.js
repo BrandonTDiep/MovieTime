@@ -92,7 +92,7 @@ module.exports = {
       
       if(req.user){
         res.render("moviepage.ejs", {
-          movieId: req.params.id,
+          movieId: req.params.movieId,
           movieDetails: movie, 
           movieCredit: credit,
           base_url: BASE_URL,
@@ -107,7 +107,7 @@ module.exports = {
       }
       else{
         res.render("moviepage.ejs", {
-          movieId: req.params.id,
+          movieId: req.params.movieId,
           movieDetails: movie, 
           movieCredit: credit,
           base_url: BASE_URL,
