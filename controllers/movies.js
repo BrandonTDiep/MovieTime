@@ -2,7 +2,7 @@ const Review = require("../models/Review");
 
 
 module.exports = {
-  getMovie: async (req, res) => {
+  getHomePage: async (req, res) => {
     try {
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
       const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
@@ -78,22 +78,29 @@ module.exports = {
     try {
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
       const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
-      const movieId = req.params.movieId;
+
+      const movieName = req.params.movieId;
+
+      const movieId = movieName.split('-')[0];
+
+
+      const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
+      const movie = await movieRes.json()
+
       const response_credit =  await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${MOVIEAPI_KEY}`)
       const credit = await response_credit.json()
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
-      const movie = await response.json()
+
       const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
 
       
       if(req.user){
         const userHasReview = await Review.findOne({
-          movieId: req.params.movieId,
+          movieId: movieId,
           user: req.user.id
         });
         
         res.render("moviepage.ejs", {
-          movieId: req.params.movieId,
+          movieId: movieId,
           movieDetails: movie, 
           movieCredit: credit,
           base_url: BASE_URL,
@@ -108,7 +115,7 @@ module.exports = {
       }
       else{
         res.render("moviepage.ejs", {
-          movieId: req.params.movieId,
+          movieId: movieId,
           movieDetails: movie, 
           movieCredit: credit,
           base_url: BASE_URL,

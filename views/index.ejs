@@ -25,7 +25,8 @@
       <div class="carouselbox">
         <% for (let i = 0; i < trendMovies.length; i++) { %>
           <div class="movie-item">
-            <a href="/movies/<%= trendMovies[i].id %>">
+            <% const trendMovieTitle = trendMovies[i].title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+            <a href="/movies/<%= trendMovies[i].id %>-<%= trendMovieTitle %>">
               <img src="<%= base_url + trendMovies[i].poster_path %>" class="slider-img img-fluid rounded img-<%=i%>" alt="movie poster" id="slider" loading="lazy">
             </a>
           </div>    
@@ -41,7 +42,8 @@
       <div class="carouselbox1">
         <% for (let i = 0; i < trendMovies.length; i++) { %>
           <div class="movie-item">
-            <a href="/movies/<%= nowPlayMovies[i].id %>">
+            <% const nowPlayMovieTitle = nowPlayMovies[i].title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+            <a href="/movies/<%= nowPlayMovies[i].id %>-<%= nowPlayMovieTitle %>">
               <img src="<%= base_url + nowPlayMovies[i].poster_path %>" class="slider-img img-fluid rounded img-<%=i%>" alt="movie poster" id="slider" loading="lazy">
             </a>
           </div>    

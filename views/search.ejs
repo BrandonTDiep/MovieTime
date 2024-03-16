@@ -10,12 +10,13 @@
           <div class="card mb-3">
               <div class="d-flex">
                 <div>
+                  <% const movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
                   <% if(movie.poster_path == null) {%>
-                    <a href="/movies/<%= movie.id%>">
+                    <a href="/movies/<%= movie.id%>-<%= movieTitle %>">
                       <img src="/imgs/missing-img.jpg" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
                     </a>
                   <% } else {%>
-                    <a href="/movies/<%= movie.id%>">
+                    <a href="/movies/<%= movie.id%>-<%= movieTitle %>">
                       <img src="<%= base_url + movie.poster_path %>" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
                     </a>                
                   <% }%>

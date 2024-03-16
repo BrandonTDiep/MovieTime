@@ -36,7 +36,8 @@
                 <div class="pt-3 mb-5">
                   <% if(userProf.favFilms.length !== 0) { %>
                       <% for(let i=0; i < favFilms.length; i++) {%>
-                        <a href="/movies/<%= favFilms[i].movieId %>" class="text-decoration-none">
+                        <% const movieTitle = favFilms[i].movieTitle.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+                        <a href="/movies/<%= favFilms[i].movieId %>-<%= movieTitle %>" class="text-decoration-none">
                           <img src="<%= base_url2 + favFilms[i].moviePoster %>" class="img-fluid rounded pr-3 favfilm-poster" alt="favorite movie poster" loading="lazy">
                         </a>
                       <% } %>

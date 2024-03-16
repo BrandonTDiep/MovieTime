@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
       type: Number,
       required: true
     },
+    movieTitle: {
+      type: String,
+      required: true
+    },
     moviePoster: {
       type: String,
       required: true
