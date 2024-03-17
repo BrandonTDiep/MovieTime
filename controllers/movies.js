@@ -80,7 +80,6 @@ module.exports = {
       const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
 
       const movieName = req.params.movieId;
-
       const movieId = movieName.split('-')[0];
 
       const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
@@ -89,13 +88,14 @@ module.exports = {
       const response_credit =  await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${MOVIEAPI_KEY}`)
       const credit = await response_credit.json()
 
-      if(movie.success !== false){
+      if(movie.success === undefined){
+        const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
+
         if(req.user){
           const userHasReview = await Review.findOne({
             movieId: movieId,
             user: req.user.id
           });
-          const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
 
           res.render("moviepage.ejs", {
             movieId: movieId,

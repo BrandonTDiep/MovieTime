@@ -69,18 +69,17 @@ module.exports = {
       const movieName = req.params.movieId;
 
       const movieId = movieName.split('-')[0];
-      console.log(req.params)
 
       const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await movieRes.json()
 
-      const userHasReview = await Review.findOne({
-        movieId: movieId,
-        user: req.user.id
-      });
-
-      if(userHasReview){
+      if(movie.success === undefined){
         if(req.user){
+          const userHasReview = await Review.findOne({
+            movieId: movieId,
+            user: req.user.id
+          });
+
           res.render("reviewpage.ejs", {
             movieId: movieId,
             movieDetails: movie, 
@@ -103,12 +102,9 @@ module.exports = {
             },
           });
         }
-      }
-      else{
-        res.status(404).render('error'); 
-      }
-      
-
+        } else {
+          res.status(404).render('error'); 
+        }
     } catch (err) {
       console.log(err);
     }
