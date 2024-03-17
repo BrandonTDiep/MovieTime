@@ -81,14 +81,21 @@ module.exports = {
 
       const movieName = req.params.movieId;
       const movieId = movieName.split('-')[0];
+      const movieTitleParts = movieName.split('-');
+      const result = movieTitleParts.slice(1).join("-"); 
 
       const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await movieRes.json()
 
       const response_credit =  await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${MOVIEAPI_KEY}`)
       const credit = await response_credit.json()
-
+      
+      let movieTitle;
       if(movie.success === undefined){
+         movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase();
+      }
+
+      if(movie.success === undefined && result === movieTitle){
         const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
 
         if(req.user){

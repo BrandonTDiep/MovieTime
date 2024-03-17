@@ -66,31 +66,43 @@ module.exports = {
     try {
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
       const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
+      
       const movieName = req.params.movieId;
-
       const movieId = movieName.split('-')[0];
+      const movieTitleParts = movieName.split('-');
+      const result = movieTitleParts.slice(1).join("-"); 
 
       const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await movieRes.json()
 
+      let movieTitle;
       if(movie.success === undefined){
+         movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase();
+      }
+      
+      if(movie.success === undefined && result === movieTitle){
         if(req.user){
           const userHasReview = await Review.findOne({
             movieId: movieId,
             user: req.user.id
           });
 
-          res.render("reviewpage.ejs", {
-            movieId: movieId,
-            movieDetails: movie, 
-            base_url: BASE_URL,
-            user: req.user,
-            userId: req.user.id,
-            userStatus: {
-              loggedIn: true
-            },
-            userReview: userHasReview
-          });
+          if(userHasReview){
+            res.render("reviewpage.ejs", {
+              movieId: movieId,
+              movieDetails: movie, 
+              base_url: BASE_URL,
+              user: req.user,
+              userId: req.user.id,
+              userStatus: {
+                loggedIn: true
+              },
+              userReview: userHasReview
+            });
+          } 
+          else{
+            res.status(404).render('error'); 
+          }
         }
         else{
           res.render("reviewpage.ejs", {
