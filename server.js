@@ -12,6 +12,7 @@ const mainRoutes = require("./routes/main");
 const movieRoutes = require("./routes/movies");
 const reviewRoutes = require("./routes/reviews");
 const settingRoutes = require("./routes/settings");
+const profileRoutes = require("./routes/profiles");
 
 
 
@@ -62,6 +63,7 @@ app.use("/", mainRoutes);
 app.use("/movies", movieRoutes)
 app.use("/review", reviewRoutes);
 app.use("/settings", settingRoutes);
+app.use("/:user", profileRoutes);
 
 
 //Server Running
