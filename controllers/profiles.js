@@ -61,7 +61,7 @@ module.exports = {
         }
       }
       else{
-        res.render("profile.ejs", {
+        res.render("error.ejs", {
           user: req.user,
           userProf: userProfile,
           userStatus: {

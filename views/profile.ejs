@@ -2,9 +2,6 @@
 <%- include('partials/nav') -%>
 <main>
     <section class = "profilePicHeader">
-      <% if(userProf == null) { %>
-        <h1 class="missing-profile">Could not find user.</h1>
-      <% } else { %>
         <section>
           <section class="row mt-4">
               <div class="col-auto mt-auto">
@@ -139,8 +136,9 @@
                                 <% } %>
                               <% } %>
                             </form>
-                            <%= console.log(userProf.username) %>
-                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i]._id %>" style="text-decoration: none;"><span style="color: rgb(139, 173, 207); font-size: 0.9rem">Open Review</span></a>
+                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>" class="open-review">
+                              <span>Open Review</span>
+                            </a>
           
                             <% if (userStatus.loggedIn) { %>
                               <%if(JSON.stringify(recentReviews[i].user._id) === JSON.stringify(user._id)){ %>
@@ -159,7 +157,6 @@
             </section>  
                 
           </section>
-      <% } %>
     </section>
 </main>
 

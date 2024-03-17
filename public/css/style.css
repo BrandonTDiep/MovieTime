@@ -28,6 +28,19 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
 .btn.btn-primary.mt-2{
    width: 220px;
 }
+
+.open-review{
+    text-decoration: none;
+}
+
+.open-review span:hover{
+    color: white;
+}
+
+.open-review span{
+    color: rgb(139, 173, 207);
+    font-size: 0.9rem
+}
 /* --------------- NAVBAR --------------- */
 
 nav {
@@ -67,6 +80,12 @@ nav li.nav-item a.nav-link{
     background-color: #3B4760;
 }
 
+/* --------------- ERROR PAGE --------------- */
+
+.error{
+    text-align: center;
+    margin-top: 80px
+}
 
 /* --------------- SEARCH PAGE --------------- */
 
