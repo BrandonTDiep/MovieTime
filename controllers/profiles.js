@@ -26,6 +26,7 @@ module.exports = {
           const movie = await response.json()
           movieDetails.push(movie)
         }
+        console.log(req.user)
 
         const favFilms = userProfile.favFilms.sort((a, b) => a.position - b.position)
         if(req.user){
@@ -61,13 +62,7 @@ module.exports = {
         }
       }
       else{
-        res.render("error.ejs", {
-          user: req.user,
-          userProf: userProfile,
-          userStatus: {
-            loggedIn: true
-          },
-        });
+        res.render("error.ejs");
       }
     } catch (err) {
       console.log(err);
@@ -77,45 +72,48 @@ module.exports = {
     try {
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
       const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
-      const movieId = req.params.movieId;
-      const response_credit =  await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${MOVIEAPI_KEY}`)
-      const credit = await response_credit.json()
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
-      const movie = await response.json()
-      const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
+      const movieName = req.params.movieId;
+
+      const movieId = movieName.split('-')[0];
+
+
+      const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
+      const movie = await movieRes.json()
 
       const userHasReview = await Review.findOne({
-        movieId: req.params.movieId,
+        movieId: movieId,
         user: req.user.id
       });
-      
-      if(req.user){
-        res.render("reviewpage.ejs", {
-          movieId: req.params.movieId,
-          movieDetails: movie, 
-          movieCredit: credit,
-          base_url: BASE_URL,
-          reviews: reviews,
-          user: req.user,
-          userId: req.user.id,
-          userStatus: {
-            loggedIn: true
-          },
-          userReview: userHasReview
-        });
+
+      if(userHasReview){
+        if(req.user){
+          res.render("reviewpage.ejs", {
+            movieId: movieId,
+            movieDetails: movie, 
+            base_url: BASE_URL,
+            user: req.user,
+            userId: req.user.id,
+            userStatus: {
+              loggedIn: true
+            },
+            userReview: userHasReview
+          });
+        }
+        else{
+          res.render("reviewpage.ejs", {
+            movieId: movieId,
+            movieDetails: movie, 
+            base_url: BASE_URL,
+            userStatus: {
+              loggedIn: false
+            },
+          });
+        }
       }
       else{
-        res.render("reviewpage.ejs", {
-          movieId: req.params.movieId,
-          movieDetails: movie, 
-          movieCredit: credit,
-          base_url: BASE_URL,
-          reviews: reviews,
-          userStatus: {
-            loggedIn: false
-          },
-        });
+        res.status(404).render('error'); 
       }
+      
 
     } catch (err) {
       console.log(err);

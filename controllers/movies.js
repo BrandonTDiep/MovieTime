@@ -83,49 +83,50 @@ module.exports = {
 
       const movieId = movieName.split('-')[0];
 
-
       const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await movieRes.json()
 
       const response_credit =  await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${MOVIEAPI_KEY}`)
       const credit = await response_credit.json()
 
-      const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
+      if(movie.success !== false){
+        if(req.user){
+          const userHasReview = await Review.findOne({
+            movieId: movieId,
+            user: req.user.id
+          });
+          const reviews = await Review.find({ movieId }).sort({ reviewLikes: 'desc', createdAt: 'desc' }).populate('user');
 
-      
-      if(req.user){
-        const userHasReview = await Review.findOne({
-          movieId: movieId,
-          user: req.user.id
-        });
-        
-        res.render("moviepage.ejs", {
-          movieId: movieId,
-          movieDetails: movie, 
-          movieCredit: credit,
-          base_url: BASE_URL,
-          reviews: reviews,
-          user: req.user,
-          userId: req.user.id,
-          userStatus: {
-            loggedIn: true
-          },
-          userReview: userHasReview
-        });
+          res.render("moviepage.ejs", {
+            movieId: movieId,
+            movieDetails: movie, 
+            movieCredit: credit,
+            base_url: BASE_URL,
+            reviews: reviews,
+            user: req.user,
+            userId: req.user.id,
+            userStatus: {
+              loggedIn: true
+            },
+            userReview: userHasReview
+          });
+        }
+        else{
+          res.render("moviepage.ejs", {
+            movieId: movieId,
+            movieDetails: movie, 
+            movieCredit: credit,
+            base_url: BASE_URL,
+            reviews: reviews,
+            userStatus: {
+              loggedIn: false
+            },
+          });
+        }
       }
       else{
-        res.render("moviepage.ejs", {
-          movieId: movieId,
-          movieDetails: movie, 
-          movieCredit: credit,
-          base_url: BASE_URL,
-          reviews: reviews,
-          userStatus: {
-            loggedIn: false
-          },
-        });
+        res.status(404).render('error'); 
       }
-
     } catch (err) {
       console.log(err);
     }

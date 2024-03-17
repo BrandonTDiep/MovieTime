@@ -60,7 +60,8 @@
                     <% } %>
                       <div class="review row">
                         <div class="col-auto mt-auto">
-                          <a href="/movies/<%= recentReviews[i].movieId %>">
+                          <% const movieTitle = movieDetails[i].title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+                          <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>">
                             <img src="<%= base_url + movieDetails[i].poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
                           </a>
                         </div>
@@ -136,7 +137,7 @@
                                 <% } %>
                               <% } %>
                             </form>
-                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>" class="open-review">
+                            <a href="/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="open-review">
                               <span>Open Review</span>
                             </a>
           

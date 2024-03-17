@@ -65,6 +65,9 @@ app.use("/review", reviewRoutes);
 app.use("/settings", settingRoutes);
 app.use("/:user", profileRoutes);
 
+app.use((req, res) => {
+  res.status(404).render('error'); 
+});
 
 //Server Running
 app.listen(process.env.PORT, () => {
