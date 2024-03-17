@@ -26,7 +26,6 @@ module.exports = {
           const movie = await response.json()
           movieDetails.push(movie)
         }
-        console.log(req.user)
 
         const favFilms = userProfile.favFilms.sort((a, b) => a.position - b.position)
         if(req.user){
@@ -75,7 +74,7 @@ module.exports = {
       const movieName = req.params.movieId;
 
       const movieId = movieName.split('-')[0];
-
+      console.log(req.params)
 
       const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
       const movie = await movieRes.json()

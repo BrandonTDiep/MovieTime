@@ -13,6 +13,7 @@ const movieRoutes = require("./routes/movies");
 const reviewRoutes = require("./routes/reviews");
 const settingRoutes = require("./routes/settings");
 const profileRoutes = require("./routes/profiles");
+const { ensureUserExists } = require("./middleware/auth");
 
 
 
@@ -63,7 +64,7 @@ app.use("/", mainRoutes);
 app.use("/movies", movieRoutes)
 app.use("/review", reviewRoutes);
 app.use("/settings", settingRoutes);
-app.use("/:user", profileRoutes);
+app.use("/:user", ensureUserExists, profileRoutes);
 
 app.use((req, res) => {
   res.status(404).render('error'); 
