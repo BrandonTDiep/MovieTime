@@ -170,7 +170,10 @@
                         <% } %>
                       <% } %>
                     </form>
-    
+                    <a href="/<%= user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>" class="open-review">
+                      <span>Open Review</span>
+                    </a>
+
                     <% if (userStatus.loggedIn) { %>
                       <%if(JSON.stringify(reviews[i].user._id) === JSON.stringify(user._id)){ %>
                         <form action="/review/deleteReview/<%= movieId %>-<%= movieTitle %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
