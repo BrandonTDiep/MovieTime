@@ -4,7 +4,7 @@ const Review = require("../models/Review");
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      const userProfile = await User.findOne({userName: req.params.username});
+      const userProfile = await User.findOne({userName: req.params.user});
       const BASE_URL = 'https://www.themoviedb.org/t/p/w94_and_h141_bestv2'
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
       const base_url2 = 'https://www.themoviedb.org/t/p/w220_and_h330_face'

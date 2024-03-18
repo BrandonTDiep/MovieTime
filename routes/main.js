@@ -6,7 +6,7 @@ const profileController = require("../controllers/profiles");
 const settingController = require("../controllers/settings");
 
 
-const { ensureAuth, ensureGuest } = require("../middleware/auth");
+const { ensureAuth, ensureGuest, ensureUserExists } = require("../middleware/auth");
 
 //Main Routes - simplified for now
 router.get("/", moviesController.getHomePage);
@@ -16,7 +16,7 @@ router.get("/logout", authController.logout);
 router.get("/signup",  authController.getSignup);
 router.get("/settings", ensureAuth, settingController.getSetting);
 router.get("/search",  moviesController.getSearchedMovies); // this is where the "id" property is created in request :id query parameter
-router.get("/:username",  profileController.getProfile);
+router.get("/:user", ensureUserExists, profileController.getProfile);
 router.post("/signup", authController.postSignup);
 
 module.exports = router;

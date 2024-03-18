@@ -16,12 +16,8 @@
                         Review by <%= userProf.userName %>
                     </h5>
                     <h4>
-                        <a href="/movies/<%= movieDetails.movieId %>-<%= movieTitle %>" class="movie-title">
-                        <%= movieDetails.title %>
-                        </a>
-                        <span class="movie-date">
-                        <%= movieDetails.release_date.split('-')[0] %>
-                        </span>
+                        <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>" class="movie-title"><%= movieDetails.title %></a>
+                        <span class="movie-date"><%= movieDetails.release_date.split('-')[0] %></span>
                     </h4>
                     <% const dateObject = new Date(userReview.createdAt); %>
                     <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
