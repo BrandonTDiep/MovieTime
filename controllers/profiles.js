@@ -64,6 +64,12 @@ module.exports = {
   },
   getProfileReviewPage: async (req, res) => {
     try {
+      const path = req.originalUrl;
+      const pathParts = path.split('/');
+      const username = pathParts[1];
+      
+      const userProfile = await User.findOne({userName: username});
+
       const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
       const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
       
@@ -80,14 +86,13 @@ module.exports = {
          movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase();
       }
 
-      
       if(movie.success === undefined && result === movieTitle){
-        if(req.user){
-          const userHasReview = await Review.findOne({
-            movieId: movieId,
-            user: req.user.id
-          });
+        const userHasReview = await Review.findOne({
+          movieId: movieId,
+          user: userProfile.id
+        });
 
+        if(req.user){
           if(userHasReview){
             res.render("reviewpage.ejs", {
               movieId: movieId,
@@ -95,10 +100,11 @@ module.exports = {
               base_url: BASE_URL,
               user: req.user,
               userId: req.user.id,
+              userProf: userProfile,
               userStatus: {
                 loggedIn: true
               },
-              userReview: userHasReview
+              userReview: userHasReview,
             });
           } 
           else{
@@ -110,6 +116,8 @@ module.exports = {
             movieId: movieId,
             movieDetails: movie, 
             base_url: BASE_URL,
+            userReview: userHasReview,
+            userProf: userProfile,
             userStatus: {
               loggedIn: false
             },

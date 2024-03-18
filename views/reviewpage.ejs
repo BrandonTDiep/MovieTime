@@ -11,7 +11,10 @@
                 </a>
                 </div>
                 <section class="col">
-                    <h5 class="pb-1">Recent Reviews</h5>
+                    <h5 class="pb-1">
+                        <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
+                        Review by <%= userProf.userName %>
+                    </h5>
                     <h4>
                         <a href="/movies/<%= movieDetails.movieId %>-<%= movieTitle %>" class="movie-title">
                         <%= movieDetails.title %>
