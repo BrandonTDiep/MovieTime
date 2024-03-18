@@ -130,9 +130,10 @@
                     </div>
                   </div>
                   <p class="review"><%= reviews[i].review%></p>
-                  
+
                   <div class="review-container">
-                    <form action="/review/likeReview/<%= movieId %>/<%= reviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
+                    <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+                    <form action="/review/likeReview/<%= movieId %>-<%= movieTitle %>/<%= reviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
                       <% let userLikesArray = reviews[i].userLikes.map(String); %>
                       <% if (userStatus.loggedIn) { %>
                         <% if(userLikesArray.includes(userId)) {%>
@@ -172,7 +173,7 @@
     
                     <% if (userStatus.loggedIn) { %>
                       <%if(JSON.stringify(reviews[i].user._id) === JSON.stringify(user._id)){ %>
-                        <form action="/review/deleteReview/<%= movieId %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                        <form action="/review/deleteReview/<%= movieId %>-<%= movieTitle %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
                           <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
                         </form>
                       <%}%>
@@ -200,11 +201,12 @@
           </div>
 
           <!-- Modal Body -->
+          <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
           <% if (userStatus.loggedIn) { %>
             <% if(userReview) { %>
-              <form action="/review/updateReview/<%= movieId %>?_method=PUT" method="POST">
+              <form action="/review/updateReview/<%= movieId %>-<%= movieTitle %>?_method=PUT" method="POST">
             <% } else { %>
-              <form action="/review/createReview/<%= movieId %>" method="POST">
+              <form action="/review/createReview/<%= movieId %>-<%= movieTitle %>" method="POST">
             <% } %>
           <% } %>
           

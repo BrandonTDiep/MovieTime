@@ -67,7 +67,7 @@
                         </div>
                         <section class="col">
                           <h4>
-                            <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>"" class="movie-title">
+                            <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="movie-title">
                               <%= movieDetails[i].title %>
                             </a>
                             
@@ -100,7 +100,7 @@
                           <p class="review mb-2"><%= recentReviews[i].review%></p>
 
                           <div class="review-container">
-                            <form action="/review/likeReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
+                            <form action="/review/likeReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
                               <% let userLikesArray = recentReviews[i].userLikes.map(String); %>
                               <% if (userStatus.loggedIn) { %>
                                 <% if(userLikesArray.includes(userId)) {%>
@@ -143,7 +143,7 @@
           
                             <% if (userStatus.loggedIn) { %>
                               <%if(JSON.stringify(recentReviews[i].user._id) === JSON.stringify(user._id)){ %>
-                                <form action="/review/deleteReview/<%= recentReviews[i].movieId %>/<%= recentReviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                                <form action="/review/deleteReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
                                   <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
                                 </form>
                               <%}%>

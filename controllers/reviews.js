@@ -7,9 +7,13 @@ module.exports = {
     try {
       const user = await User.findById(req.user.id); 
       const userName = user.userName;
+      const movieName = req.params.movieId;
+      const movieId = movieName.split('-')[0];
+      const movieTitleParts = movieName.split('-');
+      const movieTitle = movieTitleParts.slice(1).join("-");
     
       const newReview = await Review.create({
-        movieId: req.params.movieId,
+        movieId: movieId,
         user: req.user.id,
         review: req.body.review, 
         reviewLikes: 0,
@@ -18,7 +22,7 @@ module.exports = {
         userName: userName,
       });
 
-      const existingMovie = await Movie.findOne({movieId: req.params.movieId});
+      const existingMovie = await Movie.findOne({movieId: movieId});
 
       if(existingMovie){
         existingMovie.reviews.push(newReview._id);
@@ -27,22 +31,27 @@ module.exports = {
       }
       else{
         await Movie.create({
-          movieId: req.params.movieId,
+          movieId: movieId,
           reviews: [newReview._id],
         })
         console.log("Review has been added for new movieId!")
       }
       
-      res.redirect("/movies/" + req.params.movieId);
+      res.redirect(`/movies/${movieId}-${movieTitle}`);
     } catch (err) {
       console.log(err);
     }
   },
   updateReview: async (req, res) => {
     try {
+      const movieName = req.params.movieId;
+      const movieId = movieName.split('-')[0];
+      const movieTitleParts = movieName.split('-');
+      const movieTitle = movieTitleParts.slice(1).join("-");
+
       await Review.findOneAndUpdate(
         { 
-          movieId: req.params.movieId, 
+          movieId: movieId, 
           "user": req.user.id 
         },
         {
@@ -53,14 +62,19 @@ module.exports = {
         },
         { new: true }
       );
-      res.redirect("/movies/" + req.params.movieId);
+      res.redirect(`/movies/${movieId}-${movieTitle}`);
     } catch (err) {
       console.log(err);
     }
   },
   likeReview: async (req, res) => {
     try {
-      const movieId = req.params.movieId
+
+      const movieName = req.params.movieId;
+      const movieId = movieName.split('-')[0];
+      const movieTitleParts = movieName.split('-');
+      const movieTitle = movieTitleParts.slice(1).join("-"); 
+
       const userId = req.user.id;
       const reviewId = req.params.reviewId;
 
@@ -82,15 +96,18 @@ module.exports = {
           { $inc: { "reviewLikes": 1 }, $push: { "userLikes": userId } }
         );
       }
-      res.redirect(`/movies/${movieId}#review-section`);
+      res.redirect(`/movies/${movieId}-${movieTitle}#review-section`);
     } catch (err) {
       console.log(err);
     }
   },
   deleteReview: async (req, res) => {
     try {
-      const movieId = req.params.movieId;
       const reviewId = req.params.reviewId;
+      const movieName = req.params.movieId;
+      const movieId = movieName.split('-')[0];
+      const movieTitleParts = movieName.split('-');
+      const movieTitle = movieTitleParts.slice(1).join("-"); 
 
       // Delete the review document
       await Review.findByIdAndDelete(reviewId);
@@ -101,7 +118,7 @@ module.exports = {
         { $pull: { reviews: reviewId } }
       );
       console.log("Deleted Review");
-      res.redirect(`/movies/${movieId}`);
+      res.redirect(`/movies/${movieId}-${movieTitle}`);
     } catch (err) {
       console.log(err)
     }

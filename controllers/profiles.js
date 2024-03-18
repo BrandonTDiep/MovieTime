@@ -79,6 +79,7 @@ module.exports = {
       if(movie.success === undefined){
          movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase();
       }
+
       
       if(movie.success === undefined && result === movieTitle){
         if(req.user){
@@ -86,6 +87,7 @@ module.exports = {
             movieId: movieId,
             user: req.user.id
           });
+          console.log(userHasReview)
 
           if(userHasReview){
             res.render("reviewpage.ejs", {
