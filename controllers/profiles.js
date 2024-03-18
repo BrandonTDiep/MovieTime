@@ -87,7 +87,6 @@ module.exports = {
             movieId: movieId,
             user: req.user.id
           });
-          console.log(userHasReview)
 
           if(userHasReview){
             res.render("reviewpage.ejs", {

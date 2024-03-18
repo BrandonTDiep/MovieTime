@@ -9,8 +9,6 @@ module.exports = {
       const userName = user.userName;
       const movieName = req.params.movieId;
       const movieId = movieName.split('-')[0];
-      const movieTitleParts = movieName.split('-');
-      const movieTitle = movieTitleParts.slice(1).join("-");
     
       const newReview = await Review.create({
         movieId: movieId,
@@ -37,7 +35,7 @@ module.exports = {
         console.log("Review has been added for new movieId!")
       }
       
-      res.redirect(`/movies/${movieId}-${movieTitle}`);
+      res.redirect(`back`);
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +45,6 @@ module.exports = {
       const movieName = req.params.movieId;
       const movieId = movieName.split('-')[0];
       const movieTitleParts = movieName.split('-');
-      const movieTitle = movieTitleParts.slice(1).join("-");
 
       await Review.findOneAndUpdate(
         { 
@@ -62,7 +59,7 @@ module.exports = {
         },
         { new: true }
       );
-      res.redirect(`/movies/${movieId}-${movieTitle}`);
+      res.redirect(`back`);
     } catch (err) {
       console.log(err);
     }
@@ -71,9 +68,6 @@ module.exports = {
     try {
 
       const movieName = req.params.movieId;
-      const movieId = movieName.split('-')[0];
-      const movieTitleParts = movieName.split('-');
-      const movieTitle = movieTitleParts.slice(1).join("-"); 
 
       const userId = req.user.id;
       const reviewId = req.params.reviewId;
@@ -96,7 +90,7 @@ module.exports = {
           { $inc: { "reviewLikes": 1 }, $push: { "userLikes": userId } }
         );
       }
-      res.redirect(`/movies/${movieId}-${movieTitle}#review-section`);
+      res.redirect(`back`);
     } catch (err) {
       console.log(err);
     }
@@ -106,8 +100,6 @@ module.exports = {
       const reviewId = req.params.reviewId;
       const movieName = req.params.movieId;
       const movieId = movieName.split('-')[0];
-      const movieTitleParts = movieName.split('-');
-      const movieTitle = movieTitleParts.slice(1).join("-"); 
 
       // Delete the review document
       await Review.findByIdAndDelete(reviewId);
@@ -118,7 +110,7 @@ module.exports = {
         { $pull: { reviews: reviewId } }
       );
       console.log("Deleted Review");
-      res.redirect(`/movies/${movieId}-${movieTitle}`);
+      res.redirect(`back`);
     } catch (err) {
       console.log(err)
     }
