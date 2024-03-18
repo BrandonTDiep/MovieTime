@@ -1,20 +1,23 @@
 <%- include('partials/head') -%>
 <%- include('partials/nav') -%>
-<main class="movie-overview">
+<main >
     <!-- Review Comment Section -->
-    <section class="review-comments justify-content-between py-3 review-last"">
+    <section class="review-comments justify-content-between py-4 review-last review-page">
         <div class="review row">
             <div class="col-auto mt-auto">
                 <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
                 <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>">
-                    <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
+                    <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded" style="width: 150px; height: 230px;">
                 </a>
                 </div>
                 <section class="col">
-                    <h5 class="pb-1">
-                        <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
-                        Review by <%= userProf.userName %>
-                    </h5>
+                    <h1 class="pb-2" style="font-size: 1rem; font-weight:300; color: #abc; border-bottom: 1px solid #456;">
+                        <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded" style="width: 30px; height: 30px;">
+                        Review by 
+                        <a href="/<%= userProf.userName %>" class="text-decoration-none">
+                            <span style="font-weight:500;"><%= userProf.userName %></span>
+                        </a>
+                    </h1>
                     <h4>
                         <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>" class="movie-title"><%= movieDetails.title %></a>
                         <span class="movie-date"><%= movieDetails.release_date.split('-')[0] %></span>
@@ -38,7 +41,7 @@
                             <%= datePart %>  
                         </span>
                     </div>
-                    <p class="review mb-2"><%= userReview.review%></p>
+                    <p class="review mb-2" style="font-size: 1.1rem"><%= userReview.review%></p>
                     
                     <div class="review-container">
                         <form action="/review/likeReview/<%= userReview.movieId %>-<%= movieTitle %>/<%= userReview._id%>?_method=PUT" method="POST" class="review-likes">
@@ -54,16 +57,16 @@
                                 <span><%= userReview.reviewLikes %> likes</span>
                             <% } %>
                             <% } else { %>
-                            <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                <span> Like Review</span>
-                            </button> 
-                            <% if(userReview.reviewLikes === 0) { %>
-                                <span></span>
-                            <% } else if (userReview.reviewLikes === 1) { %>
-                                <span><%= userReview.reviewLikes %> like</span>
-                            <% } else { %>
-                                <span><%= userReview.reviewLikes %> likes</span>
-                            <% } %>
+                                <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                                    <span> Like Review</span>
+                                </button> 
+                                <% if(userReview.reviewLikes === 0) { %>
+                                    <span></span>
+                                <% } else if (userReview.reviewLikes === 1) { %>
+                                    <span><%= userReview.reviewLikes %> like</span>
+                                <% } else { %>
+                                    <span><%= userReview.reviewLikes %> likes</span>
+                                <% } %>
                             <% } %>
                         <% } else { %>
                             <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
@@ -88,6 +91,21 @@
                         <% } %>              
                     </div>
                 </section>
+                <section class="mt-5">
+                    
+                    <h3 class="pb-2" style="font-size: 0.85rem; color: #abc; border-bottom: 1px solid #456; letter-spacing: .08rem;">
+                        <i class="fa fa-comments"></i>
+                        COMMENTS
+                    </h3>
+                    <textarea class="form-control comments" id="comment" name="comment" rows="4" placeholder="Leave a comment.."></textarea>
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" class="btn btn-primary">POST</button>
+
+                    </div>
+
+
+                </section>
+                
             </div>
         </div>
     </section> 
