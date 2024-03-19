@@ -45,7 +45,7 @@
                 <% const day = dateObject.getDate(); %>  
                 <% const year = dateObject.getFullYear(); %>  
 
-                <% const datePart = `${month} ${day} ${year}`; %>  
+                <% const datePart = `${month} ${day}, ${year}`; %>  
                 <div class="mb-2">
                     <% let rating = userReview.rating; %>
                     <% for (let j = 1; j <= 5; j++) { %>
@@ -142,11 +142,20 @@
                         <li class="justify-content-between py-3 review-other">
                         <% } %>
                         <div class="row">
-                            <div class="col-3 d-flex">
+                            <% const dateObject = new Date(comments[i].createdAt); %>
+                            <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
+                            <% const day = dateObject.getDate(); %>  
+                            <% const year = dateObject.getFullYear(); %>  
+
+                            <% const datePart = `${month} ${day}, ${year}`; %> 
+                            <div class="col-lg-3 col-sm-3 d-flex">
                                 <a href="/<%= comments[i].user.userName %>" class="nav-link" style="color: white;">
-                                    <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
+                                    <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded" style="width: 30px; height: 30px;">
                                 </a>
-                                <a href="/<%= comments[i].user.userName %>" class="ms-2" style="color: white; text-decoration: none; font-weight: 500;" ><%= comments[i].user.userName %></a>        
+                                <div class="row">
+                                    <a href="/<%= comments[i].user.userName %>" class="ms-2" style="color: white; text-decoration: none; font-weight: 500;" ><%= comments[i].user.userName %></a>     
+                                    <span class="comment-dateCreated ms-2"><%= datePart %></span>
+                                </div>
                             </div>
 
                             <div class="col d-flex">

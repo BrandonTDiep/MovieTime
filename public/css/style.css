@@ -575,6 +575,12 @@ p.card-text{
     margin-left: 10px;
 }
 
+.comment-dateCreated{
+    color: #89a; 
+    font-size: 10px; 
+    font-weight: 300; 
+}
+
 
 /* --------------- SETTINGS PAGE --------------- */
 
