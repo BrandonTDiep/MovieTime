@@ -65,8 +65,8 @@ app.use("/", mainRoutes);
 app.use("/movies", movieRoutes)
 app.use("/review", reviewRoutes);
 app.use("/settings", settingRoutes);
-app.use("/:user", ensureUserExists, profileRoutes);
 app.use("/comment", commentRoutes);
+app.use("/:user", ensureUserExists, profileRoutes);
 
 app.use((req, res) => {
   res.status(404).render('error'); 

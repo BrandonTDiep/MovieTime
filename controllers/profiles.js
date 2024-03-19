@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const Review = require("../models/Review");
+const Comment = require("../models/Comment");
+
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -91,7 +93,7 @@ module.exports = {
           movieId: movieId,
           user: userProfile.id
         });
-
+        const comments = await Comment.find({review: userHasReview.id}).sort({ createdAt: 'asc' }).populate('user');
         if(req.user){
           if(userHasReview){
             res.render("reviewpage.ejs", {
@@ -101,6 +103,7 @@ module.exports = {
               user: req.user,
               userId: req.user.id,
               userProf: userProfile,
+              comments: comments,
               userStatus: {
                 loggedIn: true
               },
@@ -118,6 +121,7 @@ module.exports = {
             base_url: BASE_URL,
             userReview: userHasReview,
             userProf: userProfile,
+            comments: comments,
             userStatus: {
               loggedIn: false
             },

@@ -17,7 +17,6 @@ module.exports = {
         reviewLikes: 0,
         rating: req.body.rating,
         liked: 0,
-        userName: userName,
       });
 
       const existingMovie = await Movie.findOne({movieId: movieId});
@@ -44,7 +43,6 @@ module.exports = {
     try {
       const movieName = req.params.movieId;
       const movieId = movieName.split('-')[0];
-      const movieTitleParts = movieName.split('-');
 
       await Review.findOneAndUpdate(
         { 

@@ -11,8 +11,10 @@
                 </a>
                 </div>
                 <section class="col">
-                    <h1 class="pb-2" style="font-size: 1rem; font-weight:300; color: #abc; border-bottom: 1px solid #456;">
+                    <a href="/<%= userProf.userName %>" class="nav-link">
                         <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded" style="width: 30px; height: 30px;">
+                    </a>
+                    <h1 class="pb-2" style="font-size: 1rem; font-weight:300; color: #abc; border-bottom: 1px solid #456;">
                         Review by 
                         <a href="/<%= userProf.userName %>" class="text-decoration-none">
                             <span style="font-weight:500;"><%= userProf.userName %></span>
@@ -95,13 +97,51 @@
                     
                     <h3 class="pb-2" style="font-size: 0.85rem; color: #abc; border-bottom: 1px solid #456; letter-spacing: .08rem;">
                         <i class="fa fa-comments"></i>
-                        COMMENTS
+                        <% if(comments.length === 0) { %>
+                            COMMENT?
+                        <% } else if (comments.length === 1) { %>
+                            <%= comments.length %> COMMENT
+                        <% } else { %>
+                            <%= comments.length %> COMMENTS
+                        <% } %>
+                        
                     </h3>
-                    <textarea class="form-control comments" id="comment" name="comment" rows="4" placeholder="Leave a comment.."></textarea>
-                    <div class="d-flex justify-content-end mt-3">
-                        <button type="submit" class="btn btn-primary">POST</button>
+                    <form action="/comment/createComment/<%= userProf.id %>/<%= userReview._id %>" method="POST">
+                        <textarea class="form-control comments" id="comment" name="comment" rows="4" placeholder="Leave a comment.."></textarea>
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn btn-primary">POST</button>
+                        </div>
+                    </form>
 
-                    </div>
+                    <!-- Review Comment Section -->
+                    <section class="mt-1 review-comments">
+                        <ul>
+                        <% for(let i=0; i < comments.length; i++) { %>
+                            <% if (i === comments.length - 1) { %>
+                            <li class="justify-content-between py-3 review-last">
+                            <% } else { %>
+                            <li class="justify-content-between py-3 review-other">
+                            <% } %>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <a href="/<%= comments[i].user.userName %>" class="nav-link">
+                                        <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <div class="review d-flex">
+                                        <a href="/<%= comments[i].user.userName %>" class="nav-link">
+                                            <p class="review-username"><%= comments[i].user.userName %></p>
+                                        </a>        
+                                    </div>
+                                    <p class="review"><%= comments[i].comment%></p>
+                                </div>
+                            </div>
+                            </li>
+                        <% } %>
+                        </ul>
+                    </section>   
 
 
                 </section>
