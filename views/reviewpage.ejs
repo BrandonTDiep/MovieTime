@@ -5,155 +5,166 @@
     <section class="review-comments justify-content-between py-4 review-last review-page">
         <div class="review row">
             <div class="col-auto mt-auto">
-                <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
-                <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>">
-                    <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded" style="width: 150px; height: 230px;">
-                </a>
+                <div class="wgag" style="display: flex; flex-direction: column;">
+                    <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+
+                    <% if(movieDetails.poster_path != null) { %>
+                        <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>">
+                            <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded" style="width: 150px; height: 230px;">
+                        </a>                   
+                    <% } else { %>
+                        <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img" loading="lazy">
+                    <% } %>
+                    <!-- Button trigger modal -->
+                    <% if (userStatus.loggedIn) { %>
+                        <% if(userReview.user == userId) { %>
+                            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 150px;">
+                            Edit review
+                            </button>
+                        <% } %>
+                    <% } %>
                 </div>
-                <section class="col">
-                    <a href="/<%= userProf.userName %>" class="nav-link">
-                        <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded" style="width: 30px; height: 30px;">
-                    </a>
-                    <h1 class="pb-2" style="font-size: 1rem; font-weight:300; color: #abc; border-bottom: 1px solid #456;">
-                        Review by 
+            </div>
+            <section class="col">
+                <section class="pb-2" style="border-bottom: 1px solid #456;">
+                        <a href="/<%= userProf.userName %>" class="nav-link" style="display: inline;">
+                            <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded" style="width: 30px; height: 30px;">
+                        </a>
+                        <span class="ms-1" style="font-size: 1rem; font-weight:300; color: #abc;">Review By</span>
                         <a href="/<%= userProf.userName %>" class="text-decoration-none">
                             <span style="font-weight:500;"><%= userProf.userName %></span>
                         </a>
-                    </h1>
-                    <h4>
-                        <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>" class="movie-title"><%= movieDetails.title %></a>
-                        <span class="movie-date"><%= movieDetails.release_date.split('-')[0] %></span>
-                    </h4>
-                    <% const dateObject = new Date(userReview.createdAt); %>
-                    <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
-                    <% const day = dateObject.getDate(); %>  
-                    <% const year = dateObject.getFullYear(); %>  
+                </section>
+                
+                <h4 class="mt-2">
+                    <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>" class="movie-title"><%= movieDetails.title %></a>
+                    <span class="movie-date"><%= movieDetails.release_date.split('-')[0] %></span>
+                </h4>
+                <% const dateObject = new Date(userReview.createdAt); %>
+                <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
+                <% const day = dateObject.getDate(); %>  
+                <% const year = dateObject.getFullYear(); %>  
 
-                    <% const datePart = `${month} ${day} ${year}`; %>  
-                    <div class="mb-2">
-                        <% let rating = userReview.rating; %>
-                        <% for (let j = 1; j <= 5; j++) { %>
-                            <% if (j <= Math.floor(rating)) { %>
-                                <span class="fa fa-star checked"></span>
-                            <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
-                                <span class="fa fa-star-half checked"></span>
-                            <% } %>
+                <% const datePart = `${month} ${day} ${year}`; %>  
+                <div class="mb-2">
+                    <% let rating = userReview.rating; %>
+                    <% for (let j = 1; j <= 5; j++) { %>
+                        <% if (j <= Math.floor(rating)) { %>
+                            <span class="fa fa-star checked"></span>
+                        <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
+                            <span class="fa fa-star-half checked"></span>
                         <% } %>
-                        <span class="review-dateCreated">             
-                            <%= datePart %>  
-                        </span>
-                    </div>
-                    <p class="review mb-2" style="font-size: 1.1rem"><%= userReview.review%></p>
-                    
-                    <div class="review-container">
-                        <form action="/review/likeReview/<%= userReview.movieId %>-<%= movieTitle %>/<%= userReview._id%>?_method=PUT" method="POST" class="review-likes">
-                        <% let userLikesArray = userReview.userLikes.map(String); %>
-                        <% if (userStatus.loggedIn) { %>
-                            <% if(userLikesArray.includes(userId)) {%>
-                            <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                <span> Liked</span>
+                    <% } %>
+                    <span class="review-dateCreated">             
+                        <%= datePart %>  
+                    </span>
+                </div>
+                <p class="review mb-2" style="font-size: 1.1rem"><%= userReview.review%></p>
+                
+                <div class="review-container">
+                    <form action="/review/likeReview/<%= userReview.movieId %>-<%= movieTitle %>/<%= userReview._id%>?_method=PUT" method="POST" class="review-likes">
+                    <% let userLikesArray = userReview.userLikes.map(String); %>
+                    <% if (userStatus.loggedIn) { %>
+                        <% if(userLikesArray.includes(userId)) {%>
+                        <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                            <span> Liked</span>
+                        </button> 
+                        <% if(userReview.reviewLikes === 1) { %>
+                            <span><%= userReview.reviewLikes %> like</span>
+                        <% } else { %>
+                            <span><%= userReview.reviewLikes %> likes</span>
+                        <% } %>
+                        <% } else { %>
+                            <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                                <span> Like Review</span>
                             </button> 
-                            <% if(userReview.reviewLikes === 1) { %>
+                            <% if(userReview.reviewLikes === 0) { %>
+                                <span></span>
+                            <% } else if (userReview.reviewLikes === 1) { %>
                                 <span><%= userReview.reviewLikes %> like</span>
                             <% } else { %>
                                 <span><%= userReview.reviewLikes %> likes</span>
                             <% } %>
-                            <% } else { %>
-                                <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                    <span> Like Review</span>
-                                </button> 
-                                <% if(userReview.reviewLikes === 0) { %>
-                                    <span></span>
-                                <% } else if (userReview.reviewLikes === 1) { %>
-                                    <span><%= userReview.reviewLikes %> like</span>
-                                <% } else { %>
-                                    <span><%= userReview.reviewLikes %> likes</span>
-                                <% } %>
-                            <% } %>
-                        <% } else { %>
-                            <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                            <span> Like Review</span>
-                            </button> 
-                            <% if(userReview.reviewLikes === 0) { %>
-                            <span></span>
-                            <% } else if (userReview.reviewLikes === 1) { %>
-                            <span><%= userReview.reviewLikes %> like</span>
-                            <% } else { %>
-                            <span><%= userReview.reviewLikes %> likes</span>
-                            <% } %>
                         <% } %>
-                        </form>
-                    
-                        <% if (userStatus.loggedIn) { %>
-                            <%if(JSON.stringify(userReview.user._id) === JSON.stringify(user._id)){ %>
-                                <form action="/review/deleteReview/<%= userReview.movieId %>-<%= movieTitle %>/<%= userReview._id %>?_method=DELETE" method="POST" class="delete-form">
-                                <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
-                                </form>
-                            <% } %> 
-                        <% } %>              
-                    </div>
-                </section>
-                <section class="mt-5">
-                    
-                    <h3 class="pb-2" style="font-size: 0.85rem; color: #abc; border-bottom: 1px solid #456; letter-spacing: .08rem;">
-                        <i class="fa fa-comments"></i>
-                        <% if(comments.length === 0) { %>
-                            COMMENT?
-                        <% } else if (comments.length === 1) { %>
-                            <%= comments.length %> COMMENT
+                    <% } else { %>
+                        <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                        <span> Like Review</span>
+                        </button> 
+                        <% if(userReview.reviewLikes === 0) { %>
+                        <span></span>
+                        <% } else if (userReview.reviewLikes === 1) { %>
+                        <span><%= userReview.reviewLikes %> like</span>
                         <% } else { %>
-                            <%= comments.length %> COMMENTS
+                        <span><%= userReview.reviewLikes %> likes</span>
                         <% } %>
-                        
-                    </h3>
-                    <form action="/comment/createComment/<%= userProf.id %>/<%= userReview._id %>" method="POST">
+                    <% } %>
+                    </form>
+                
+                    <% if (userStatus.loggedIn) { %>
+                        <%if(JSON.stringify(userReview.user._id) === JSON.stringify(user._id)){ %>
+                            <form action="/review/deleteReview/<%= userReview.movieId %>-<%= movieTitle %>/<%= userReview._id %>?_method=DELETE" method="POST" class="delete-form">
+                            <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
+                            </form>
+                        <% } %> 
+                    <% } %>              
+                </div>
+            </section>
+            <section class="mt-5">
+                
+                <h3 class="mb-2" style="font-size: 0.85rem; color: #abc; letter-spacing: .08rem; margin-bottom: 0;">
+                    <i class="fa fa-comments"></i>
+                    <% if(comments.length === 0) { %>
+                        COMMENT?
+                    <% } else if (comments.length === 1) { %>
+                        <%= comments.length %> COMMENT
+                    <% } else { %>
+                        <%= comments.length %> COMMENTS
+                    <% } %>                
+                </h3>
+
+                <% if (userStatus.loggedIn) { %>
+                    <form action="/comment/createComment/<%= user.id %>/<%= userReview._id %>" method="POST" class="mt-2 mb-5 pt-2" style="border-top: 1px solid #456;">
                         <textarea class="form-control comments" id="comment" name="comment" rows="4" placeholder="Leave a comment.."></textarea>
                         <div class="d-flex justify-content-end mt-3">
                             <button type="submit" class="btn btn-primary">POST</button>
                         </div>
                     </form>
-
-                    <!-- Review Comment Section -->
-                    <section class="mt-3 review-comments">
-                        <ul>
-                        <% for(let i=0; i < comments.length; i++) { %>
-                            <% if (i === comments.length - 1) { %>
-                            <li class="justify-content-between py-3 review-last">
-                            <% } else { %>
-                            <li class="justify-content-between py-3 review-other">
-                            <% } %>
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="/<%= comments[i].user.userName %>" class="nav-link">
-                                        <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
-                                    </a>
-                                </div>
-
-                                <div class="col review-container">
-                                    <div class="review d-flex">
-                                        <a href="/<%= comments[i].user.userName %>" class="nav-link">
-                                            <p class="review-username"><%= comments[i].user.userName %></p>
-                                        </a>        
-                                    </div>
-                                    <p class="review"><%= comments[i].comment%></p>
-                                    <% if (userStatus.loggedIn) { %>
-                                        <%if(JSON.stringify(comments[i].user._id) === JSON.stringify(user._id)){ %>
-                                            <form action="/comment/deleteComment/<%= comments[i].id %>?_method=DELETE" method="POST" class="delete-form">
-                                                <button class="delete-button" type="submit"><i class="fa fa-trash"></i></button> 
-                                            </form>
-                                        <% } %> 
-                                    <% } %> 
-                                </div>
-                            </div>
-                            </li>
-                        <% } %>
-                        </ul>
-                    </section>   
-
-
-                </section>
+                <% } %> 
                 
-            </div>
+
+                <!-- Comment Section -->
+                <section style="border-top: 1px solid #456;">
+                    <ul>
+                    <% for(let i=0; i < comments.length; i++) { %>
+                        <% if (i === comments.length - 1) { %>
+                        <li class="justify-content-between py-3 review-last">
+                        <% } else { %>
+                        <li class="justify-content-between py-3 review-other">
+                        <% } %>
+                        <div class="row">
+                            <div class="col-3 d-flex">
+                                <a href="/<%= comments[i].user.userName %>" class="nav-link" style="color: white;">
+                                    <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
+                                </a>
+                                <a href="/<%= comments[i].user.userName %>" class="ms-2" style="color: white; text-decoration: none; font-weight: 500;" ><%= comments[i].user.userName %></a>        
+                            </div>
+
+                            <div class="col d-flex">
+                                <p style="color: #B3D6F3;"><%= comments[i].comment%></p>
+                                <% if (userStatus.loggedIn) { %>
+                                    <%if(JSON.stringify(comments[i].user._id) === JSON.stringify(user._id)){ %>
+                                        <form action="/comment/deleteComment/<%= comments[i].id %>?_method=DELETE" method="POST" class="delete-form">
+                                            <button class="delete-button" type="submit"><i class="fa fa-trash"></i></button> 
+                                        </form>
+                                    <% } %> 
+                                <% } %> 
+                            </div> 
+                        </div>
+                        </li>
+                    <% } %>
+                    </ul>
+                </section>   
+            </section>
         </div>
     </section> 
 </main>

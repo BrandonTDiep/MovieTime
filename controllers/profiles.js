@@ -87,13 +87,17 @@ module.exports = {
       if(movie.success === undefined){
          movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase();
       }
-
       if(movie.success === undefined && result === movieTitle){
         const userHasReview = await Review.findOne({
           movieId: movieId,
           user: userProfile.id
         });
-        const comments = await Comment.find({review: userHasReview.id}).sort({ createdAt: 'asc' }).populate('user');
+
+        let comments;
+        if(userHasReview){
+          comments = await Comment.find({review: userHasReview.id}).sort({ createdAt: 'asc' }).populate('user');
+        }
+        
         if(req.user){
           if(userHasReview){
             res.render("reviewpage.ejs", {
