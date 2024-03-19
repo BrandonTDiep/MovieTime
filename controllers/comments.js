@@ -14,4 +14,17 @@ module.exports = {
       console.log(err);
     }
   },
+  deleteComment: async (req, res) => {
+    try {
+      const commentId = req.params.commentId;
+
+      // Delete the review document
+      await Comment.findByIdAndDelete(commentId);
+          
+      console.log("Deleted Comment");
+      res.redirect(`back`);
+    } catch (err) {
+      console.log(err)
+    }
+  },
 };

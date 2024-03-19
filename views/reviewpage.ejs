@@ -114,7 +114,7 @@
                     </form>
 
                     <!-- Review Comment Section -->
-                    <section class="mt-1 review-comments">
+                    <section class="mt-3 review-comments">
                         <ul>
                         <% for(let i=0; i < comments.length; i++) { %>
                             <% if (i === comments.length - 1) { %>
@@ -129,13 +129,20 @@
                                     </a>
                                 </div>
 
-                                <div class="col">
+                                <div class="col review-container">
                                     <div class="review d-flex">
                                         <a href="/<%= comments[i].user.userName %>" class="nav-link">
                                             <p class="review-username"><%= comments[i].user.userName %></p>
                                         </a>        
                                     </div>
                                     <p class="review"><%= comments[i].comment%></p>
+                                    <% if (userStatus.loggedIn) { %>
+                                        <%if(JSON.stringify(comments[i].user._id) === JSON.stringify(user._id)){ %>
+                                            <form action="/comment/deleteComment/<%= comments[i].id %>?_method=DELETE" method="POST" class="delete-form">
+                                                <button class="delete-button" type="submit"><i class="fa fa-trash"></i></button> 
+                                            </form>
+                                        <% } %> 
+                                    <% } %> 
                                 </div>
                             </div>
                             </li>
