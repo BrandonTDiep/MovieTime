@@ -3,12 +3,6 @@ const Review = require("../models/Review");
 module.exports = {
   createComment: async (req, res) => {
     try {
-        await Comment.create({
-            comment: req.body.comment, 
-            user: req.params.userId,
-            review: req.params.reviewId,
-        });
-
         await Review.findByIdAndUpdate(
           req.params.reviewId,
           { $push: { 
@@ -40,8 +34,6 @@ module.exports = {
         }}
       );
 
-      
-          
       console.log("Deleted Comment");
       res.redirect(`back`);
     } catch (err) {
