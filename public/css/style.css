@@ -583,6 +583,10 @@ p.card-text{
     text-decoration: none;
 }
 
+.review-comment:hover{
+    color: white;
+}
+
 .comment-dateCreated{
     color: #89a; 
     font-size: 10px; 
