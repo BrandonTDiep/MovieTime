@@ -1,6 +1,6 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css);
 
-/* --------------- HTML --------------- */
+/* --------------- GENERAL --------------- */
 
 body{
     background-color: #14181C;
@@ -45,6 +45,17 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
 .comments::placeholder, #bio::placeholder{
     color: rgb(118, 145, 172);
 }
+
+.movie-overview, .settings, .review-page{
+    margin: 0 auto; 
+    padding: 0 10px;
+    max-width: 1100px;
+}
+
+.overview, .review, .bio{
+    color: #B3D6F3;
+} 
+
 /* --------------- NAVBAR --------------- */
 
 nav {
@@ -175,12 +186,6 @@ p.card-text{
 
 /*--- Movie Overview ---*/
 
-.movie-overview, .settings, .review-page{
-    margin: 0 auto; 
-    padding: 0 10px;
-    max-width: 1100px;
-}
-
 .movie-poster{
     flex: 0.5;
 }
@@ -248,9 +253,6 @@ p.card-text{
     margin-right: 10px;
 }
 
-.overview, .review, .bio{
-    color: #B3D6F3;
-} 
 
 /*-------- Rating Section --------*/
 .like-button, .unlike-button {
@@ -656,4 +658,78 @@ aside.favorite-films ul li button{
 
 .film:hover{
     border: 3px solid rgb(70, 95, 121);
+}
+
+/* --------------- REVIEW PAGE --------------- */
+
+.review-poster{
+    width: 155px; 
+    height: 230px;
+}
+
+.btn.btn-primary.mt-2.review-button{
+    width: 155px; 
+}
+
+.review-profile{
+    border-bottom: 1px solid #456;
+}
+
+.review-profile a:first-child{ 
+    display: inline;
+}
+
+.review-profile span{
+    font-size: 1rem; 
+    font-weight:300; 
+    color: #abc;
+}
+
+.review-profile a span{
+    font-weight: 500;
+}
+
+.review-profile a span:hover{
+    color: white;
+}
+
+.review-prof-pic, .comment-pic{
+    width: 30px; height: 30px;
+}
+
+.user-review{
+    font-size: 1.1rem
+}
+
+.comment-heading{
+    font-size: 0.85rem; 
+    color: #abc; 
+    letter-spacing: .08rem; 
+    margin-bottom: 0;
+}
+
+.comment-textarea{
+    border-top: 1px solid #456;
+}
+
+.review-comments.comment{
+    border-top: 1px solid #456;
+}
+
+.review-comments.comment{
+    border-top: 1px solid #456;
+}
+
+.comment-user{
+    color: #abc; 
+    text-decoration: none; 
+    font-weight: 500;
+}
+
+.comment-user:hover{
+    color: white; 
+}
+
+.comment{
+    color: #B3D6F3;
 }

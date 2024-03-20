@@ -1,16 +1,15 @@
 <%- include('partials/head') -%>
 <%- include('partials/nav') -%>
 <main >
-    <!-- Review Comment Section -->
-    <section class="review-comments justify-content-between py-4 review-last review-page">
+    <section class="justify-content-between py-4 review-page">
         <div class="review row">
             <div class="col-auto mt-auto">
-                <div style="display: flex; flex-direction: column;">
+                <div class="d-flex flex-column">
                     <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
 
                     <% if(movieDetails.poster_path != null) { %>
                         <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>">
-                            <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded" style="width: 155px; height: 230px;">
+                            <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded review-poster">
                         </a>                   
                     <% } else { %>
                         <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img" loading="lazy">
@@ -18,21 +17,19 @@
                     <!-- Button trigger modal -->
                     <% if (userStatus.loggedIn) { %>
                         <% if(userReview.user == userId) { %>
-                            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 155px;">
-                            Edit review
-                            </button>
+                            <button type="button" class="btn btn-primary mt-2 review-button" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit review</button>
                         <% } %>
                     <% } %>
                 </div>
             </div>
             <section class="col ps-4">
-                <section class="pb-2" style="border-bottom: 1px solid #456;">
-                        <a href="/<%= userProf.userName %>" class="nav-link" style="display: inline;">
-                            <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded" style="width: 30px; height: 30px;">
+                <section class="pb-2 review-profile">
+                        <a href="/<%= userProf.userName %>" class="nav-link">
+                            <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded review-prof-pic">
                         </a>
-                        <span class="ms-1" style="font-size: 1rem; font-weight:300; color: #abc;">Review By</span>
+                        <span class="ms-1">Review By</span>
                         <a href="/<%= userProf.userName %>" class="text-decoration-none">
-                            <span style="font-weight:500;"><%= userProf.userName %></span>
+                            <span><%= userProf.userName %></span>
                         </a>
                 </section>
                 
@@ -59,7 +56,7 @@
                         <%= datePart %>  
                     </span>
                 </div>
-                <p class="review mb-2" style="font-size: 1.1rem"><%= userReview.review%></p>
+                <p class="review mb-2 user-review"><%= userReview.review%></p>
                 
                 <div class="review-container">
                     <form action="/review/likeReview/<%= userReview.movieId %>-<%= movieTitle %>/<%= userReview._id%>?_method=PUT" method="POST" class="review-likes">
@@ -103,7 +100,7 @@
                     <% if (userStatus.loggedIn) { %>
                         <%if(JSON.stringify(userReview.user._id) === JSON.stringify(user._id)){ %>
                             <form action="/review/deleteReview/<%= userReview.movieId %>-<%= movieTitle %>/<%= userReview._id %>?_method=DELETE" method="POST" class="delete-form">
-                            <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
+                                <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
                             </form>
                         <% } %> 
                     <% } %>              
@@ -111,7 +108,7 @@
             </section>
             <section class="mt-5">
                 
-                <h3 class="mb-2" style="font-size: 0.85rem; color: #abc; letter-spacing: .08rem; margin-bottom: 0;">
+                <h3 class="mb-2 comment-heading">
                     <i class="fa fa-comments"></i>
                     <% if(comments.length === 0) { %>
                         COMMENT?
@@ -123,8 +120,8 @@
                 </h3>
 
                 <% if (userStatus.loggedIn) { %>
-                    <form action="/comment/createComment/<%= user.id %>/<%= userReview._id %>" method="POST" class="mt-2 mb-5 pt-2" style="border-top: 1px solid #456;">
-                        <textarea class="form-control comments" id="comment" name="comment" rows="4" placeholder="Leave a comment.."></textarea>
+                    <form action="/comment/createComment/<%= user.id %>/<%= userReview._id %>" method="POST" class="mt-2 mb-5 pt-2 comment-textarea">
+                        <textarea class="form-control comments" id="comment" name="comment" rows="4" placeholder="Reply as <%= user.userName %>..."></textarea>
                         <div class="d-flex justify-content-end mt-3">
                             <button type="submit" class="btn btn-primary">POST</button>
                         </div>
@@ -133,7 +130,7 @@
                 
 
                 <!-- Comment Section -->
-                <section style="border-top: 1px solid #456;">
+                <section class="review-comments comment">
                     <ul>
                     <% for(let i=0; i < comments.length; i++) { %>
                         <% if (i === comments.length - 1) { %>
@@ -149,17 +146,17 @@
 
                             <% const datePart = `${month} ${day}, ${year}`; %> 
                             <div class="col-lg-3 col-sm-3 d-flex">
-                                <a href="/<%= comments[i].user.userName %>" class="nav-link" style="color: white;">
-                                    <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded" style="width: 30px; height: 30px;">
+                                <a href="/<%= comments[i].user.userName %>" class="nav-link">
+                                    <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
                                 </a>
                                 <div class="row">
-                                    <a href="/<%= comments[i].user.userName %>" class="ms-2" style="color: white; text-decoration: none; font-weight: 500;" ><%= comments[i].user.userName %></a>     
+                                    <a href="/<%= comments[i].user.userName %>" class="ms-2 comment-user"><%= comments[i].user.userName %></a>     
                                     <span class="comment-dateCreated ms-2"><%= datePart %></span>
                                 </div>
                             </div>
 
                             <div class="col d-flex">
-                                <p style="color: #B3D6F3;"><%= comments[i].comment%></p>
+                                <p class="comment"><%= comments[i].comment%></p>
                                 <% if (userStatus.loggedIn) { %>
                                     <%if(JSON.stringify(comments[i].user._id) === JSON.stringify(user._id)){ %>
                                         <form action="/comment/deleteComment/<%= comments[i].id %>/<%= userReview._id %>?_method=DELETE" method="POST" class="delete-form">
