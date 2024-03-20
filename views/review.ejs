@@ -174,9 +174,118 @@
                     </ul>
                 </section>   
             </section>
+            
+            <!-- Modal -->
+            <section class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h4 class="modal-title font-weight-bold" id="exampleModalLabel"> <%= movieDetails.title %> 
+                            <span class="movie-date">
+                            <%= movieDetails.release_date.split('-')[0] %>
+                            </span>
+                        </h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+            
+                        <!-- Modal Body -->
+                        <% if (userStatus.loggedIn) { %>
+                            <form action="/review/updateReview/<%= movieId %>-<%= movieTitle %>?_method=PUT" method="POST">
+                        <% } %>
+                            <div class="modal-body d-flex">
+                                <div class="d-flex align-items-center">
+                                <% if(movieDetails.poster_path != null) { %>
+                                    <img src="<%= base_url + movieDetails.poster_path %>" class="img-fluid rounded modal-poster"  alt="movie poster" loading="lazy">
+                                    <% } %>
+                                </div>
+                
+                                <div class="mb-3 modal-review">
+                                <h5 class="form-label font-weight-bold">Review</h5>
+                                <% if (userStatus.loggedIn) { %>
+                                    <% if(userReview) { %>
+                                    <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.review %></textarea>
+                                    <% } else { %>
+                                    <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
+                                    <% } %>
+                                <% } %>
+                                </div>
+                            </div>
+                
+                            <!-- Modal Footer -->
+                            <div class="modal-footer d-flex justify-content-between">
+                                <div class="rating-wrap d-flex flex-column">
+                                <h5>Rating</h5>
+                                <div>
+                                    <fieldset class="d-flex">
+                                    <button id="clearRating" class="clear-button" aria-label="Clear rating"><i class="fas fa-times"></i></button>
+                                    <div class="rating">
+                                        <input type="radio" id="star5" name="rating" value="5"/><label for="star5" class="full" title="Awesome"></label>
+                                        <input type="radio" id="star4.5" name="rating" value="4.5"/><label for="star4.5" class="half"></label>
+                                        <input type="radio" id="star4" name="rating" value="4"/><label for="star4" class="full"></label>
+                                        <input type="radio" id="star3.5" name="rating" value="3.5"/><label for="star3.5" class="half"></label>
+                                        <input type="radio" id="star3" name="rating" value="3"/><label for="star3" class="full"></label>
+                                        <input type="radio" id="star2.5" name="rating" value="2.5"/><label for="star2.5" class="half"></label>
+                                        <input type="radio" id="star2" name="rating" value="2"/><label for="star2" class="full"></label>
+                                        <input type="radio" id="star1.5" name="rating" value="1.5"/><label for="star1.5" class="half"></label>
+                                        <input type="radio" id="star1" name="rating" value="1"/><label for="star1" class="full"></label>
+                                        <input type="radio" id="star0.5" name="rating" value="0.5"/><label for="star0.5" class="half"></label>
+                                    </div>
+                                    </fieldset>
+                                </div>
+                                </div>
+                                <div>
+                                <% if (userStatus.loggedIn) { %>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button> 
+                                <% } %>    
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
         </div>
     </section> 
 </main>
+
+<<script>
+    // Get all the star inputs
+    const stars = document.querySelectorAll('.rating input');
+  
+    // Function to check the appropriate star rating input based on user's previous rating
+    function checkUserRating(userRating) {
+      stars.forEach(star => {
+        if (star.value == userRating) {
+          star.checked = true;
+        }
+      });
+    }
+  
+    // Add click event listener to each star input
+    stars.forEach(star => {
+      star.addEventListener('click', function() {
+        // Toggle the visibility of clear button based on whether any star is checked or not
+        document.getElementById('clearRating').style.display = document.querySelector('.rating input:checked') ? 'inline-block' : 'none';
+      });
+    });
+  
+    // Add click event listener to clear button to reset the rating
+    document.getElementById('clearRating').addEventListener('click', function() {
+      event.preventDefault(); // Prevent the default form submission
+  
+      document.querySelector('.rating input:checked').checked = false;
+      // Hide the clear button after resetting the rating
+      this.style.display = 'none';
+    });
+  
+    // Check and autofill the stars if user has already made a review
+    <% if (userStatus.loggedIn) { %>
+      <% if (userReview) { %>
+        checkUserRating(<%= userReview.rating %>);
+      <% } %>
+    <% } %>
+  
+  </script>
 
 <%- include('partials/footer') -%>
 

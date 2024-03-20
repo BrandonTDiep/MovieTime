@@ -18,7 +18,7 @@ module.exports = {
     try {
       const commentId = req.params.commentId;
 
-      // Delete the review document
+      // Delete the comment
       await Comment.findByIdAndDelete(commentId);
           
       console.log("Deleted Comment");
