@@ -1,16 +1,12 @@
-const Movie = require("../models/Movie");
 const Review = require("../models/Review");
-const User = require("../models/User");
 
 module.exports = {
   createReview: async (req, res) => {
     try {
-      const user = await User.findById(req.user.id); 
-      const userName = user.userName;
       const movieName = req.params.movieId;
       const movieId = movieName.split('-')[0];
     
-      const newReview = await Review.create({
+      await Review.create({
         movieId: movieId,
         user: req.user.id,
         review: req.body.review, 
@@ -18,21 +14,6 @@ module.exports = {
         rating: req.body.rating,
         liked: 0,
       });
-
-      const existingMovie = await Movie.findOne({movieId: movieId});
-
-      if(existingMovie){
-        existingMovie.reviews.push(newReview._id);
-        await existingMovie.save();
-        console.log("Review has been added for existing movieId!");
-      }
-      else{
-        await Movie.create({
-          movieId: movieId,
-          reviews: [newReview._id],
-        })
-        console.log("Review has been added for new movieId!")
-      }
       
       res.redirect(`back`);
     } catch (err) {
@@ -64,9 +45,6 @@ module.exports = {
   },
   likeReview: async (req, res) => {
     try {
-
-      const movieName = req.params.movieId;
-
       const userId = req.user.id;
       const reviewId = req.params.reviewId;
 
@@ -96,17 +74,10 @@ module.exports = {
   deleteReview: async (req, res) => {
     try {
       const reviewId = req.params.reviewId;
-      const movieName = req.params.movieId;
-      const movieId = movieName.split('-')[0];
 
       // Delete the review document
       await Review.findByIdAndDelete(reviewId);
           
-      // Remove the reference to the deleted review from the Movie document
-      await Movie.findOneAndUpdate(
-        { movieId: movieId },
-        { $pull: { reviews: reviewId } }
-      );
       console.log("Deleted Review");
       res.redirect(`back`);
     } catch (err) {
