@@ -1,7 +1,5 @@
 const User = require("../models/User");
 const Review = require("../models/Review");
-const Comment = require("../models/Comment");
-
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -27,7 +25,6 @@ module.exports = {
         const movie = await response.json()
         movieDetails.push(movie)
       }
-
       const favFilms = userProfile.favFilms.sort((a, b) => a.position - b.position)
       if(req.user){
         res.render("profile.ejs", {
@@ -95,9 +92,9 @@ module.exports = {
 
         let comments;
         if(userHasReview){
-          comments = await Comment.find({review: userHasReview.id}).sort({ createdAt: 'asc' }).populate('user');
+          comments = await Review.findOne({ "_id": userHasReview.id }, {"_id": 0, "comments": 1 }).populate('comments.user').sort({ "comments.createdAt": 'asc' });
         }
-        
+
         if(req.user){
           if(userHasReview){
             res.render("review.ejs", {
@@ -107,7 +104,7 @@ module.exports = {
               user: req.user,
               userId: req.user.id,
               userProf: userProfile,
-              comments: comments,
+              comments: comments.comments,
               userStatus: {
                 loggedIn: true
               },

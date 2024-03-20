@@ -1,4 +1,4 @@
-const Comment = require("../models/Comment");
+const Review = require("../models/Review");
 
 module.exports = {
   createComment: async (req, res) => {
@@ -8,8 +8,18 @@ module.exports = {
             user: req.params.userId,
             review: req.params.reviewId,
         });
+
+        await Review.findByIdAndUpdate(
+          req.params.reviewId,
+          { $push: { 
+            "comments": {
+              comment: req.body.comment, 
+              user: req.params.userId,
+            } 
+          }}
+        );
         console.log("Comment has been added!");
-         res.redirect('back');
+        res.redirect('back');
     } catch (err) {
       console.log(err);
     }
@@ -17,9 +27,20 @@ module.exports = {
   deleteComment: async (req, res) => {
     try {
       const commentId = req.params.commentId;
+      const reviewId = req.params.reviewId;
 
+      console.log(commentId)
       // Delete the comment
-      await Comment.findByIdAndDelete(commentId);
+      await Review.findOneAndUpdate(
+        { _id: reviewId},
+        { $pull: {
+          "comments": {
+            _id: commentId, 
+          } 
+        }}
+      );
+
+      
           
       console.log("Deleted Comment");
       res.redirect(`back`);
