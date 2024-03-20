@@ -105,6 +105,7 @@
             <% } else {%>
               <li class="justify-content-between py-3 review-other">
             <% } %>
+              <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
               <div class="row">
                 <div class="col-auto">
                   <a href="/<%= reviews[i].user.userName %>" class="nav-link">
@@ -128,11 +129,18 @@
                             <% } %>
                         <% } %>
                     </div>
+                    <span>
+                      <% if(reviews[i].comments.length > 0) { %>
+                        <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>" class="review-comment">                                  
+                          <i class="fa fa-comment"></i>
+                          <%= reviews[i].comments.length %>
+                        </a>
+                      <% } %>
+                    </span>
                   </div>
                   <p class="review"><%= reviews[i].review%></p>
 
                   <div class="review-container">
-                    <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
                     <form action="/review/likeReview/<%= movieId %>-<%= movieTitle %>/<%= reviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
                       <% let userLikesArray = reviews[i].userLikes.map(String); %>
                       <% if (userStatus.loggedIn) { %>

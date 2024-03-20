@@ -96,8 +96,16 @@
                               <span class="review-dateCreated">             
                                 <%= datePart %>  
                               </span>
+                              <span>
+                                <% if(recentReviews[i].comments.length > 0) { %>
+                                  <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="review-comment">                                  
+                                    <i class="fa fa-comment"></i>
+                                    <%= recentReviews[i].comments.length %>
+                                  </a>
+                                <% } %>
+                              </span>
                           </div>
-                          <p class="review mb-2"><%= recentReviews[i].review%></p>
+                          <p class="review mb-2"><%= recentReviews[i].review %></p>
 
                           <div class="review-container">
                             <form action="/review/likeReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST" class="review-likes">

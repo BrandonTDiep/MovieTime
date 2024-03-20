@@ -575,6 +575,14 @@ p.card-text{
     margin-left: 10px;
 }
 
+.review-comment{
+    color: #89a; 
+    font-size: 14px; 
+    font-weight: 300; 
+    margin-left: 10px;
+    text-decoration: none;
+}
+
 .comment-dateCreated{
     color: #89a; 
     font-size: 10px; 
