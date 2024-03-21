@@ -1,120 +1,38 @@
 <%- include('partials/head') -%>
 <%- include('partials/nav') -%>
 <main >
-    <section class="justify-content-between py-4 review-page">
+    <section class="justify-content-between py-4 likes-page">
+        <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+        <h5>Likes for <%= userProf.userName %> review of</h5>
+
+        <h4 class="mt-2">
+            <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>" class="movie-title"><%= movieDetails.title %></a>
+            <span class="movie-date"><%= movieDetails.release_date.split('-')[0] %></span>
+        </h4>
                 <!-- Comment Section -->
                 <section class="review-comments comment">
                     <ul>
-                    <% for(let i=0; i < comments.length; i++) { %>
-                        <% if (i === comments.length - 1) { %>
+                    <% for(let i=0; i < userLikes.length; i++) { %>
+                        <% if (i === userLikes.length - 1) { %>
                         <li class="justify-content-between py-3 review-last">
                         <% } else { %>
                         <li class="justify-content-between py-3 review-other">
                         <% } %>
-                        <div class="row">
-                            <% const dateObject = new Date(comments[i].createdAt); %>
-                            <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
-                            <% const day = dateObject.getDate(); %>  
-                            <% const year = dateObject.getFullYear(); %>  
-
-                            <% const datePart = `${month} ${day}, ${year}`; %> 
-                            <div class="col-lg-3 col-sm-3 d-flex">
-                                <a href="/<%= comments[i].user.userName %>" class="nav-link">
-                                    <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
-                                </a>
-                                <div class="row">
-                                    <a href="/<%= comments[i].user.userName %>" class="ms-2 comment-user"><%= comments[i].user.userName %></a>     
-                                    <span class="comment-dateCreated ms-2"><%= datePart %></span>
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-3 d-flex align-items-center">
+                                    <a href="/<%= userLikes[i].userName %>" class="nav-link">
+                                        <img src="<%= userLikes[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                                    </a>
+                                    <div class="row">
+                                        <a href="/<%= userLikes[i].userName %>" class="ms-2 comment-user"><%= userLikes[i].userName %></a>     
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col d-flex">
-                                <p class="comment"><%= comments[i].comment%></p>
-                                <% if (userStatus.loggedIn) { %>
-                                    <%if(JSON.stringify(comments[i].user._id) === JSON.stringify(user._id)){ %>
-                                        <form action="/comment/deleteComment/<%= comments[i].id %>/<%= userReview._id %>?_method=DELETE" method="POST" class="delete-form">
-                                            <button class="delete-button" type="submit"><i class="fa fa-trash"></i></button> 
-                                        </form>
-                                    <% } %> 
-                                <% } %> 
-                            </div> 
-                        </div>
                         </li>
                     <% } %>
                     </ul>
                 </section>   
             </section>
-            
-            <!-- Modal -->
-            <section class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h4 class="modal-title font-weight-bold" id="exampleModalLabel"> <%= movieDetails.title %> 
-                            <span class="movie-date">
-                            <%= movieDetails.release_date.split('-')[0] %>
-                            </span>
-                        </h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-            
-                        <!-- Modal Body -->
-                        <% if (userStatus.loggedIn) { %>
-                            <form action="/review/updateReview/<%= movieId %>-<%= movieTitle %>?_method=PUT" method="POST">
-                        <% } %>
-                            <div class="modal-body d-flex">
-                                <div class="d-flex align-items-center">
-                                <% if(movieDetails.poster_path != null) { %>
-                                    <img src="<%= base_url + movieDetails.poster_path %>" class="img-fluid rounded modal-poster"  alt="movie poster" loading="lazy">
-                                    <% } %>
-                                </div>
-                
-                                <div class="mb-3 modal-review">
-                                <h5 class="form-label font-weight-bold">Review</h5>
-                                <% if (userStatus.loggedIn) { %>
-                                    <% if(userReview) { %>
-                                    <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."><%= userReview.review %></textarea>
-                                    <% } else { %>
-                                    <textarea class="form-control" id="review" name="review" rows="7" placeholder="Add a review..."></textarea>
-                                    <% } %>
-                                <% } %>
-                                </div>
-                            </div>
-                
-                            <!-- Modal Footer -->
-                            <div class="modal-footer d-flex justify-content-between">
-                                <div class="rating-wrap d-flex flex-column">
-                                <h5>Rating</h5>
-                                <div>
-                                    <fieldset class="d-flex">
-                                    <button id="clearRating" class="clear-button" aria-label="Clear rating"><i class="fas fa-times"></i></button>
-                                    <div class="rating">
-                                        <input type="radio" id="star5" name="rating" value="5"/><label for="star5" class="full" title="Awesome"></label>
-                                        <input type="radio" id="star4.5" name="rating" value="4.5"/><label for="star4.5" class="half"></label>
-                                        <input type="radio" id="star4" name="rating" value="4"/><label for="star4" class="full"></label>
-                                        <input type="radio" id="star3.5" name="rating" value="3.5"/><label for="star3.5" class="half"></label>
-                                        <input type="radio" id="star3" name="rating" value="3"/><label for="star3" class="full"></label>
-                                        <input type="radio" id="star2.5" name="rating" value="2.5"/><label for="star2.5" class="half"></label>
-                                        <input type="radio" id="star2" name="rating" value="2"/><label for="star2" class="full"></label>
-                                        <input type="radio" id="star1.5" name="rating" value="1.5"/><label for="star1.5" class="half"></label>
-                                        <input type="radio" id="star1" name="rating" value="1"/><label for="star1" class="full"></label>
-                                        <input type="radio" id="star0.5" name="rating" value="0.5"/><label for="star0.5" class="half"></label>
-                                    </div>
-                                    </fieldset>
-                                </div>
-                                </div>
-                                <div>
-                                <% if (userStatus.loggedIn) { %>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save</button> 
-                                <% } %>    
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </div>
     </section> 
 </main>
 

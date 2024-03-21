@@ -34,9 +34,13 @@
                   <% if(userProf.favFilms.length !== 0) { %>
                       <% for(let i=0; i < favFilms.length; i++) {%>
                         <% const movieTitle = favFilms[i].movieTitle.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
-                        <a href="/movies/<%= favFilms[i].movieId %>-<%= movieTitle %>" class="text-decoration-none">
-                          <img src="<%= base_url2 + favFilms[i].moviePoster %>" class="img-fluid rounded pr-3 favfilm-poster" alt="favorite movie poster" loading="lazy">
-                        </a>
+                          <% if(favFilms[i].moviePoster != null) { %>
+                            <a href="/movies/<%= favFilms[i].movieId %>-<%= movieTitle %>" class="text-decoration-none">
+                              <img src="<%= base_url2 + favFilms[i].moviePoster %>" class="img-fluid rounded pr-3 favfilm-poster" alt="favorite movie poster" loading="lazy">
+                            </a>                  
+                          <% } else { %>
+                              <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img favfilm-poster" loading="lazy">
+                          <% } %>
                       <% } %>
                   <% } else { %>
                       <% if (userStatus.loggedIn) { %>
@@ -61,9 +65,13 @@
                       <div class="review row">
                         <div class="col-auto mt-auto">
                           <% const movieTitle = movieDetails[i].title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
-                          <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>">
-                            <img src="<%= base_url + movieDetails[i].poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
-                          </a>
+                          <% if(movieDetails[i].poster_path != null) { %>
+                            <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>">
+                              <img src="<%= base_url + movieDetails[i].poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
+                            </a>                  
+                          <% } else { %>
+                              <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img-2" loading="lazy">
+                          <% } %>
                         </div>
                         <section class="col">
                           <h4>
@@ -116,9 +124,13 @@
                                     <span> Liked</span>
                                   </button> 
                                   <% if(recentReviews[i].reviewLikes === 1) { %>
-                                    <span><%= recentReviews[i].reviewLikes %> like</span>
+                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                                      <%= recentReviews[i].reviewLikes %> like
+                                    </a>
                                   <% } else { %>
-                                    <span><%= recentReviews[i].reviewLikes %> likes</span>
+                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                                      <%= recentReviews[i].reviewLikes %> likes
+                                    </a>
                                   <% } %>
                                 <% } else { %>
                                   <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
@@ -127,9 +139,13 @@
                                   <% if(recentReviews[i].reviewLikes === 0) { %>
                                     <span></span>
                                   <% } else if (recentReviews[i].reviewLikes === 1) { %>
-                                    <span><%= recentReviews[i].reviewLikes %> like</span>
+                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                                      <%= recentReviews[i].reviewLikes %> like
+                                    </a>
                                   <% } else { %>
-                                    <span><%= recentReviews[i].reviewLikes %> likes</span>
+                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                                      <%= recentReviews[i].reviewLikes %> likes
+                                    </a>
                                   <% } %>
                                 <% } %>
                               <% } else { %>

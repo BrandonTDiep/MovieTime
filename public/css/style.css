@@ -46,7 +46,7 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
     color: rgb(118, 145, 172);
 }
 
-.movie-overview, .settings, .review-page{
+.movie-overview, .settings, .review-page, .likes-page{
     margin: 0 auto; 
     padding: 0 10px;
     max-width: 1100px;
@@ -56,6 +56,20 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
     color: #B3D6F3;
 } 
 
+.like-link{
+    text-decoration: none;
+    color: rgb(139, 173, 207);
+}
+
+.like-link:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.missing-img-2{
+    width: 94px;
+    height: 141px;
+}
 /* --------------- NAVBAR --------------- */
 
 nav {
@@ -732,4 +746,15 @@ aside.favorite-films ul li button{
 
 .comment{
     color: #B3D6F3;
+}
+
+/* --------------- LIKES PAGE --------------- */
+
+.likes-page h5{
+    font-size: 1rem;
+    font-weight: 300; 
+    color: #abc; 
+    text-transform: uppercase; 
+    letter-spacing: .03cm; 
+    margin-bottom: 0;
 }

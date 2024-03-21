@@ -14,7 +14,7 @@
                         <section class="row mb-5">
                             <label class="form-label">Avatar</label>
                             <div class="col-auto mt-auto">
-                                <img src="<%= user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded settings-profilePic"> 
+                                <img src="<%= user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded settings-profilePic text-white"> 
                             </div>
                             <div class="col d-flex align-items-center avatar-select">
                                 <label for="avatar_upload" class="btn btn-primary">Select new avatar</label>
@@ -32,7 +32,7 @@
                             <ul class="d-flex flex-wrap favfilm-list">
                                 <li>
                                     <% if(favFilms[0]) { %>
-                                        <img src="<%= base_url + favFilms[0].moviePoster %>" alt="favorite films movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film" data-position="1">
+                                        <img src="<%= base_url + favFilms[0].moviePoster %>" alt="favorite films movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film text-white" data-position="1">
                                     <% } else { %>
                                         <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="1">
                                             <i class="fa fa-plus-square"></i>
@@ -41,7 +41,7 @@
                                 </li>
                                 <li>
                                     <% if(favFilms[1]) { %>
-                                        <img src="<%= base_url + favFilms[1].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film" data-position="2">
+                                        <img src="<%= base_url + favFilms[1].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film text-white" data-position="2">
                                     <% } else { %>
                                         <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="2">
                                             <i class="fa fa-plus-square"></i>
@@ -50,7 +50,7 @@
                                 </li>
                                 <li>
                                     <% if(favFilms[2]) { %>
-                                        <img src="<%= base_url + favFilms[2].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film" data-position="3">
+                                        <img src="<%= base_url + favFilms[2].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film text-white" data-position="3">
                                     <% } else { %>
                                         <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="3">
                                             <i class="fa fa-plus-square"></i>
@@ -59,7 +59,7 @@
                                 </li>
                                 <li>
                                     <% if(favFilms[3]) { %>
-                                        <img src="<%= base_url + favFilms[3].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film" data-position="4">
+                                        <img src="<%= base_url + favFilms[3].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film text-white" data-position="4">
                                     <% } else { %>
                                         <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="4">
                                             <i class="fa fa-plus-square"></i>

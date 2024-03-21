@@ -12,7 +12,7 @@
                             <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded review-poster">
                         </a>                   
                     <% } else { %>
-                        <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img" loading="lazy">
+                        <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img review-poster" loading="lazy">
                     <% } %>
                     <!-- Button trigger modal -->
                     <% if (userStatus.loggedIn) { %>
@@ -145,7 +145,7 @@
                             <% const year = dateObject.getFullYear(); %>  
 
                             <% const datePart = `${month} ${day}, ${year}`; %> 
-                            <div class="col-lg-3 col-sm-3 d-flex">
+                            <div class="col-lg-3 col-sm-3 d-flex align-items-center">
                                 <a href="/<%= comments[i].user.userName %>" class="nav-link">
                                     <img src="<%= comments[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
                                 </a>

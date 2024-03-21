@@ -135,5 +135,79 @@ module.exports = {
       console.log(err);
     }
   },
+  getLikesPage: async (req, res) => {
+    try {
+      const path = req.originalUrl;
+      const pathParts = path.split('/');
+      const username = pathParts[1];
+      
+      const userProfile = await User.findOne({userName: username});
+
+      const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
+      const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
+      
+      const movieName = req.params.movieId;
+      const movieId = movieName.split('-')[0];
+      const movieTitleParts = movieName.split('-');
+      const result = movieTitleParts.slice(1).join("-"); 
+
+      const movieRes = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
+      const movie = await movieRes.json()
+
+      let movieTitle;
+      if(movie.success === undefined){
+         movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase();
+      }
+      if(movie.success === undefined && result === movieTitle){
+        const userHasReview = await Review.findOne({
+          movieId: movieId,
+          user: userProfile.id
+        });
+
+        let userLikes;
+        if(userHasReview){
+          userLikes = await Review.findOne({ "_id": userHasReview.id }, {"_id": 0, "userLikes": 1 }).populate('userLikes');
+        }
+
+        if(req.user){
+          if(userHasReview){
+            res.render("likes.ejs", {
+              movieId: movieId,
+              movieDetails: movie, 
+              base_url: BASE_URL,
+              user: req.user,
+              userId: req.user.id,
+              userProf: userProfile,
+              userLikes: userLikes.userLikes,
+              userStatus: {
+                loggedIn: true
+              },
+              userReview: userHasReview,
+            });
+          } 
+          else{
+            res.status(404).render('error'); 
+          }
+        }
+        else{
+          res.render("likes.ejs", {
+            movieId: movieId,
+            movieDetails: movie, 
+            base_url: BASE_URL,
+            userReview: userHasReview,
+            userProf: userProfile,
+            userLikes: userLikes.userLikes,
+            userStatus: {
+              loggedIn: false
+            },
+          });
+        }
+        } else {
+          res.status(404).render('error'); 
+        }
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
