@@ -119,7 +119,20 @@
                             <form action="/review/likeReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
                               <% let userLikesArray = recentReviews[i].userLikes.map(String); %>
                               <% if (userStatus.loggedIn) { %>
-                                <% if(userLikesArray.includes(userId)) {%>
+                                <%if(recentReviews[i].user.id === user.id){ %>
+                                  <i class="fa fa-heart user-heart"></i>
+                                  <% if(recentReviews[i].reviewLikes === 0) { %>
+                                    <span>No likes yet</span>
+                                  <% } else if (recentReviews[i].reviewLikes === 1) { %>
+                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                                      <%= recentReviews[i].reviewLikes %> like
+                                    </a>
+                                  <% } else { %>
+                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                                      <%= recentReviews[i].reviewLikes %> likes
+                                    </a>
+                                  <% } %>
+                                <% } else if(userLikesArray.includes(userId)) { %>
                                   <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
                                     <span> Liked</span>
                                   </button> 
@@ -155,9 +168,13 @@
                                 <% if(recentReviews[i].reviewLikes === 0) { %>
                                   <span></span>
                                 <% } else if (recentReviews[i].reviewLikes === 1) { %>
-                                  <span><%= recentReviews[i].reviewLikes %> like</span>
+                                  <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                                    <%= recentReviews[i].reviewLikes %> like
+                                  </a>
                                 <% } else { %>
-                                  <span><%= recentReviews[i].reviewLikes %> likes</span>
+                                  <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                                    <%= recentReviews[i].reviewLikes %> likes
+                                  </a>
                                 <% } %>
                               <% } %>
                             </form>
@@ -166,7 +183,7 @@
                             </a>
           
                             <% if (userStatus.loggedIn) { %>
-                              <%if(JSON.stringify(recentReviews[i].user._id) === JSON.stringify(user._id)){ %>
+                              <%if(recentReviews[i].user.id === user.id){ %>
                                 <form action="/review/deleteReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
                                   <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
                                 </form>

@@ -269,6 +269,10 @@ p.card-text{
 
 
 /*-------- Rating Section --------*/
+.user-heart{
+    color: rgb(139, 173, 207);
+}
+
 .like-button, .unlike-button {
     background-color: transparent; 
     border: none;
