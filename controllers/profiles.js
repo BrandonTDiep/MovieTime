@@ -122,7 +122,7 @@ module.exports = {
             base_url: BASE_URL,
             userReview: userHasReview,
             userProf: userProfile,
-            comments: comments,
+            comments: comments.comments,
             userStatus: {
               loggedIn: false
             },
