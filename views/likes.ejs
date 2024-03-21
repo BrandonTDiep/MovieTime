@@ -1,39 +1,50 @@
 <%- include('partials/head') -%>
 <%- include('partials/nav') -%>
 <main >
-    <section class="justify-content-between py-4 likes-page">
+    <section class="justify-content-between py-4 likes-page d-flex">
         <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
-        <h5>Likes for <%= userProf.userName %> review of</h5>
+        <section class="review-likes flex-grow-1 pe-5">
+            <div>
+                <h5>Likes for <%= userProf.userName %> review of</h5>
+                <h4 class="mt-1 pb-2">
+                    <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>" class="movie-title"><%= movieDetails.title %></a>
+                    <span class="movie-date"><%= movieDetails.release_date.split('-')[0] %></span>
+                </h4>
+            </div>
 
-        <h4 class="mt-2">
-            <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>" class="movie-title"><%= movieDetails.title %></a>
-            <span class="movie-date"><%= movieDetails.release_date.split('-')[0] %></span>
-        </h4>
-                <!-- Comment Section -->
-                <section class="review-comments comment">
-                    <ul>
-                    <% for(let i=0; i < userLikes.length; i++) { %>
-                        <% if (i === userLikes.length - 1) { %>
-                        <li class="justify-content-between py-3 review-last">
-                        <% } else { %>
-                        <li class="justify-content-between py-3 review-other">
-                        <% } %>
+            <!-- Likes Section -->
+            <ul>
+            <% for(let i=0; i < userLikes.length; i++) { %>  
+                <li class="justify-content-between py-3 like-other">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 d-flex align-items-center">
+                            <a href="/<%= userLikes[i].userName %>" class="nav-link">
+                                <img src="<%= userLikes[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded like-pic">
+                            </a>
                             <div class="row">
-                                <div class="col-lg-3 col-sm-3 d-flex align-items-center">
-                                    <a href="/<%= userLikes[i].userName %>" class="nav-link">
-                                        <img src="<%= userLikes[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
-                                    </a>
-                                    <div class="row">
-                                        <a href="/<%= userLikes[i].userName %>" class="ms-2 comment-user"><%= userLikes[i].userName %></a>     
-                                    </div>
-                                </div>
+                                <a href="/<%= userLikes[i].userName %>" class="ms-2 like-user"><%= userLikes[i].userName %></a>     
                             </div>
-                        </li>
-                    <% } %>
-                    </ul>
-                </section>   
-            </section>
-    </section> 
+                        </div>
+
+                        <div class="col d-flex align-items-center">
+                            <i class="fa fa-heart like-heart"></i>
+                        </div> 
+                    </div>
+                </li>
+            <% } %>
+            </ul>
+        </section>   
+        <aside>
+            <% if(movieDetails.poster_path != null) { %>
+                <a href="/movies/<%= movieDetails.id %>-<%= movieTitle %>">
+                    <img src="<%= base_url + movieDetails.poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
+                </a>                   
+            <% } else { %>
+                <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img review-poster" loading="lazy">
+            <% } %>
+
+        </aside>
+    </section>
 </main>
 
 <%- include('partials/footer') -%>

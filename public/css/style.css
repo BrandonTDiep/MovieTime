@@ -240,15 +240,15 @@ p.card-text{
     margin-bottom: 0;
 }
 
-.review-comments ul{
+.review-comments ul, .review-likes ul{
     padding: 0;
 }
 
-.review-comments ul li{
+.review-comments ul li, .review-likes ul li{
     padding: 0;
 }
 
-.review-other{
+.review-other, .like-other{
     border-bottom: 1px solid #456; 
     list-style: none
 }
@@ -707,7 +707,7 @@ aside.favorite-films ul li button{
     color: white;
 }
 
-.review-prof-pic, .comment-pic{
+.review-prof-pic, .comment-pic, .like-pic{
     width: 30px; height: 30px;
 }
 
@@ -730,11 +730,7 @@ aside.favorite-films ul li button{
     border-top: 1px solid #456;
 }
 
-.review-comments.comment{
-    border-top: 1px solid #456;
-}
-
-.comment-user{
+.comment-user, .like-user{
     color: #abc; 
     text-decoration: none; 
     font-weight: 500;
@@ -752,9 +748,17 @@ aside.favorite-films ul li button{
 
 .likes-page h5{
     font-size: 1rem;
-    font-weight: 300; 
+    font-weight: 400; 
     color: #abc; 
     text-transform: uppercase; 
     letter-spacing: .03cm; 
     margin-bottom: 0;
+}
+
+.review-likes > div{
+    border-bottom: 1px solid #456;
+}
+
+.like-heart{
+    color: red;
 }
