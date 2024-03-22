@@ -728,6 +728,14 @@ aside.favorite-films ul li button{
     border: 3px solid rgb(70, 95, 121);
 }
 
+.delete-account{
+    border: none;
+}
+
+.delete-text{
+    font-size: 1.1rem;
+}
+
 /* --------------- REVIEW PAGE --------------- */
 
 .review-poster{
