@@ -44,11 +44,13 @@ module.exports = {
   },
   updateSetting: async (req, res) => {
     try {
-      // Delete image from cloudinary
-      await cloudinary.uploader.destroy(req.user.cloudinaryId);
-
       // Upload image to cloudinary
       if(req.file){
+        // Delete image from cloudinary
+        if(req.user.cloudinaryId){
+          await cloudinary.uploader.destroy(req.user.cloudinaryId);
+        }
+
         const result = await cloudinary.uploader.upload(req.file.path, {
           folder: "movie_profilePics"
         });
@@ -89,9 +91,7 @@ module.exports = {
       const position = req.body.position;
 
       const fav_film = await User.findOne({ _id: req.user.id, "favFilms.position": position });
-      console.log("help" + position)
       if(fav_film){
-        console.log("hello")
         await User.findOneAndUpdate(
           { "_id": req.user.id, "favFilms.position": position },
           {
@@ -130,7 +130,7 @@ module.exports = {
 
       // Delete the favorite film document
       await User.findOneAndUpdate(
-        {},
+        {_id: req.user._id},
         { $pull: { favFilms: { _id: favFilmId } } }
       );      
       console.log("Deleted Fav Film");
