@@ -31,37 +31,37 @@
                             <label>Favorite Films</label>
                             <ul class="d-flex flex-wrap favfilm-list">
                                 <li>
-                                    <% if(favFilms[0]) { %>
-                                        <img src="<%= base_url + favFilms[0].moviePoster %>" alt="favorite films movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film text-white" data-position="1">
+                                    <% if(favfilm1) { %>
+                                        <img src="<%= base_url + favfilm1.moviePoster %>" alt="favorite films movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal1" class="img-fluid rounded film fav_film text-white" data-position="1">
                                     <% } else { %>
-                                        <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="1">
+                                        <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal1" data-position="1">
                                             <i class="fa fa-plus-square"></i>
                                         </button>
                                     <% } %>
                                 </li>
                                 <li>
-                                    <% if(favFilms[1]) { %>
-                                        <img src="<%= base_url + favFilms[1].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film text-white" data-position="2">
+                                    <% if(favfilm2) { %>
+                                        <img src="<%= base_url + favfilm2.moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal2" class="img-fluid rounded film fav_film text-white" data-position="2">
                                     <% } else { %>
-                                        <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="2">
+                                        <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal2" data-position="2">
                                             <i class="fa fa-plus-square"></i>
                                         </button>
                                     <% } %>
                                 </li>
                                 <li>
-                                    <% if(favFilms[2]) { %>
-                                        <img src="<%= base_url + favFilms[2].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film text-white" data-position="3">
+                                    <% if(favfilm3) { %>
+                                        <img src="<%= base_url + favfilm3.moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal3" class="img-fluid rounded film fav_film text-white" data-position="3">
                                     <% } else { %>
-                                        <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="3">
+                                        <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal3" data-position="3">
                                             <i class="fa fa-plus-square"></i>
                                         </button>
                                     <% } %>
                                 </li>
                                 <li>
-                                    <% if(favFilms[3]) { %>
-                                        <img src="<%= base_url + favFilms[3].moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal" class="img-fluid rounded film fav_film text-white" data-position="4">
+                                    <% if(favfilm4) { %>
+                                        <img src="<%= base_url + favfilm4.moviePoster %>" alt="movie poster" loading="lazy" data-bs-toggle="modal" data-bs-target="#favFilmModal4" class="img-fluid rounded film fav_film text-white" data-position="4">
                                     <% } else { %>
-                                        <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal" data-position="4">
+                                        <button type="button" class="img-fluid rounded fav_film" data-bs-toggle="modal" data-bs-target="#favFilmModal4" data-position="4">
                                             <i class="fa fa-plus-square"></i>
                                         </button>
                                     <% } %>
@@ -78,7 +78,7 @@
 
 
         <!-- Modal -->
-        <section class="modal fade" id="favFilmModal" tabindex="-1" aria-labelledby="favFilmModalLabel" aria-hidden="true">
+        <section class="modal fade" id="favFilmModal1" tabindex="-1" aria-labelledby="favFilmModal1Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -91,9 +91,106 @@
 
                             <label for="favFilm" class="col-form-label">Name of Film:</label>
                             <input type="text" class="form-control" id="favFilm" name="favFilm">
-                            <input type="hidden" id="position" name="position">
+                            <input type="hidden" id="position" name="position" value="1">
                         </form>
                     </div>
+                    <!-- Modal Footer -->
+                    <% if(favfilm1) { %>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <form action="/settings/deleteFavMovies/<%= favfilm1._id %>/?_method=DELETE" method="POST" id="deleteForm">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div> 
+                    <% } %>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal -->
+        <section class="modal fade" id="favFilmModal2" tabindex="-1" aria-labelledby="favFilmModal2Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> Pick a Favorite Film</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body form-group">
+                        <form action="/settings/updateFavMovies/?_method=PUT" method="POST">
+
+                            <label for="favFilm" class="col-form-label">Name of Film:</label>
+                            <input type="text" class="form-control" id="favFilm" name="favFilm">
+                            <input type="hidden" id="position" name="position" value="2">
+                        </form>
+                    </div>
+                    <!-- Modal Footer -->
+                    <% if(favfilm2) { %>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <form action="/settings/deleteFavMovies/<%= favfilm2._id %>/?_method=DELETE" method="POST" id="deleteForm">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div> 
+                    <% } %>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Modal -->
+        <section class="modal fade" id="favFilmModal3" tabindex="-1" aria-labelledby="favFilmModal3Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> Pick a Favorite Film</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body form-group">
+                        <form action="/settings/updateFavMovies/?_method=PUT" method="POST">
+
+                            <label for="favFilm" class="col-form-label">Name of Film:</label>
+                            <input type="text" class="form-control" id="favFilm" name="favFilm">
+                            <input type="hidden" id="position" name="position" value="3">
+                        </form>
+                    </div>
+                    <!-- Modal Footer -->
+                    <% if(favfilm3) { %>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <form action="/settings/deleteFavMovies/<%= favfilm3._id %>/?_method=DELETE" method="POST" id="deleteForm">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div> 
+                    <% } %>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Modal -->
+        <section class="modal fade" id="favFilmModal4" tabindex="-1" aria-labelledby="favFilmModal4Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> Pick a Favorite Film</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body form-group">
+                        <form action="/settings/updateFavMovies/?_method=PUT" method="POST">
+
+                            <label for="favFilm" class="col-form-label">Name of Film:</label>
+                            <input type="text" class="form-control" id="favFilm" name="favFilm">
+                            <input type="hidden" id="position" name="position" value="4">
+                        </form>
+                    </div>
+                    <!-- Modal Footer -->
+                    <% if(favfilm4) { %>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <form action="/settings/deleteFavMovies/<%= favfilm4._id %>/?_method=DELETE" method="POST" id="deleteForm">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div> 
+                    <% } %>
                 </div>
             </div>
         </section>
@@ -116,15 +213,6 @@
             fileSelected.textContent = '';
         }
     };
-
-    const favFilmButtons = document.querySelectorAll('.fav_film');
-
-    favFilmButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const position = this.getAttribute('data-position');
-            document.getElementById('position').value = position;
-        });
-    });
 </script>
 
 <%- include('partials/footer') -%>

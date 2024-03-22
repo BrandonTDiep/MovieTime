@@ -613,6 +613,18 @@ p.card-text{
     font-weight: 300; 
 }
 
+.no-favFilms{
+    color: #89a;
+}
+
+.no-favFilms a{
+    color: #B3D6F3;
+    text-decoration: none;
+}
+
+.no-favFilms a:hover{
+    color: white;
+}
 
 /* --------------- SETTINGS PAGE --------------- */
 

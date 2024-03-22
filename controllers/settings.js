@@ -7,7 +7,25 @@ module.exports = {
     try {
       const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
       const favFilms = req.user.favFilms.sort((a, b) => a.position - b.position)
-
+      let favfilm1;
+      let favfilm2;
+      let favfilm3;
+      let favfilm4;
+      for(let i = 0; i < favFilms.length; i++){
+        if(favFilms[i].position === 1){
+          favfilm1 = favFilms[i];
+        }
+        else if(favFilms[i].position === 2){
+          favfilm2 = favFilms[i];
+        }
+        else if(favFilms[i].position === 3){
+          favfilm3 = favFilms[i];
+        }
+        else{
+          favfilm4 = favFilms[i];
+        }
+      }
+      
       res.render("settings.ejs", {
           user: req.user,
           userStatus: {
@@ -15,7 +33,10 @@ module.exports = {
           },
           favFilms: favFilms,
           base_url: BASE_URL,
-
+          favfilm1: favfilm1,
+          favfilm2: favfilm2,
+          favfilm3: favfilm3,
+          favfilm4: favfilm4,
       });
     } catch (err) {
       console.log(err);
@@ -68,8 +89,9 @@ module.exports = {
       const position = req.body.position;
 
       const fav_film = await User.findOne({ _id: req.user.id, "favFilms.position": position });
-
+      console.log("help" + position)
       if(fav_film){
+        console.log("hello")
         await User.findOneAndUpdate(
           { "_id": req.user.id, "favFilms.position": position },
           {
@@ -99,6 +121,22 @@ module.exports = {
       res.redirect(`/settings`);
     } catch (err) {
       console.log(err);
+    }
+  },
+  deleteFavMovies: async (req, res) => {
+    try {
+      const favFilmId = req.params.favFilmId;
+      console.log(favFilmId)
+
+      // Delete the favorite film document
+      await User.findOneAndUpdate(
+        {},
+        { $pull: { favFilms: { _id: favFilmId } } }
+      );      
+      console.log("Deleted Fav Film");
+      res.redirect(`/settings`);
+    } catch (err) {
+      console.log(err)
     }
   },
 };

@@ -33,8 +33,8 @@
                 <div class="pt-3 mb-5">
                   <% if(userProf.favFilms.length !== 0) { %>
                       <% for(let i=0; i < favFilms.length; i++) {%>
-                        <% const movieTitle = favFilms[i].movieTitle.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
                           <% if(favFilms[i].moviePoster != null) { %>
+                            <% const movieTitle = favFilms[i].movieTitle.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
                             <a href="/movies/<%= favFilms[i].movieId %>-<%= movieTitle %>" class="text-decoration-none">
                               <img src="<%= base_url2 + favFilms[i].moviePoster %>" class="img-fluid rounded pr-3 favfilm-poster" alt="favorite movie poster" loading="lazy">
                             </a>                  
@@ -45,7 +45,7 @@
                   <% } else { %>
                       <% if (userStatus.loggedIn) { %>
                         <% if(userProf.id === user.id) { %>
-                          <p>Have any <a href="/settings">favorite films</a>?</p>
+                          <p class="no-favFilms">Have any <a href="/settings">favorite films</a>?</p>
                         <% } %>
                       <% } %>                  
                   <% } %>
