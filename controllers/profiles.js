@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Review = require("../models/Review");
+const cloudinary = require("../middleware/cloudinary");
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -59,6 +60,24 @@ module.exports = {
       }
     } catch (err) {
       console.log(err);
+    }
+  },
+  deleteProfile: async (req, res) => {
+    try {
+      // Delete image from cloudinary
+      if(req.user.cloudinaryId){
+        await cloudinary.uploader.destroy(req.user.cloudinaryId);
+      }
+
+      await Review.deleteMany({ user: req.user._id });
+
+      // Delete the profile
+      await User.findByIdAndDelete(req.user._id);
+          
+      console.log("Deleted Profile");
+      res.redirect(`/logout`);
+    } catch (err) {
+      console.log(err)
     }
   },
   getProfileReviewPage: async (req, res) => {
