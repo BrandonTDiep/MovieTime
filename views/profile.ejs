@@ -13,7 +13,17 @@
                   <% if (userStatus.loggedIn) { %>
                     <% if(userProf.id === user.id) { %>
                       <a href="/settings" class="btn btn-primary">Edit Profile</a>
-                    <% } %>
+                    <% } else { %>
+                      <form action="/<%= userProf.userName %>/followUser/<%= userProf._id %>?_method=PUT" method="POST">              
+                        <button class="btn btn-primary" type="submit">
+                          <% if (user.usersFollowing.includes(userProf._id)) {%>
+                            Following <i class="bi bi-person-plus-fill"></i>
+                          <% } else { %>
+                            Follow <i class="bi bi-person-plus-fill"></i>
+                          <% } %>
+                        </button> 
+                      </form>
+                      <% } %>
                   <% } %>    
                 </div>
               </div>
