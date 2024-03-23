@@ -14,7 +14,6 @@ module.exports = {
       const recentReviews = await Review.find({ user: userProfile.id }).sort({ createdAt: 'desc' }).populate('user');
 
       const movieIds = []
-
       for(const review of recentReviews){
         movieIds.push(review.movieId)
       }
@@ -224,6 +223,28 @@ module.exports = {
         } else {
           res.status(404).render('error'); 
         }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  followUser: async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const userProfileId = req.params.userProfId
+      const user = await User.findOne({ "_id": userId });
+      if (user.usersFollowing.includes(userProfileId)) {
+        await User.findOneAndUpdate(
+            { "_id": userId  },
+            { $pull: { "usersFollowing": userProfileId } }
+        );
+      } 
+      else {
+        await User.findOneAndUpdate(
+          { "_id": userId  },
+          { $push: { "usersFollowing": userProfileId } }
+        );
+      }
+      res.redirect(`back`);
     } catch (err) {
       console.log(err);
     }

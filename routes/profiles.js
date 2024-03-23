@@ -6,5 +6,6 @@ const profileController = require("../controllers/profiles");
 router.get("/review/:movieId", profileController.getProfileReviewPage);
 router.get("/review/:movieId/likes", profileController.getLikesPage);
 router.delete("/deleteAccount", profileController.deleteProfile);
+router.put("/followUser/:userProfId", profileController.followUser);
 
 module.exports = router;
