@@ -215,11 +215,11 @@
                   <div class="pt-3 mb-5 d-flex flex-wrap">
                         <% for(let i=0; i < usersFollowing.length; i++) {%>
                           <% if (i == 0) {%>
-                            <a href="/<%= usersFollowing[i].userName %>" class="nav-link">
+                            <a href="/<%= usersFollowing[i].userName %>" class="nav-link" data-toggle="tooltip" data-placement="top"  title="<%= usersFollowing[i].userName %>">
                               <img src="<%= usersFollowing[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
                             </a>                 
                           <% } else { %>
-                            <a href="/<%= usersFollowing[i].userName %>" class="nav-link ms-3">
+                            <a href="/<%= usersFollowing[i].userName %>" class="nav-link ms-3" data-toggle="tooltip" data-placement="top" title="<%= usersFollowing[i].userName %>">
                               <img src="<%= usersFollowing[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
                             </a>  
                           <% } %>
