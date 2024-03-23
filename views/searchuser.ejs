@@ -23,17 +23,18 @@
         <h3 class="mt-3 search">Search Results for "<%= searchQuery %>"</h3>
         <% userProfiles.forEach(userProfile => { %>
           <div class="card mb-3">
-              <div class="d-flex">
+            <div class="d-flex">
                 <div>
-                    <a href="/<%= userProfile.userName %>" class="nav-link">
-                        <img src="<%= userProfile.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded userProfilePic">
-                    </a>
+                  <a href="/<%= userProfile.userName %>" class="nav-link">
+                    <img src="<%= userProfile.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded-start userProfilePic">
+                  </a>
                 </div>
                 <div class="card-body">
-                    <a href="/<%= userProfile.userName %>" class="nav-link">
-                        <p class="review-username"><%= userProfile.userName %></p>
-                    </a>
+                  <a href="/<%= userProfile.userName %>" class="nav-link">
+                    <p class="review-username"><%= userProfile.userName %></p>
+                  </a>  
                 </div>
+            </div>
           </div>       
         <% }); %>    
       </section>
