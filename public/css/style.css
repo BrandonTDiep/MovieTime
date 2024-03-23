@@ -610,7 +610,7 @@ p.card-text{
     font-size: 13px;
 }
 
-.profile-favfilms h5{
+.profile-favfilms h5, .profile-following h5{
     border-bottom: 1px solid #456; 
     margin-bottom: 0;
 }

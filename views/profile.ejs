@@ -208,10 +208,29 @@
                   <% } %>
                 </ul>
               </section> 
+
+              <% if(usersFollowing.length !== 0) { %>
+                <section class="profile-following mt-5 pb-5 mb-5">
+                  <h5 class="pb-1">Following</h5>
+                  <div class="pt-3 mb-5 d-flex flex-wrap">
+                        <% for(let i=0; i < usersFollowing.length; i++) {%>
+                          <% if (i == 0) {%>
+                            <a href="/<%= usersFollowing[i].userName %>" class="nav-link">
+                              <img src="<%= usersFollowing[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                            </a>                 
+                          <% } else { %>
+                            <a href="/<%= usersFollowing[i].userName %>" class="nav-link ms-3">
+                              <img src="<%= usersFollowing[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                            </a>  
+                          <% } %>
+                        <% } %>
+                  </div>                    
+                </section>
+              <% } %>  
+              
             </section>  
-                
           </section>
-    </section>
+      </section>
 </main>
 
 <script>

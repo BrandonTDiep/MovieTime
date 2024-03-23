@@ -13,6 +13,7 @@ module.exports = {
       const popularReviews = await Review.find({ user: userProfile.id }).sort({ reviewLikes: 'desc' }).populate('user');
       const recentReviews = await Review.find({ user: userProfile.id }).sort({ createdAt: 'desc' }).populate('user');
 
+      const users = await User.find({ "_id": userProfile.id }, {"_id": 0, "usersFollowing": 1 }).populate('usersFollowing');
       const movieIds = []
       for(const review of recentReviews){
         movieIds.push(review.movieId)
@@ -30,6 +31,7 @@ module.exports = {
         res.render("profile.ejs", {
           user: req.user,
           userProf: userProfile,
+          usersFollowing: users[0].usersFollowing,
           recentReviews: recentReviews,
           popularReviews: popularReviews,
           movieDetails: movieDetails,
