@@ -41,7 +41,7 @@ module.exports = {
     try{
       const user = req.query.query;
 
-      const userProfiles = await User.find({ userName: { $regex: 'testguy', $options: 'i' } });
+      const userProfiles = await User.find({ userName: { $regex: user, $options: 'i' } });
 
 
       if(req.user){
