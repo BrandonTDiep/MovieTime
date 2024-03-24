@@ -113,9 +113,15 @@
                                       <span class="fa fa-star-half checked"></span>
                                   <% } %>
                               <% } %>
-                              <span class="review-dateCreated">             
-                                <%= datePart %>  
-                              </span>
+                              <% if(rating) { %>
+                                <span class="review-dateCreated">             
+                                    <%= datePart %>  
+                                </span>
+                              <% } else { %>
+                                <span class="review-dateCreate-nostar">             
+                                  <%= datePart %>  
+                                </span>
+                              <% } %>
                               <span>
                                 <% if(recentReviews[i].comments.length > 0) { %>
                                   <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="review-comment">                                  
@@ -236,7 +242,7 @@
 <script>
   function changeToUnfollow() {
         const button = document.getElementById("followingButton");
-        const icon = document.getElementById("icon");
+        const icon = button.querySelector("i");
 
         button.style.backgroundColor = "red";
         button.innerHTML = "Unfollow <i class='bi bi-person-dash-fill'></i>";
@@ -245,7 +251,7 @@
 
   function revertToFollowing() {
         const button = document.getElementById("followingButton");
-        const icon = document.getElementById("icon");
+        const icon = button.querySelector("i");
         
         button.style.backgroundColor = "#6528E0";
         button.innerHTML = "Following <i class='bi bi-person-check-fill'></i>";

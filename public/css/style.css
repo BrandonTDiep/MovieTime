@@ -642,6 +642,12 @@ p.card-text{
     margin-left: 10px;
 }
 
+.review-dateCreate-nostar{
+    color: #89a; 
+    font-size: 14px; 
+    font-weight: 300; 
+}
+
 .review-comment{
     color: #89a; 
     font-size: 14px; 
