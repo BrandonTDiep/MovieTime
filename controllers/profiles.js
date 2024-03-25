@@ -48,6 +48,7 @@ module.exports = {
         res.render("profile.ejs", {
           user: req.user,
           userProf: userProfile,
+          usersFollowing: users[0].usersFollowing,
           recentReviews: recentReviews,
           popularReviews: popularReviews,
           movieDetails: movieDetails,
