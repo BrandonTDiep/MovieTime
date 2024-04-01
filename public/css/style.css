@@ -70,6 +70,11 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
     width: 94px;
     height: 141px;
 }
+
+.password{
+    color: #abc;
+    font-size: 0.8rem;
+}
 /* --------------- NAVBAR --------------- */
 
 nav {
@@ -670,12 +675,12 @@ p.card-text{
     color: #89a;
 }
 
-.no-favFilms a{
+.no-favFilms a, .no-account{
     color: #B3D6F3;
     text-decoration: none;
 }
 
-.no-favFilms a:hover{
+.no-favFilms a:hover, a.no-account:hover{
     color: white;
 }
 
