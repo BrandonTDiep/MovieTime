@@ -829,6 +829,15 @@ aside.favorite-films ul li button{
     color: #B3D6F3;
 }
 
+.twitter-share-button{
+    color: #89a;
+    text-decoration: none;
+}
+
+.twitter-share-button:hover{
+    color: white;
+}
+
 /* --------------- LIKES PAGE --------------- */
 
 .likes-page h5{

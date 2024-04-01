@@ -120,6 +120,7 @@ module.exports = {
           if(userHasReview){
             res.render("review.ejs", {
               movieId: movieId,
+              movieTitle: movieTitle,
               movieDetails: movie, 
               base_url: BASE_URL,
               user: req.user,
@@ -139,6 +140,7 @@ module.exports = {
         else{
           res.render("review.ejs", {
             movieId: movieId,
+            movieTitle: movieTitle,
             movieDetails: movie, 
             base_url: BASE_URL,
             userReview: userHasReview,

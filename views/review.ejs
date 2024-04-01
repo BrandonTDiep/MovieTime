@@ -14,10 +14,35 @@
                     <% } else { %>
                         <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img review-poster" loading="lazy">
                     <% } %>
+                    <% let reviewStars = ""; %>
+                    <% for (let i = 1; i <= 5; i++) { %>
+                      <% if (i <= Math.floor(userReview.rating)) { %>
+                        <% reviewStars += "★" %>
+                      <% } else if (i === Math.ceil(userReview.rating) && userReview.rating % 1 !== 0) { %>
+                        <% reviewStars += "½" %>
+                      <% } %>
+                    <% } %>
+                    <% if(userReview.user == userId) { %> 
+                        <span class="text-center mt-1">
+                          <a class="twitter-share-button" 
+                          href="https://twitter.com/intent/tweet?text=My <%= reviewStars %> review of <%= movieDetails.title %> (<%= movieDetails.release_date.split('-')[0] %>) on MovieTime: https://movie-time.cyclic.app/<%= userProf.userName %>/review/<%= movieDetails.id %>-<%= movieTitle %>" target="_blank">
+                            <i class="bi bi-twitter-x"></i>
+                            Share this review!
+                          </a>
+                        </span>
+                    <% } else { %>
+                      <span class="text-center mt-1">
+                        <a class="twitter-share-button" 
+                        href="https://twitter.com/intent/tweet?text=A <%= reviewStars %> review of <%= movieDetails.title %> (<%= movieDetails.release_date.split('-')[0] %>) by <%= userProf.userName %> on MovieTime: https://movie-time.cyclic.app/<%= userProf.userName %>/review/<%= movieDetails.id %>-<%= movieTitle %>" target="_blank">
+                          <i class="bi bi-twitter-x"></i>
+                          Share this review!
+                        </a>
+                    <% } %>
+
                     <!-- Button trigger modal -->
-                    <% if (userStatus.loggedIn) { %>
-                        <% if(userReview.user == userId) { %>
-                            <button type="button" class="btn btn-primary mt-2 review-button" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit review</button>
+                    <% if (userStatus.loggedIn) { %>   
+                        <% if(userReview.user == userId) { %> 
+                          <button type="button" class="btn btn-primary mt-2 review-button" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit review</button>
                         <% } %>
                     <% } %>
                 </div>
@@ -52,9 +77,15 @@
                             <span class="fa fa-star-half checked"></span>
                         <% } %>
                     <% } %>
-                    <span class="review-dateCreated">             
+                    <% if(rating) { %>
+                      <span class="review-dateCreated">             
+                          <%= datePart %>  
+                      </span>
+                    <% } else { %>
+                      <span class="review-dateCreate-nostar">             
                         <%= datePart %>  
-                    </span>
+                      </span>
+                    <% } %>
                 </div>
                 <p class="review mb-2 user-review"><%= userReview.review%></p>
                 
