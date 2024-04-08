@@ -857,6 +857,10 @@ aside.favorite-films ul li button{
     color: red;
 }
 
+.like-user:hover{
+    color: white;
+}
+
 /* --------------- FOOTER --------------- */
 
 footer{

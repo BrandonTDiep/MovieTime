@@ -15,7 +15,7 @@
                       <a href="/settings" class="btn btn-primary">Edit Profile</a>
                     <% } else { %>
                       <form action="/<%= userProf.userName %>/followUser/<%= userProf._id %>?_method=PUT" method="POST">              
-                          <% if (user.usersFollowing.includes(userProf._id)) {%>
+                          <% if (user.following.includes(userProf._id)) {%>
                             <button class="btn btn-primary" type="submit" id="followingButton" onmouseover="changeToUnfollow()" onmouseout="revertToFollowing()"> 
                               Following <i class="bi bi-person-check-fill"></i>
                             </button>  
@@ -34,11 +34,32 @@
           <div class="profile-line"></div>
 
           <section class="row">
-            <section class="mt-5 col-lg-2 col-sm-2 profile-bio">
-              <h5 class="mb-1 pb-1">Bio</h5>
-              <p class="bio"><%= userProf.bio %></p>
-            </section>
+            <div class="col-lg-2 col-sm-2">
+              <section class="mt-5 profile-bio">
+                <h5 class="mb-1 pb-1">Bio</h5>
+                <p class="bio"><%= userProf.bio %></p>
+              </section>
 
+              <% if(followers.length !== 0) { %>
+                <section class="profile-following mt-5 pb-5 mb-5">
+                  <h5 class="pb-1">Followers</h5>
+                  <div class="pt-3 mb-5 d-flex flex-wrap">
+                        <% for(let i=0; i < followers.length; i++) {%>
+                          <% if (i == 0) {%>
+                            <a href="/<%= followers[i].userName %>" class="nav-link" data-toggle="tooltip" data-placement="top"  title="<%= followers[i].userName %>">
+                              <img src="<%= followers[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                            </a>                 
+                          <% } else { %>
+                            <a href="/<%= followers[i].userName %>" class="nav-link ms-3" data-toggle="tooltip" data-placement="top" title="<%= followers[i].userName %>">
+                              <img src="<%= followers[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                            </a>  
+                          <% } %>
+                        <% } %>
+                  </div>                    
+                </section>
+              <% } %>  
+            </div>
+            
             <section class="mt-5 col">
               <section class="profile-favfilms">
                 <h5 class="pb-1">Favorite Films</h5>

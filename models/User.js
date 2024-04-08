@@ -15,7 +15,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  usersFollowing: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], 
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], 
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   favFilms: [{ 
     movieId: {
       type: Number,

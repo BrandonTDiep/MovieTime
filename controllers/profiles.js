@@ -13,12 +13,12 @@ module.exports = {
       const popularReviews = await Review.find({ user: userProfile.id }).sort({ reviewLikes: 'desc' }).populate('user');
       const recentReviews = await Review.find({ user: userProfile.id }).sort({ createdAt: 'desc' }).populate('user');
 
-      const users = await User.find({ "_id": userProfile.id }, {"_id": 0, "usersFollowing": 1 }).populate('usersFollowing');
+      const users = await User.find({ "_id": userProfile.id }, {"_id": 0, "following": 1, "followers": 1 }).populate('following').populate('followers');
       const movieIds = []
       for(const review of recentReviews){
         movieIds.push(review.movieId)
       }
-
+      
       const movieDetails = []
 
       for(const movieId of movieIds){
@@ -31,7 +31,8 @@ module.exports = {
         res.render("profile.ejs", {
           user: req.user,
           userProf: userProfile,
-          usersFollowing: users[0].usersFollowing,
+          usersFollowing: users[0].following,
+          followers: users[0].followers,
           recentReviews: recentReviews,
           popularReviews: popularReviews,
           movieDetails: movieDetails,
@@ -48,7 +49,8 @@ module.exports = {
         res.render("profile.ejs", {
           user: req.user,
           userProf: userProfile,
-          usersFollowing: users[0].usersFollowing,
+          usersFollowing: users[0].following,
+          followers: users[0].followers,
           recentReviews: recentReviews,
           popularReviews: popularReviews,
           movieDetails: movieDetails,
@@ -237,16 +239,26 @@ module.exports = {
       const userId = req.user.id;
       const userProfileId = req.params.userProfId
       const user = await User.findOne({ "_id": userId });
-      if (user.usersFollowing.includes(userProfileId)) {
+      if (user.following.includes(userProfileId)) {
         await User.findOneAndUpdate(
             { "_id": userId  },
-            { $pull: { "usersFollowing": userProfileId } }
+            { $pull: { "following": userProfileId } }
+        );
+
+        await User.findOneAndUpdate(
+          { "_id": userProfileId  },
+          { $pull: { "followers": userId } }
         );
       } 
       else {
         await User.findOneAndUpdate(
           { "_id": userId  },
-          { $push: { "usersFollowing": userProfileId } }
+          { $push: { "following": userProfileId } }
+        );
+
+        await User.findOneAndUpdate(
+          { "_id": userProfileId  },
+          { $push: { "followers": userId } }
         );
       }
       res.redirect(`back`);
