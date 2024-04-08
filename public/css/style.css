@@ -687,6 +687,10 @@ p.card-text{
 #followingButton{
     background-color: #6528E0;
 }
+
+.follow{
+    font-size: 0.9rem;
+}
 /* --------------- SETTINGS PAGE --------------- */
 
 

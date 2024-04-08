@@ -42,7 +42,7 @@
 
               <% if(followers.length !== 0) { %>
                 <section class="profile-following mt-5 pb-5 mb-5">
-                  <h5 class="pb-1">Followers</h5>
+                  <h5 class="pb-1 d-flex justify-content-between align-items-end">Followers <span class="follow"><%= followers.length %></span> </h5>
                   <div class="pt-3 mb-5 d-flex flex-wrap">
                         <% for(let i=0; i < followers.length; i++) {%>
                           <% if (i == 0) {%>
@@ -238,7 +238,7 @@
 
               <% if(usersFollowing.length !== 0) { %>
                 <section class="profile-following mt-5 pb-5 mb-5">
-                  <h5 class="pb-1">Following</h5>
+                  <h5 class="pb-1 d-flex justify-content-between align-items-end">Following <span class="follow"><%= usersFollowing.length %></span> </h5>
                   <div class="pt-3 mb-5 d-flex flex-wrap">
                         <% for(let i=0; i < usersFollowing.length; i++) {%>
                           <% if (i == 0) {%>
