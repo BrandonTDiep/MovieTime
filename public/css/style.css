@@ -2,6 +2,13 @@
 
 /* --------------- GENERAL --------------- */
 
+:root {
+    --primary-text-color: rgb(139, 173, 207);
+    --secondary-text-color: #89a;
+    --tertiary-text-color: #abc;
+    --borderline: #456;
+}
+
 body{
     background-color: #14181C;
 }
@@ -38,7 +45,7 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
 }
 
 .open-review span{
-    color: rgb(139, 173, 207);
+    color: var(--primary-text-color);
     font-size: 0.9rem
 }
 
@@ -58,7 +65,7 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
 
 .like-link{
     text-decoration: none;
-    color: rgb(139, 173, 207);
+    color: var(--primary-text-color);
 }
 
 .like-link:hover{
@@ -72,7 +79,7 @@ button.btn.btn-primary:active, a.btn.btn-primary:active, label.btn.btn-primary:a
 }
 
 .password{
-    color: #abc;
+    color: var(--tertiary-text-color);
     font-size: 0.8rem;
 }
 /* --------------- NAVBAR --------------- */
@@ -133,7 +140,7 @@ nav li.nav-item a.nav-link{
 
 h3.search{
     font-size: 1.2rem;
-    border-bottom: 1px solid #456;
+    border-bottom: 1px solid var(--borderline);
     padding-bottom: 0.25rem;
     margin-bottom: 1rem;
 }
@@ -147,7 +154,7 @@ h4.card-title{
 }
 
 h4.card-title span{
-    color: #89a; 
+    color: var(--secondary-text-color); 
     font-size: 16px; 
     font-weight: 400;
 }
@@ -233,7 +240,7 @@ p.card-text{
 }
 
 .movie-date{
-    color: #89a; 
+    color: var(--secondary-text-color); 
     font-size: 22px; 
     font-weight: 300;
 }
@@ -258,7 +265,7 @@ p.card-text{
 
 .movie-info span{
     font-weight:300; 
-    color: #abc;
+    color: var(--tertiary-text-color);
     font-size: 20px;
 } 
 
@@ -279,7 +286,7 @@ p.card-text{
 }
 
 .review-comments h5{
-    border-bottom: 1px solid #456; 
+    border-bottom: 1px solid var(--borderline); 
     margin-bottom: 0;
 }
 
@@ -292,7 +299,7 @@ p.card-text{
 }
 
 .review-other, .like-other{
-    border-bottom: 1px solid #456; 
+    border-bottom: 1px solid var(--borderline); 
     list-style: none
 }
 
@@ -312,10 +319,6 @@ p.card-text{
 
 
 /*-------- Rating Section --------*/
-.user-heart{
-    color: rgb(139, 173, 207);
-}
-
 .like-button, .unlike-button {
     background-color: transparent; 
     border: none;
@@ -334,7 +337,7 @@ p.card-text{
 }
 
 
-.like-button .fa-heart, .unlike-button .fa-heart {
+.like-button .fa-heart, .unlike-button .fa-heart, .fa-heart {
     color: rgb(113, 147, 182); 
     font-size: 0.91rem;
 }
@@ -357,9 +360,8 @@ p.card-text{
 }
 
 .review-likes > span{
-    color: rgb(139, 173, 207);
+    color: var(--primary-text-color);
 }
-
 
 .review-container {
     display: flex;
@@ -478,7 +480,7 @@ p.card-text{
 .movie-home h4{
     margin: 50px 0; 
     font-weight:100; 
-    color: #abc;
+    color: var(--tertiary-text-color);
 } 
 
 .movie-home h1{
@@ -606,12 +608,12 @@ p.card-text{
 }
 
 .profile-line{
-    border-bottom: 2px solid #456; 
+    border-bottom: 2px solid var(--borderline); 
     padding-bottom: 20px;
 }
 
 .profile-bio h5{
-    border-bottom: 1px solid #456;
+    border-bottom: 1px solid var(--borderline);
 }
 
 .profile-bio p{
@@ -620,7 +622,7 @@ p.card-text{
 }
 
 .profile-favfilms h5, .profile-following h5{
-    border-bottom: 1px solid #456; 
+    border-bottom: 1px solid var(--borderline); 
     margin-bottom: 0;
 }
 
@@ -641,20 +643,20 @@ p.card-text{
 }
 
 .review-dateCreated{
-    color: #89a; 
+    color: var(--secondary-text-color); 
     font-size: 14px; 
     font-weight: 300; 
     margin-left: 10px;
 }
 
 .review-dateCreate-nostar{
-    color: #89a; 
+    color: var(--secondary-text-color); 
     font-size: 14px; 
     font-weight: 300; 
 }
 
 .review-comment{
-    color: #89a; 
+    color: var(--secondary-text-color); 
     font-size: 14px; 
     font-weight: 300; 
     margin-left: 10px;
@@ -666,13 +668,13 @@ p.card-text{
 }
 
 .comment-dateCreated{
-    color: #89a; 
+    color: var(--secondary-text-color); 
     font-size: 10px; 
     font-weight: 300; 
 }
 
 .no-favFilms{
-    color: #89a;
+    color: var(--secondary-text-color);
 }
 
 .no-favFilms a, .no-account{
@@ -775,7 +777,7 @@ aside.favorite-films ul li button{
 }
 
 .review-profile{
-    border-bottom: 1px solid #456;
+    border-bottom: 1px solid var(--borderline);
 }
 
 .review-profile a:first-child{ 
@@ -785,7 +787,7 @@ aside.favorite-films ul li button{
 .review-profile span{
     font-size: 1rem; 
     font-weight:300; 
-    color: #abc;
+    color: var(--tertiary-text-color);
 }
 
 .review-profile a span{
@@ -806,21 +808,21 @@ aside.favorite-films ul li button{
 
 .comment-heading{
     font-size: 0.85rem; 
-    color: #abc; 
+    color: var(--tertiary-text-color); 
     letter-spacing: .08rem; 
     margin-bottom: 0;
 }
 
 .comment-textarea{
-    border-top: 1px solid #456;
+    border-top: 1px solid var(--borderline);
 }
 
 .review-comments.comment{
-    border-top: 1px solid #456;
+    border-top: 1px solid var(--borderline);
 }
 
 .comment-user, .like-user{
-    color: #abc; 
+    color: var(--tertiary-text-color); 
     text-decoration: none; 
     font-weight: 500;
 }
@@ -834,7 +836,7 @@ aside.favorite-films ul li button{
 }
 
 .twitter-share-button{
-    color: #89a;
+    color: var(--secondary-text-color);
     text-decoration: none;
 }
 
@@ -847,7 +849,7 @@ aside.favorite-films ul li button{
 .likes-page h5{
     font-size: 1rem;
     font-weight: 400; 
-    color: #abc; 
+    color: var(--tertiary-text-color); 
     text-transform: uppercase; 
     letter-spacing: .03cm; 
     margin-bottom: 0;
@@ -877,12 +879,12 @@ footer{
 footer p{
      font-size: 1rem;
      margin: 0;
-     color: #89a;
+     color: var(--secondary-text-color);
 }
 
 footer p span{
      font-size: 1rem;
-     color: #89a;
+     color: var(--secondary-text-color);
 }
 
 .flex-wrapper {
@@ -893,7 +895,7 @@ footer p span{
 }
 
 .API{
-    color: #89a;
+    color: var(--secondary-text-color);
 }
 
 .API:hover{
