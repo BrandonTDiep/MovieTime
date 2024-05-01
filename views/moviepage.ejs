@@ -94,133 +94,6 @@
         </div>
 
       </div>
-
-      <!-- Review Comment Section -->
-      <section class="mt-5 mb-5 pb-2 review-comments">
-        <h5 class="pb-1">Reviews</h5>
-        <ul>
-          <% for(let i=0; i < reviews.length; i++) {%>
-            <% if (i === reviews.length - 1) { %>
-              <li class="justify-content-between py-3 review-last">
-            <% } else {%>
-              <li class="justify-content-between py-3 review-other">
-            <% } %>
-              <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
-              <div class="row">
-                <div class="col-auto">
-                  <a href="/<%= reviews[i].user.userName %>" class="nav-link">
-                    <img src="<%= reviews[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
-                  </a>
-                </div>
-
-                <div class="col">
-                  <div class="review d-flex">
-                    <a href="/<%= reviews[i].user.userName %>" class="nav-link">
-                      <p class="review-username"><%= reviews[i].user.userName %></p>
-                    </a>
-                    <!-- Show star ratings based on reviews.rating -->
-                    <div>
-                        <% let rating = reviews[i].rating; %>
-                        <% for (let j = 1; j <= 5; j++) { %>
-                            <% if (j <= Math.floor(rating)) { %>
-                                <span class="fa fa-star checked"></span>
-                            <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
-                                <span class="fa fa-star-half checked"></span>
-                            <% } %>
-                        <% } %>
-                    </div>
-                    <span>
-                      <% if(reviews[i].comments.length > 0) { %>
-                        <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>" class="review-comment">                                  
-                          <i class="fa fa-comment"></i>
-                          <%= reviews[i].comments.length %>
-                        </a>
-                      <% } %>
-                    </span>
-                  </div>
-                  <p class="review"><%= reviews[i].review%></p>
-
-                  <div class="review-container">
-                    <form action="/review/likeReview/<%= movieId %>-<%= movieTitle %>/<%= reviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
-                      <% let userLikesArray = reviews[i].userLikes.map(String); %>
-                      <% if (userStatus.loggedIn) { %>
-                        <%if(reviews[i].user.id === user.id){ %>
-                          <i class="fa fa-heart user-heart"></i>
-                          <% if(reviews[i].reviewLikes === 0) { %>
-                            <span>No likes yet</span>
-                          <% } else if (reviews[i].reviewLikes === 1) { %>
-                            <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                              <%= reviews[i].reviewLikes %> like
-                            </a>
-                          <% } else { %>
-                            <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                              <%= reviews[i].reviewLikes %> likes
-                            </a>
-                          <% } %>
-                        <% } else if(userLikesArray.includes(userId)) { %>
-                          <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                            <span> Liked</span>
-                          </button> 
-                          <% if(reviews[i].reviewLikes === 1) { %>
-                            <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                              <%= reviews[i].reviewLikes %> like
-                            </a>
-                          <% } else { %>
-                            <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                              <%= reviews[i].reviewLikes %> likes
-                            </a>
-                          <% } %>
-                        <% } else { %>
-                          <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                            <span> Like Review</span>
-                          </button> 
-                          <% if(reviews[i].reviewLikes === 0) { %>
-                            <span></span>
-                          <% } else if (reviews[i].reviewLikes === 1) { %>
-                            <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                              <%= reviews[i].reviewLikes %> like
-                            </a>
-                          <% } else { %>
-                            <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                              <%= reviews[i].reviewLikes %> likes
-                            </a>
-                          <% } %>
-                        <% } %>
-                      <% } else { %>
-                        <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                          <span> Like Review</span>
-                        </button> 
-                        <% if(reviews[i].reviewLikes === 0) { %>
-                          <span></span>
-                        <% } else if (reviews[i].reviewLikes === 1) { %>
-                          <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                            <%= reviews[i].reviewLikes %> like
-                          </a>
-                        <% } else { %>
-                          <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                            <%= reviews[i].reviewLikes %> likes
-                          </a>
-                        <% } %>
-                      <% } %>
-                    </form>
-                    <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>" class="open-review">
-                      <span>Open Review</span>
-                    </a>
-
-                    <% if (userStatus.loggedIn) { %>
-                      <%if(reviews[i].user.id === user.id){ %>
-                        <form action="/review/deleteReview/<%= movieId %>-<%= movieTitle %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
-                          <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
-                        </form>
-                      <%}%>
-                    <% } %>              
-                  </div>                 
-                </div>
-              </div>
-            </li>
-          <% } %>
-        </ul>
-      </section>   
     </section>
 
     <!-- Modal -->
@@ -307,6 +180,156 @@
     </section>
 
   </section>
+
+  <section class="actor-section-carousel col movie-overview">
+    <div class="actor-carousel">  
+      <h3>Cast</h3>
+      <div class="actor-carouselbox">
+        <% for (let i=0; i < actors.length; i++) { %>
+          <% if(actors[i].profile_path == null) {%>
+            <div>
+              <img src="/imgs/missing-img.jpg" alt="missng actor poster" loading="lazy">
+              <p><%= actors[i].name %></p>
+            </div>
+          <% } else {%>
+            <div>
+              <img alt="actor poster" src="https://media.themoviedb.org/t/p/w138_and_h175_face/<%= actors[i].profile_path %>" class="text-white">
+              <p><%= actors[i].name %></p>
+            </div>              
+          <% }%>
+      <% } %>
+      </div>  
+      <a class="switchLeft sliderButton" onclick="sliderScrollLeft()"><</a>
+      <a class="switchRight sliderButton" onclick="sliderScrollRight()">></a>
+    </div>  
+  </section>
+
+  <!-- Review Comment Section -->
+  <section class="mt-5 mb-5 pb-2 review-comments col movie-overview">
+    <h5 class="pb-1">Reviews</h5>
+    <ul>
+      <% for(let i=0; i < reviews.length; i++) {%>
+        <% if (i === reviews.length - 1) { %>
+          <li class="justify-content-between py-3 review-last">
+        <% } else {%>
+          <li class="justify-content-between py-3 review-other">
+        <% } %>
+          <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+          <div class="row">
+            <div class="col-auto">
+              <a href="/<%= reviews[i].user.userName %>" class="nav-link">
+                <img src="<%= reviews[i].user.profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded user-profilePic">
+              </a>
+            </div>
+
+            <div class="col">
+              <div class="review d-flex">
+                <a href="/<%= reviews[i].user.userName %>" class="nav-link">
+                  <p class="review-username"><%= reviews[i].user.userName %></p>
+                </a>
+                <!-- Show star ratings based on reviews.rating -->
+                <div>
+                    <% let rating = reviews[i].rating; %>
+                    <% for (let j = 1; j <= 5; j++) { %>
+                        <% if (j <= Math.floor(rating)) { %>
+                            <span class="fa fa-star checked"></span>
+                        <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
+                            <span class="fa fa-star-half checked"></span>
+                        <% } %>
+                    <% } %>
+                </div>
+                <span>
+                  <% if(reviews[i].comments.length > 0) { %>
+                    <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>" class="review-comment">                                  
+                      <i class="fa fa-comment"></i>
+                      <%= reviews[i].comments.length %>
+                    </a>
+                  <% } %>
+                </span>
+              </div>
+              <p class="review"><%= reviews[i].review%></p>
+
+              <div class="review-container">
+                <form action="/review/likeReview/<%= movieId %>-<%= movieTitle %>/<%= reviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
+                  <% let userLikesArray = reviews[i].userLikes.map(String); %>
+                  <% if (userStatus.loggedIn) { %>
+                    <%if(reviews[i].user.id === user.id){ %>
+                      <i class="fa fa-heart user-heart"></i>
+                      <% if(reviews[i].reviewLikes === 0) { %>
+                        <span>No likes yet</span>
+                      <% } else if (reviews[i].reviewLikes === 1) { %>
+                        <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                          <%= reviews[i].reviewLikes %> like
+                        </a>
+                      <% } else { %>
+                        <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                          <%= reviews[i].reviewLikes %> likes
+                        </a>
+                      <% } %>
+                    <% } else if(userLikesArray.includes(userId)) { %>
+                      <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                        <span> Liked</span>
+                      </button> 
+                      <% if(reviews[i].reviewLikes === 1) { %>
+                        <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                          <%= reviews[i].reviewLikes %> like
+                        </a>
+                      <% } else { %>
+                        <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                          <%= reviews[i].reviewLikes %> likes
+                        </a>
+                      <% } %>
+                    <% } else { %>
+                      <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                        <span> Like Review</span>
+                      </button> 
+                      <% if(reviews[i].reviewLikes === 0) { %>
+                        <span></span>
+                      <% } else if (reviews[i].reviewLikes === 1) { %>
+                        <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                          <%= reviews[i].reviewLikes %> like
+                        </a>
+                      <% } else { %>
+                        <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                          <%= reviews[i].reviewLikes %> likes
+                        </a>
+                      <% } %>
+                    <% } %>
+                  <% } else { %>
+                    <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                      <span> Like Review</span>
+                    </button> 
+                    <% if(reviews[i].reviewLikes === 0) { %>
+                      <span></span>
+                    <% } else if (reviews[i].reviewLikes === 1) { %>
+                      <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                        <%= reviews[i].reviewLikes %> like
+                      </a>
+                    <% } else { %>
+                      <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                        <%= reviews[i].reviewLikes %> likes
+                      </a>
+                    <% } %>
+                  <% } %>
+                </form>
+                <a href="/<%= reviews[i].user.userName %>/review/<%= reviews[i].movieId %>-<%= movieTitle %>" class="open-review">
+                  <span>Open Review</span>
+                </a>
+
+                <% if (userStatus.loggedIn) { %>
+                  <%if(reviews[i].user.id === user.id){ %>
+                    <form action="/review/deleteReview/<%= movieId %>-<%= movieTitle %>/<%= reviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                      <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
+                    </form>
+                  <%}%>
+                <% } %>              
+              </div>                 
+            </div>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+  </section>   
 </main>
 
 <<script>
@@ -346,5 +369,36 @@
     <% } %>
   <% } %>
 
+  // Actor Slider
+  const sliders = document.querySelector(".actor-carouselbox")
+  let scrollPerClick;
+  let scrollAmount = 0;
+  let scrollAmount1 = 0;
+  let imagePadding = 20;
+
+
+  function sliderScrollLeft(){
+    sliders.scrollTo({
+      top: 0,
+      left: (scrollAmount -= scrollPerClick),
+      behavior:"smooth"
+    });
+
+    if(scrollAmount < 0){
+      scrollAmount = 0
+    }
+  }
+
+  function sliderScrollRight(){
+    if(scrollAmount <= sliders.scrollWidth - sliders.clientWidth){
+      sliders.scrollTo({
+        top: 0,
+        left: (scrollAmount += scrollPerClick),
+        behavior: "smooth",
+      });
+    }
+  }
+  scrollPerClick = 400;
 </script>
 <%- include('partials/footer') -%>
+

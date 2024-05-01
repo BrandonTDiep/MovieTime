@@ -591,6 +591,86 @@ p.card-text{
     margin-bottom: 200px;
 }
 
+
+.actor-section-carousel{
+    width: 90%;
+    margin-bottom: -100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.actor-carousel{
+    height: 250px;
+    width: 95%;
+    position: relative;
+    margin-top: 100px;
+}
+
+.actor-carousel .switchLeft, .actor-carousel .switchRight {
+    color: white;
+    font-weight: bold;
+    height: 100%;
+    width: 45px;
+    font-size: 25px;
+    text-align: center;
+    line-height: 320px;
+    top: 0;
+    z-index: 3;
+    font-family: sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.actor-carousel .switchLeft{
+    position: absolute;
+    left: -50px;
+}
+
+.actor-carousel .switchRight {
+    position: absolute;
+    right: -50px;
+}
+
+.actor-carouselbox{
+    height: 250px;
+    width: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.actor-carouselbox img{
+    min-width: 138px;
+    max-width: 138px;
+    height: 175px;
+    cursor: pointer;
+    background-size: cover;
+    margin: 5px 10px;
+    transition: 0.5s ease;
+    z-index: 2;
+}
+
+.actor-carouselbox img:hover{
+    transform: scale(1.1);
+    z-index: 5;
+}
+
+.actor-carousel h3{
+    margin-left: 5px;
+}
+
+.actor-carousel:last-child{
+    margin-bottom: 200px;
+}
+
+
+
 /* --------------- PROFILE PAGE --------------- */
 
 .profilePicHeader{

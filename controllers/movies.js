@@ -89,6 +89,12 @@ module.exports = {
 
       const response_credit =  await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${MOVIEAPI_KEY}`)
       const credit = await response_credit.json()
+
+      let actors = []
+      for (let i = 0; i < 15 && i < credit.cast.length; i++) {
+        if(i === 15) break
+        actors.push(credit.cast[i])
+      }
       
       let movieTitle;
       if(movie.success === undefined){
@@ -108,6 +114,7 @@ module.exports = {
             movieId: movieId,
             movieDetails: movie, 
             movieCredit: credit,
+            actors: actors,
             base_url: BASE_URL,
             reviews: reviews,
             user: req.user,

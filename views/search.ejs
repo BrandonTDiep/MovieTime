@@ -29,7 +29,7 @@
                   <% const movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
                   <% if(movie.poster_path == null) {%>
                     <a href="/movies/<%= movie.id%>-<%= movieTitle %>">
-                      <img src="/imgs/missing-img.jpg" class="img-fluid rounded-start search-poster" alt="movie poster" loading="lazy">
+                      <img src="/imgs/missing-img.jpg" class="img-fluid rounded-start search-poster" alt="missing movie poster" loading="lazy">
                     </a>
                   <% } else {%>
                     <a href="/movies/<%= movie.id%>-<%= movieTitle %>">
