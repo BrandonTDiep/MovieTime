@@ -130,6 +130,7 @@ module.exports = {
             movieId: movieId,
             movieDetails: movie, 
             movieCredit: credit,
+            actors: actors,
             base_url: BASE_URL,
             reviews: reviews,
             userStatus: {
