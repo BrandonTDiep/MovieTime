@@ -1010,6 +1010,15 @@ aside.favorite-films ul li button{
     padding-bottom: 8.5px;
 }
 
+.watchlist-button{
+    background: none;
+    border: none;
+}
+
+.watchlist-button:hover{
+    color: #8a4fff;
+}
+
 
 /* --------------- FOOTER --------------- */
 

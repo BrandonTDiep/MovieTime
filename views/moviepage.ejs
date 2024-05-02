@@ -93,22 +93,24 @@
           <% } %>
 
           <div class="mt-5">
+            <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+            <% if (userStatus.loggedIn) { %>
             <p>Watchlist</p>
             <h4 class="mt-1">
-              <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
-              <% if (user.watchlist.includes(movieId)) {%>
-                <form action="/movies/addWatchlist/<%= movieId %>-<%= movieTitle %>?_method=PUT" type="submit"  method="POST">              
-                  <button>
-                    <i class="bi bi-check-circle"></i>
-                  </button>
-                </form> 
-              <% } else { %>
-                <form action="/movies/addWatchlist/<%= movieId %>-<%= movieTitle %>?_method=PUT" type="submit"  method="POST">              
-                  <button>
-                    <i class="bi bi-plus-circle" style="color: white;"></i>
-                  </button>
-                </form> 
-              <% } %>    
+                <% if (user.watchlist.includes(movieId)) {%>
+                  <form action="/movies/addWatchlist/<%= movieId %>-<%= movieTitle %>?_method=PUT" type="submit"  method="POST">              
+                    <button class="watchlist-button">
+                      <i class="bi bi-check-circle"></i>
+                    </button>
+                  </form> 
+                <% } else { %>
+                  <form action="/movies/addWatchlist/<%= movieId %>-<%= movieTitle %>?_method=PUT" type="submit"  method="POST">              
+                    <button class="watchlist-button">
+                      <i class="bi bi-plus-circle"></i>
+                    </button>
+                  </form> 
+                <% } %>  
+              <% } %>
             </h4>
           </div>
         </div>
