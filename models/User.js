@@ -15,6 +15,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  watchlist: [Number],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], 
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   favFilms: [{ 

@@ -266,5 +266,49 @@ module.exports = {
       console.log(err);
     }
   },
+  getWatchlistPage: async (req, res) => {
+    try {
+      const path = req.originalUrl;
+      const pathParts = path.split('/');
+      const username = pathParts[1];
+
+      const userProfile = await User.findOne({userName: username});
+      const BASE_URL = 'https://www.themoviedb.org/t/p/w220_and_h330_face'
+      const MOVIEAPI_KEY = process.env.MOVIEAPI_KEY
+
+      const movieDetails = []
+      for(const movieId of userProfile.watchlist){
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${MOVIEAPI_KEY}&language=en-US`)
+        const movie = await response.json()
+        movieDetails.unshift(movie)
+      }
+
+      if(req.user){
+        res.render("watchlist.ejs", {
+          user: req.user,
+          userProf: userProfile,
+          movieDetails: movieDetails,
+          base_url: BASE_URL,
+          userId: req.user.id,
+          userStatus: {
+            loggedIn: true
+          },
+        });
+      }
+      else{
+        res.render("watchlist.ejs", {
+          user: req.user,
+          userProf: userProfile,
+          movieDetails: movieDetails,
+          base_url: BASE_URL,
+          userStatus: {
+            loggedIn: false
+          },
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 

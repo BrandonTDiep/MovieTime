@@ -91,8 +91,28 @@
             
             <h3><span class="fa fa-star checked"></span> <%= avgRating.toFixed(1) %></h3>
           <% } %>
-        </div>
 
+          <div class="mt-5">
+            <p>Watchlist</p>
+            <h4 class="mt-1">
+              <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+              <% if (user.watchlist.includes(movieId)) {%>
+                <form action="/movies/addWatchlist/<%= movieId %>-<%= movieTitle %>?_method=PUT" type="submit"  method="POST">              
+                  <button>
+                    <i class="bi bi-check-circle"></i>
+                  </button>
+                </form> 
+              <% } else { %>
+                <form action="/movies/addWatchlist/<%= movieId %>-<%= movieTitle %>?_method=PUT" type="submit"  method="POST">              
+                  <button>
+                    <i class="bi bi-plus-circle" style="color: white;"></i>
+                  </button>
+                </form> 
+              <% } %>    
+            </h4>
+          </div>
+        </div>
+        
       </div>
     </section>
 
@@ -110,7 +130,6 @@
           </div>
 
           <!-- Modal Body -->
-          <% const movieTitle = movieDetails.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
           <% if (userStatus.loggedIn) { %>
             <% if(userReview) { %>
               <form action="/review/updateReview/<%= movieId %>-<%= movieTitle %>?_method=PUT" method="POST">

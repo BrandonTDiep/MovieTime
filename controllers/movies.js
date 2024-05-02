@@ -1,5 +1,5 @@
 const Review = require("../models/Review");
-
+const User = require("../models/User");
 
 module.exports = {
   getHomePage: async (req, res) => {
@@ -142,6 +142,29 @@ module.exports = {
       else{
         res.status(404).render('error'); 
       }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  addWatchlist: async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const movieId = req.params.movieId.split('-')[0];
+      console.log(movieId)
+      const user = await User.findOne({ "_id": userId });
+      if (user.watchlist.includes(movieId)) {
+        await User.findOneAndUpdate(
+            { "_id": userId  },
+            { $pull: { watchlist: movieId } }
+        );
+      } 
+      else {
+        await User.findOneAndUpdate(
+          { "_id": userId  },
+          { $push: { watchlist: movieId } }
+        );
+      }
+      res.redirect(`back`);
     } catch (err) {
       console.log(err);
     }

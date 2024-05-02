@@ -1,0 +1,68 @@
+<%- include('partials/head') -%>
+<%- include('partials/nav') -%>
+<main >
+    <section class = "profilePicHeader">
+        <section class="row mt-4">
+          <div class="col-auto mt-auto">
+            <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded userProfilePic">
+          </div>
+          <div class="col mt-auto">
+            <div class="d-flex justify-content-between">
+              <h4><%= userProf.userName %></h4>
+              <% if (userStatus.loggedIn) { %>
+                <% if(userProf.id === user.id) { %>
+                  <a href="/settings" class="btn btn-primary">Edit Profile</a>
+                <% } else { %>
+                  <form action="/<%= userProf.userName %>/followUser/<%= userProf._id %>?_method=PUT" method="POST">              
+                      <% if (user.following.includes(userProf._id)) {%>
+                        <button class="btn btn-primary" type="submit" id="followingButton" onmouseover="changeToUnfollow()" onmouseout="revertToFollowing()"> 
+                          Following <i class="bi bi-person-check-fill"></i>
+                        </button>  
+                      <% } else { %>
+                        <button class="btn btn-primary" type="submit" id="#followButton">
+                          Follow <i class="bi bi-person-plus-fill"></i>
+                        </button>  
+                      <% } %>
+                  </form>
+                  <% } %>
+              <% } %>    
+            </div>
+          </div>
+        </section>
+    
+        <div class="py-2 px-5 rounded profile-nav">
+          <a class="basic-link" href="/<%= userProf.userName %>">Profile</a>
+          <a class="watchlist-link" href="/<%= userProf.userName %>/watchlist">Watchlist</a>
+        </div>  
+    </section>
+
+    <section class="watchlist-page">
+        <section class="watchlists">
+            <h5 class="mt-5 pb-1"><%= movieDetails.length %> FILMS <%= userProf.userName %> WANT TO WATCH</h5>
+            <!-- Watchlist Section -->
+            <ul class="d-flex flex-wrap">
+            <% movieDetails.forEach(movie => { %>
+                <li class="mt-3" style="margin-right: 15px;">
+                    <div>
+                        <div>
+                            <% const movieTitle = movie.title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+                            <% if(movie.poster_path == null) { %>
+                                <a href="/movies/<%= movie.id %>-<%= movieTitle %>">
+                                <img src="/imgs/missing-img.jpg" class="img-fluid rounded watchlist-poster" alt="missing movie poster" loading="lazy">
+                                </a>
+                            <% } else { %>
+                                <a href="/movies/<%= movie.id %>-<%= movieTitle %>">
+                                <img src="<%= base_url + movie.poster_path %>" class="img-fluid rounded watchlist-poster" alt="watchlist movie poster" loading="lazy">
+                                </a>                
+                            <% }%>
+                        </div>
+                    </div>
+                </li>
+            <% }) %>
+            </ul>
+        </section>   
+    </section>
+</main>
+
+<%- include('partials/footer') -%>
+

@@ -1,263 +1,266 @@
 <%- include('partials/head') -%>
 <%- include('partials/nav') -%>
 <main>
-    <section class = "profilePicHeader">
-        <section>
-          <section class="row mt-4">
-              <div class="col-auto mt-auto">
-                <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded userProfilePic">
-              </div>
-              <div class="col mt-auto">
-                <div class="d-flex justify-content-between">
-                  <h4><%= userProf.userName %></h4>
-                  <% if (userStatus.loggedIn) { %>
-                    <% if(userProf.id === user.id) { %>
-                      <a href="/settings" class="btn btn-primary">Edit Profile</a>
-                    <% } else { %>
-                      <form action="/<%= userProf.userName %>/followUser/<%= userProf._id %>?_method=PUT" method="POST">              
-                          <% if (user.following.includes(userProf._id)) {%>
-                            <button class="btn btn-primary" type="submit" id="followingButton" onmouseover="changeToUnfollow()" onmouseout="revertToFollowing()"> 
-                              Following <i class="bi bi-person-check-fill"></i>
-                            </button>  
-                          <% } else { %>
-                            <button class="btn btn-primary" type="submit" id="#followButton">
-                              Follow <i class="bi bi-person-plus-fill"></i>
-                            </button>  
-                          <% } %>
-                      </form>
-                      <% } %>
-                  <% } %>    
-                </div>
-              </div>
-          </section>
-
-          <div class="profile-line"></div>
-
-          <section class="row">
-            <div class="col-lg-2 col-sm-2">
-              <section class="mt-5 profile-bio">
-                <h5 class="mb-1 pb-1">Bio</h5>
-                <p class="bio"><%= userProf.bio %></p>
-              </section>
-
-              <% if(followers.length !== 0) { %>
-                <section class="profile-following mt-5 pb-5 mb-5">
-                  <h5 class="pb-1 d-flex justify-content-between align-items-end">Followers <span class="follow"><%= followers.length %></span> </h5>
-                  <div class="pt-3 mb-5 d-flex flex-wrap">
-                        <% for(let i=0; i < followers.length; i++) {%>
-                          <% if (i == 0) {%>
-                            <a href="/<%= followers[i].userName %>" class="nav-link" data-toggle="tooltip" data-placement="top"  title="<%= followers[i].userName %>">
-                              <img src="<%= followers[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
-                            </a>                 
-                          <% } else { %>
-                            <a href="/<%= followers[i].userName %>" class="nav-link ms-3" data-toggle="tooltip" data-placement="top" title="<%= followers[i].userName %>">
-                              <img src="<%= followers[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
-                            </a>  
-                          <% } %>
-                        <% } %>
-                  </div>                    
-                </section>
-              <% } %>  
-            </div>
-            
-            <section class="mt-5 col">
-              <section class="profile-favfilms">
-                <h5 class="pb-1">Favorite Films</h5>
-                <div class="pt-3 mb-5">
-                  <% if(userProf.favFilms.length !== 0) { %>
-                      <% for(let i=0; i < favFilms.length; i++) {%>
-                          <% if(favFilms[i].moviePoster != null) { %>
-                            <% const movieTitle = favFilms[i].movieTitle.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
-                            <a href="/movies/<%= favFilms[i].movieId %>-<%= movieTitle %>" class="text-decoration-none">
-                              <img src="<%= base_url2 + favFilms[i].moviePoster %>" class="img-fluid rounded pr-3 favfilm-poster" alt="favorite movie poster" loading="lazy">
-                            </a>                  
-                          <% } else { %>
-                              <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img favfilm-poster" loading="lazy">
-                          <% } %>
-                      <% } %>
+  <section class = "profilePicHeader">
+    <section class="row mt-4">
+      <div class="col-auto mt-auto">
+        <img src="<%= userProf.profilePic %>" alt="user profile picture" loading="lazy" class="img-fluid rounded userProfilePic">
+      </div>
+      <div class="col mt-auto">
+        <div class="d-flex justify-content-between">
+          <h4><%= userProf.userName %></h4>
+          <% if (userStatus.loggedIn) { %>
+            <% if(userProf.id === user.id) { %>
+              <a href="/settings" class="btn btn-primary">Edit Profile</a>
+            <% } else { %>
+              <form action="/<%= userProf.userName %>/followUser/<%= userProf._id %>?_method=PUT" method="POST">              
+                  <% if (user.following.includes(userProf._id)) {%>
+                    <button class="btn btn-primary" type="submit" id="followingButton" onmouseover="changeToUnfollow()" onmouseout="revertToFollowing()"> 
+                      Following <i class="bi bi-person-check-fill"></i>
+                    </button>  
                   <% } else { %>
-                      <% if (userStatus.loggedIn) { %>
-                        <% if(userProf.id === user.id) { %>
-                          <p class="no-favFilms">Have any <a href="/settings">favorite films</a>?</p>
-                        <% } %>
-                      <% } %>                  
+                    <button class="btn btn-primary" type="submit" id="#followButton">
+                      Follow <i class="bi bi-person-plus-fill"></i>
+                    </button>  
                   <% } %>
-                </div>                    
-              </section>
+              </form>
+              <% } %>
+          <% } %>    
+        </div>
+      </div>
+    </section>
 
-              <!-- Review Comment Section -->
-              <section class="review-comments">
-                <h5 class="pb-1">Recent Reviews</h5>
-                <ul>
-                  <% for(let i=0; i < recentReviews.length; i++) {%>
-                    <% if (i === recentReviews.length - 1) { %>
-                      <li class="justify-content-between py-3 review-last">
-                    <% } else {%>
-                      <li class="justify-content-between py-3  review-other">
-                    <% } %>
-                      <div class="review row">
-                        <div class="col-auto mt-auto">
-                          <% const movieTitle = movieDetails[i].title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
-                          <% if(movieDetails[i].poster_path != null) { %>
-                            <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>">
-                              <img src="<%= base_url + movieDetails[i].poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
-                            </a>                  
-                          <% } else { %>
-                              <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img-2" loading="lazy">
-                          <% } %>
-                        </div>
-                        <section class="col">
-                          <h4>
-                            <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="movie-title">
-                              <%= movieDetails[i].title %>
-                            </a>
-                            
-                            <span class="movie-date">
-                              <%= movieDetails[i].release_date.split('-')[0] %>
-                            </span>
-                          </h4>
-                          <% const dateObject = new Date(recentReviews[i].createdAt); %>
-                          <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
-                          <% const day = dateObject.getDate(); %>  
-                          <% const year = dateObject.getFullYear(); %>  
-                          <% const datePart = `${month} ${day}, ${year}`; %>  
+    <div class="py-2 px-5 rounded profile-nav">
+      <a class="profile-link" href="/<%= userProf.userName %>">Profile</a>
+      <a class="basic-link" href="/<%= userProf.userName %>/watchlist">Watchlist</a>
+    </div>  
+  </section>
 
 
-                          
-                          <!-- Show star ratings based on recentReviews.rating -->
-                          <div class="mb-2">
-                              <% let rating = recentReviews[i].rating; %>
-                              <% for (let j = 1; j <= 5; j++) { %>
-                                  <% if (j <= Math.floor(rating)) { %>
-                                      <span class="fa fa-star checked"></span>
-                                  <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
-                                      <span class="fa fa-star-half checked"></span>
-                                  <% } %>
-                              <% } %>
-                              <% if(rating) { %>
-                                <span class="review-dateCreated">             
-                                    <%= datePart %>  
-                                </span>
-                              <% } else { %>
-                                <span class="review-dateCreate-nostar">             
-                                  <%= datePart %>  
-                                </span>
-                              <% } %>
-                              <span>
-                                <% if(recentReviews[i].comments.length > 0) { %>
-                                  <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="review-comment">                                  
-                                    <i class="fa fa-comment"></i>
-                                    <%= recentReviews[i].comments.length %>
-                                  </a>
-                                <% } %>
-                              </span>
-                          </div>
-                          <p class="review mb-2"><%= recentReviews[i].review %></p>
-
-                          <div class="review-container">
-                            <form action="/review/likeReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
-                              <% let userLikesArray = recentReviews[i].userLikes.map(String); %>
-                              <% if (userStatus.loggedIn) { %>
-                                <%if(recentReviews[i].user.id === user.id){ %>
-                                  <i class="fa fa-heart user-heart"></i>
-                                  <% if(recentReviews[i].reviewLikes === 0) { %>
-                                    <span>No likes yet</span>
-                                  <% } else if (recentReviews[i].reviewLikes === 1) { %>
-                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                                      <%= recentReviews[i].reviewLikes %> like
-                                    </a>
-                                  <% } else { %>
-                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                                      <%= recentReviews[i].reviewLikes %> likes
-                                    </a>
-                                  <% } %>
-                                <% } else if(userLikesArray.includes(userId)) { %>
-                                  <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                    <span> Liked</span>
-                                  </button> 
-                                  <% if(recentReviews[i].reviewLikes === 1) { %>
-                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                                      <%= recentReviews[i].reviewLikes %> like
-                                    </a>
-                                  <% } else { %>
-                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                                      <%= recentReviews[i].reviewLikes %> likes
-                                    </a>
-                                  <% } %>
-                                <% } else { %>
-                                  <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                    <span> Like Review</span>
-                                  </button> 
-                                  <% if(recentReviews[i].reviewLikes === 0) { %>
-                                    <span></span>
-                                  <% } else if (recentReviews[i].reviewLikes === 1) { %>
-                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                                      <%= recentReviews[i].reviewLikes %> like
-                                    </a>
-                                  <% } else { %>
-                                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                                      <%= recentReviews[i].reviewLikes %> likes
-                                    </a>
-                                  <% } %>
-                                <% } %>
-                              <% } else { %>
-                                <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
-                                  <span> Like Review</span>
-                                </button> 
-                                <% if(recentReviews[i].reviewLikes === 0) { %>
-                                  <span></span>
-                                <% } else if (recentReviews[i].reviewLikes === 1) { %>
-                                  <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                                    <%= recentReviews[i].reviewLikes %> like
-                                  </a>
-                                <% } else { %>
-                                  <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
-                                    <%= recentReviews[i].reviewLikes %> likes
-                                  </a>
-                                <% } %>
-                              <% } %>
-                            </form>
-                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="open-review">
-                              <span>Open Review</span>
-                            </a>
-          
-                            <% if (userStatus.loggedIn) { %>
-                              <%if(recentReviews[i].user.id === user.id){ %>
-                                <form action="/review/deleteReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
-                                  <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
-                                </form>
-                              <%}%>
-                            <% } %>              
-                          </div>
-                        </section>
-                      </div>
-                    </li>
-                  <% } %>
-                </ul>
-              </section> 
-
-              <% if(usersFollowing.length !== 0) { %>
-                <section class="profile-following mt-5 pb-5 mb-5">
-                  <h5 class="pb-1 d-flex justify-content-between align-items-end">Following <span class="follow"><%= usersFollowing.length %></span> </h5>
-                  <div class="pt-3 mb-5 d-flex flex-wrap">
-                        <% for(let i=0; i < usersFollowing.length; i++) {%>
-                          <% if (i == 0) {%>
-                            <a href="/<%= usersFollowing[i].userName %>" class="nav-link" data-toggle="tooltip" data-placement="top"  title="<%= usersFollowing[i].userName %>">
-                              <img src="<%= usersFollowing[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
-                            </a>                 
-                          <% } else { %>
-                            <a href="/<%= usersFollowing[i].userName %>" class="nav-link ms-3" data-toggle="tooltip" data-placement="top" title="<%= usersFollowing[i].userName %>">
-                              <img src="<%= usersFollowing[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
-                            </a>  
-                          <% } %>
-                        <% } %>
-                  </div>                    
-                </section>
-              <% } %>  
-              
-            </section>  
-          </section>
+  <section class="row profilePicBody">
+    <div class="col-lg-2 col-sm-2">
+      <section class="mt-5 profile-bio">
+        <h5 class="mb-1 pb-1">Bio</h5>
+        <p class="bio"><%= userProf.bio %></p>
       </section>
+
+      <% if(followers.length !== 0) { %>
+        <section class="profile-following mt-5 pb-5 mb-5">
+          <h5 class="pb-1 d-flex justify-content-between align-items-end">Followers <span class="follow"><%= followers.length %></span> </h5>
+          <div class="pt-3 mb-5 d-flex flex-wrap">
+                <% for(let i=0; i < followers.length; i++) {%>
+                  <% if (i == 0) {%>
+                    <a href="/<%= followers[i].userName %>" class="nav-link" data-toggle="tooltip" data-placement="top"  title="<%= followers[i].userName %>">
+                      <img src="<%= followers[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                    </a>                 
+                  <% } else { %>
+                    <a href="/<%= followers[i].userName %>" class="nav-link ms-3" data-toggle="tooltip" data-placement="top" title="<%= followers[i].userName %>">
+                      <img src="<%= followers[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                    </a>  
+                  <% } %>
+                <% } %>
+          </div>                    
+        </section>
+      <% } %>  
+    </div>
+    
+    <section class="mt-5 col">
+      <section class="profile-favfilms">
+        <h5 class="pb-1">Favorite Films</h5>
+        <div class="pt-3 mb-5">
+          <% if(userProf.favFilms.length !== 0) { %>
+              <% for(let i=0; i < favFilms.length; i++) {%>
+                  <% if(favFilms[i].moviePoster != null) { %>
+                    <% const movieTitle = favFilms[i].movieTitle.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+                    <a href="/movies/<%= favFilms[i].movieId %>-<%= movieTitle %>" class="text-decoration-none">
+                      <img src="<%= base_url2 + favFilms[i].moviePoster %>" class="img-fluid rounded pr-3 favfilm-poster" alt="favorite movie poster" loading="lazy">
+                    </a>                  
+                  <% } else { %>
+                      <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img favfilm-poster" loading="lazy">
+                  <% } %>
+              <% } %>
+          <% } else { %>
+              <% if (userStatus.loggedIn) { %>
+                <% if(userProf.id === user.id) { %>
+                  <p class="no-favFilms">Have any <a href="/settings">favorite films</a>?</p>
+                <% } %>
+              <% } %>                  
+          <% } %>
+        </div>                    
+      </section>
+
+      <!-- Review Comment Section -->
+      <section class="review-comments">
+        <h5 class="pb-1">Recent Reviews</h5>
+        <ul>
+          <% for(let i=0; i < recentReviews.length; i++) {%>
+            <% if (i === recentReviews.length - 1) { %>
+              <li class="justify-content-between py-3 review-last">
+            <% } else {%>
+              <li class="justify-content-between py-3  review-other">
+            <% } %>
+              <div class="review row">
+                <div class="col-auto mt-auto">
+                  <% const movieTitle = movieDetails[i].title.replace(/:/g, '').replace(/\s+/g, '-').toLowerCase() %>
+                  <% if(movieDetails[i].poster_path != null) { %>
+                    <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>">
+                      <img src="<%= base_url + movieDetails[i].poster_path %>" alt="movie poster" loading="lazy" class="img-fluid rounded">
+                    </a>                  
+                  <% } else { %>
+                      <img src="/imgs/missing-img.jpg" alt="movie poster" class="missing-img-2" loading="lazy">
+                  <% } %>
+                </div>
+                <section class="col">
+                  <h4>
+                    <a href="/movies/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="movie-title">
+                      <%= movieDetails[i].title %>
+                    </a>
+                    
+                    <span class="movie-date">
+                      <%= movieDetails[i].release_date.split('-')[0] %>
+                    </span>
+                  </h4>
+                  <% const dateObject = new Date(recentReviews[i].createdAt); %>
+                  <% const month = dateObject.toLocaleString('default', { month: 'short' });; %>  
+                  <% const day = dateObject.getDate(); %>  
+                  <% const year = dateObject.getFullYear(); %>  
+                  <% const datePart = `${month} ${day}, ${year}`; %>  
+
+
+                  
+                  <!-- Show star ratings based on recentReviews.rating -->
+                  <div class="mb-2">
+                      <% let rating = recentReviews[i].rating; %>
+                      <% for (let j = 1; j <= 5; j++) { %>
+                          <% if (j <= Math.floor(rating)) { %>
+                              <span class="fa fa-star checked"></span>
+                          <% } else if (j === Math.ceil(rating) && rating % 1 !== 0) { %>
+                              <span class="fa fa-star-half checked"></span>
+                          <% } %>
+                      <% } %>
+                      <% if(rating) { %>
+                        <span class="review-dateCreated">             
+                            <%= datePart %>  
+                        </span>
+                      <% } else { %>
+                        <span class="review-dateCreate-nostar">             
+                          <%= datePart %>  
+                        </span>
+                      <% } %>
+                      <span>
+                        <% if(recentReviews[i].comments.length > 0) { %>
+                          <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="review-comment">                                  
+                            <i class="fa fa-comment"></i>
+                            <%= recentReviews[i].comments.length %>
+                          </a>
+                        <% } %>
+                      </span>
+                  </div>
+                  <p class="review mb-2"><%= recentReviews[i].review %></p>
+
+                  <div class="review-container">
+                    <form action="/review/likeReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id%>?_method=PUT" method="POST" class="review-likes">
+                      <% let userLikesArray = recentReviews[i].userLikes.map(String); %>
+                      <% if (userStatus.loggedIn) { %>
+                        <%if(recentReviews[i].user.id === user.id){ %>
+                          <i class="fa fa-heart user-heart"></i>
+                          <% if(recentReviews[i].reviewLikes === 0) { %>
+                            <span>No likes yet</span>
+                          <% } else if (recentReviews[i].reviewLikes === 1) { %>
+                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                              <%= recentReviews[i].reviewLikes %> like
+                            </a>
+                          <% } else { %>
+                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                              <%= recentReviews[i].reviewLikes %> likes
+                            </a>
+                          <% } %>
+                        <% } else if(userLikesArray.includes(userId)) { %>
+                          <button class="like-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                            <span> Liked</span>
+                          </button> 
+                          <% if(recentReviews[i].reviewLikes === 1) { %>
+                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                              <%= recentReviews[i].reviewLikes %> like
+                            </a>
+                          <% } else { %>
+                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                              <%= recentReviews[i].reviewLikes %> likes
+                            </a>
+                          <% } %>
+                        <% } else { %>
+                          <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                            <span> Like Review</span>
+                          </button> 
+                          <% if(recentReviews[i].reviewLikes === 0) { %>
+                            <span></span>
+                          <% } else if (recentReviews[i].reviewLikes === 1) { %>
+                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                              <%= recentReviews[i].reviewLikes %> like
+                            </a>
+                          <% } else { %>
+                            <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                              <%= recentReviews[i].reviewLikes %> likes
+                            </a>
+                          <% } %>
+                        <% } %>
+                      <% } else { %>
+                        <button class="unlike-button" type="submit" id="review-section"><i class="fa fa-heart"></i>
+                          <span> Like Review</span>
+                        </button> 
+                        <% if(recentReviews[i].reviewLikes === 0) { %>
+                          <span></span>
+                        <% } else if (recentReviews[i].reviewLikes === 1) { %>
+                          <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                            <%= recentReviews[i].reviewLikes %> like
+                          </a>
+                        <% } else { %>
+                          <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>/likes" class="like-link">
+                            <%= recentReviews[i].reviewLikes %> likes
+                          </a>
+                        <% } %>
+                      <% } %>
+                    </form>
+                    <a href="/<%= userProf.userName %>/review/<%= recentReviews[i].movieId %>-<%= movieTitle %>" class="open-review">
+                      <span>Open Review</span>
+                    </a>
+  
+                    <% if (userStatus.loggedIn) { %>
+                      <%if(recentReviews[i].user.id === user.id){ %>
+                        <form action="/review/deleteReview/<%= recentReviews[i].movieId %>-<%= movieTitle %>/<%= recentReviews[i]._id %>?_method=DELETE" method="POST" class="delete-form">
+                          <button class="delete-button" type="submit" id="review-section"><i class="fa fa-trash"></i></button> 
+                        </form>
+                      <%}%>
+                    <% } %>              
+                  </div>
+                </section>
+              </div>
+            </li>
+          <% } %>
+        </ul>
+      </section> 
+
+      <% if(usersFollowing.length !== 0) { %>
+        <section class="profile-following mt-5 pb-5 mb-5">
+          <h5 class="pb-1 d-flex justify-content-between align-items-end">Following <span class="follow"><%= usersFollowing.length %></span> </h5>
+          <div class="pt-3 mb-5 d-flex flex-wrap">
+                <% for(let i=0; i < usersFollowing.length; i++) {%>
+                  <% if (i == 0) {%>
+                    <a href="/<%= usersFollowing[i].userName %>" class="nav-link" data-toggle="tooltip" data-placement="top"  title="<%= usersFollowing[i].userName %>">
+                      <img src="<%= usersFollowing[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                    </a>                 
+                  <% } else { %>
+                    <a href="/<%= usersFollowing[i].userName %>" class="nav-link ms-3" data-toggle="tooltip" data-placement="top" title="<%= usersFollowing[i].userName %>">
+                      <img src="<%= usersFollowing[i].profilePic%>" alt="user profile picture" loading="lazy" class="img-fluid rounded comment-pic">
+                    </a>  
+                  <% } %>
+                <% } %>
+          </div>                    
+        </section>
+      <% } %>  
+            
+    </section>  
+  </section>
 </main>
 
 <script>
