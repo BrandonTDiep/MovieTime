@@ -1000,6 +1000,10 @@ aside.favorite-films ul li button{
     padding: 0;
 }
 
+.watchlists ul li {
+    margin-right: 15px;
+}
+
 .watchlist-poster{
     min-width: 131px; 
     width: 131px;
