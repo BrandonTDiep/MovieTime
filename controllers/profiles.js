@@ -75,6 +75,21 @@ module.exports = {
 
       await Review.deleteMany({ user: req.user._id });
 
+      // Find users who are following or being followed by the deleted user
+      const usersToUpdate = await User.find({
+        $or: [
+          { followers: req.user._id },
+          { following: req.user._id }
+        ]
+      });
+
+      // Update each user's followers and following arrays
+      await Promise.all(usersToUpdate.map(async (user) => {
+        await User.findByIdAndUpdate(user._id, {
+          $pull: { followers: req.user._id, following: req.user._id }
+        });
+      }));
+
       // Delete the profile
       await User.findByIdAndDelete(req.user._id);
           
