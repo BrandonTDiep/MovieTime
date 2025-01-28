@@ -75,7 +75,7 @@ Movie Review site allowing users to create reviews and follow each other.
 
 
 * [![HTML][HTML]][HTML-url]
-* [[!JavaScript][JavaScript]][JavaScript-url]
+* [![JavaScript][JavaScript]][JavaScript-url]
 * [![Express][Express.js]][Express-url]
 * [![Node][Node.js]][Node-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
