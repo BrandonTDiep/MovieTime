@@ -105,13 +105,13 @@ To get a local copy up and running follow these simple example steps.
    ```
 3. Enter your API keys in config folder `.env`
    ```js
-  PORT = 3000 (can be any port example: 2121)
-  DB_STRING = `your database URI`
-  MOVIEAPI_KEY = `your movie api key`
-
-  CLOUD_NAME = `your cloudinary cloud name`
-  API_KEY = `your cloudinary api key`
-  API_SECRET = `your cloudinary api secret`
+   PORT = 3000 (can be any port example: 2121)
+   DB_STRING = `your database URI`
+   MOVIEAPI_KEY = `your movie api key`
+   CLOUD_NAME = `your cloudinary cloud name`
+   API_KEY = `your cloudinary api key`
+   API_SECRET = `your cloudinary api secret`
+   ```
 
 4. Start the local development
    ```sh
